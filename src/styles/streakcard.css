@@ -1,0 +1,95 @@
+.streak-card {
+  margin-top: 1rem;
+  padding: 1.25rem;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 1.25rem;
+}
+
+.streak-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+}
+
+.streak-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+
+  margin-bottom: 0.35rem;
+}
+
+.streak-days {
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+.streak-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 55px;
+  height: 55px;
+
+  font-size: 1.6rem;
+
+  background: #fff7ed;
+
+  border-radius: 50%;
+}
+
+.streak-week {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  margin-bottom: 1rem;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: var(--surface-color);
+
+  color: var(--text-light);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.day.completed {
+  background: var(--primary-soft-color);
+
+  color: var(--primary-dark-color);
+}
+
+.day.active {
+  background: var(--primary-color);
+
+  color: var(--white-color);
+
+  box-shadow: 0 8px 20px rgba(20, 184, 166, 0.25);
+}
+
+.streak-text {
+  font-size: 0.85rem;
+
+  color: var(--text-light);
+
+  line-height: 1.5;
+}

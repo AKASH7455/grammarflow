@@ -1,0 +1,41 @@
+:root {
+  --primary-color: #14b8a6;
+  --primary-dark-color: #0f766e;
+  --primary-soft-color: #ccfbf1;
+
+  --white-color: #ffffff;
+  --surface-color: #f1f5f9;
+  --border-color: #e5e7eb;
+
+  --text-color: #111827;
+  --text-light: #6b7280;
+  --text-muted-color: #7c8a99;
+
+  /* Learning Levels */
+  --beginner-bg: #dcfce7;
+  --beginner-text: #16a34a;
+
+  --intermediate-bg: #dbeafe;
+  --intermediate-text: #2563eb;
+
+  --advanced-bg: #fef3c7;
+  --advanced-text: #d97706;
+
+  --master-bg: #ede9fe;
+  --master-text: #7c3aed;
+
+  --expert-bg: var(--master-bg);
+  --expert-text: var(--master-text);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --transition: 0.3s ease;
+}

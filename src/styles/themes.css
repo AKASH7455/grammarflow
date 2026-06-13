@@ -1,0 +1,8 @@
+.light-theme {
+  background: var(--surface-color);
+}
+
+.dark-theme {
+  background: #0f172a;
+  color: white;
+}

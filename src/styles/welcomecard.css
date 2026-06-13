@@ -1,0 +1,73 @@
+.welcome-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  padding: 1rem;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    #11998e
+  );
+
+  border-radius: 1rem;
+
+  box-shadow: 0 6px 18px rgba(20, 184, 166, 0.15);
+
+  overflow: hidden;
+}
+
+.welcome-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.35rem 0.75rem;
+  margin-bottom: 0.75rem;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  color: var(--white-color);
+
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.welcome-title {
+  margin-bottom: 0.4rem;
+
+  color: var(--white-color);
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.welcome-text {
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.welcome-image {
+  flex-shrink: 0;
+  width: 95px;
+}
+
+.welcome-image img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+}

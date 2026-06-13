@@ -1,0 +1,9 @@
+.app-shell {
+  min-height: 100vh;
+  background: var(--surface-color);
+}
+
+.app-main {
+  padding: 1rem;
+  padding-bottom: 90px;
+}

@@ -1,0 +1,334 @@
+/* =====================================================
+   PAGE CONTAINER
+   Learning pages ka outer wrapper
+===================================================== */
+
+.learning-page {
+  padding: var(--container-padding, 1rem);
+}
+
+/* =====================================================
+   PAGE HEADER
+   ← Button + Title (Beginner, Nouns etc.)
+===================================================== */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-bottom: 1.25rem;
+}
+
+.section-title {
+  margin: 0;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+/* =====================================================
+   BACK BUTTON
+   ┌───┐
+   │ ← │ Beginner
+   └───┘
+===================================================== */
+
+.learning-page__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+
+  color: var(--text-color);
+
+  text-decoration: none;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.learning-page__back:hover {
+  color: var(--primary-color);
+
+  border-color: var(--primary-color);
+
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   LEVELS GRID
+   Beginner | Intermediate
+   Advanced | Master
+===================================================== */
+
+.levels-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 1rem;
+}
+
+/* =====================================================
+   SUBJECTS / TOPICS LIST
+   Nouns
+   Pronouns
+   Verbs
+===================================================== */
+
+.subjects-grid {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.85rem;
+}
+
+/* =====================================================
+   LEVEL CARD
+   Beginner
+   Intermediate
+===================================================== */
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.75rem;
+
+  min-height: 150px;
+
+  padding: 1rem;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+
+  text-decoration: none;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.level-card:hover {
+  transform: translateY(-4px);
+
+  border-color: var(--primary-color);
+
+  box-shadow: var(--shadow-md);
+}
+
+.level-card:active {
+  transform: scale(0.98);
+}
+
+/* =====================================================
+   SUBJECT CARD
+   [📘] Nouns          12 Topics
+===================================================== */
+
+.subject-card {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+
+  width: 100%;
+
+  padding: 1rem;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+
+  text-decoration: none;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+
+  border-color: var(--primary-color);
+
+  box-shadow: var(--shadow-md);
+}
+
+.subject-card:active {
+  transform: scale(0.98);
+}
+
+/* =====================================================
+   CARD ICONS
+   Level Icon
+   Subject Icon
+   Topic Icon
+===================================================== */
+
+.level-card__icon,
+.subject-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 16px;
+
+  font-size: 1.4rem;
+}
+
+/* =====================================================
+   LEVEL CARD TEXT
+===================================================== */
+
+.level-card__title {
+  text-align: center;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+.level-card__topics {
+  padding: 0.35rem 0.75rem;
+
+  border-radius: 999px;
+
+  background: var(--surface-color);
+
+  color: var(--text-muted-color);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* =====================================================
+   SUBJECT / TOPIC TITLE
+===================================================== */
+
+.subject-card__title {
+  flex: 1;
+
+  margin: 0;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  color: var(--text-color);
+}
+
+/* =====================================================
+   TOPIC COUNT BADGE
+   12 Topics
+===================================================== */
+
+.subject-card__badge {
+  padding: 0.35rem 0.75rem;
+
+  border-radius: 999px;
+
+  background: var(--surface-color);
+
+  color: var(--text-muted-color);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   BEGINNER COLORS
+===================================================== */
+
+.level-card--beginner .level-card__icon,
+.subject-card--beginner .subject-card__icon {
+  background: var(--beginner-bg);
+  color: var(--beginner-text);
+}
+
+/* =====================================================
+   INTERMEDIATE COLORS
+===================================================== */
+
+.level-card--intermediate .level-card__icon,
+.subject-card--intermediate .subject-card__icon {
+  background: var(--intermediate-bg);
+  color: var(--intermediate-text);
+}
+
+/* =====================================================
+   ADVANCED COLORS
+===================================================== */
+
+.level-card--advanced .level-card__icon,
+.subject-card--advanced .subject-card__icon {
+  background: var(--advanced-bg);
+  color: var(--advanced-text);
+}
+
+/* =====================================================
+   MASTER COLORS
+===================================================== */
+
+.level-card--master .level-card__icon,
+.subject-card--master .subject-card__icon {
+  background: var(--master-bg);
+  color: var(--master-text);
+}
+
+/* =====================================================
+   TOPIC DETAILS PAGE
+   Notes Content Section
+===================================================== */
+
+.topic-section {
+  padding: 1rem;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.topic-section h2 {
+  margin-bottom: 0.5rem;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+.topic-section p {
+  line-height: 1.7;
+
+  color: var(--text-muted-color);
+}
