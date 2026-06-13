@@ -62,7 +62,7 @@ function TopicContent({
     case "mcq":
       return (
         <div className="practice-list">
-          {data.map((item, index) => (
+          {Array.isArray(data) ? data.map((item, index) => (
             <div
               key={item.id || index}
               className="practice-card"
@@ -90,14 +90,14 @@ function TopicContent({
                 Correct Answer: {item.answer}
               </p>
             </div>
-          ))}
+          )) : <div className="empty-state">No MCQ data available</div>}
         </div>
       );
 
     case "fill-blanks":
       return (
         <div className="practice-list">
-          {data.map((item, index) => (
+          {Array.isArray(data) ? data.map((item, index) => (
             <div
               key={item.id || index}
               className="practice-card"
@@ -110,14 +110,14 @@ function TopicContent({
                 Answer: {item.answer}
               </p>
             </div>
-          ))}
+          )) : <div className="empty-state">No fill-in-the-blank data available</div>}
         </div>
       );
 
     case "translation":
       return (
         <div className="practice-list">
-          {data.map((item, index) => (
+          {Array.isArray(data) ? data.map((item, index) => (
             <div
               key={item.id || index}
               className="practice-card"
@@ -132,14 +132,14 @@ function TopicContent({
                 {item.answer}
               </p>
             </div>
-          ))}
+          )) : <div className="empty-state">No translation data available</div>}
         </div>
       );
 
     case "sentenceCorrection":
       return (
         <div className="practice-list">
-          {data.map((item, index) => (
+          {Array.isArray(data) ? data.map((item, index) => (
             <div
               key={item.id || index}
               className="practice-card"
@@ -154,7 +154,7 @@ function TopicContent({
                 {item.correct}
               </p>
             </div>
-          ))}
+          )) : <div className="empty-state">No sentence correction data available</div>}
         </div>
       );
 
