@@ -3,18 +3,23 @@ import { TbBook2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/images/logo.png";
+
 import "../../styles/navbar.css";
 
 function Navbar() {
   return (
     <header className="navbar">
       <Link to="/" className="navbar__brand">
-        <img src={logo} alt="GrammarFlow Logo" className="navbar__logo" />
+        <img
+          src={logo}
+          alt="GrammarFlow Logo"
+          className="navbar__logo"
+        />
       </Link>
 
       <div className="navbar__actions">
         <Link
-          to="/verbs"
+          to="/verb-practice"
           className="navbar__verb-button"
         >
           <TbBook2 />

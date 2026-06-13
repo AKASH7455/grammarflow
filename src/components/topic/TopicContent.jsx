@@ -4,96 +4,167 @@ function TopicContent({
 }) {
   if (!data) {
     return (
-      <section className="topic-content">
-        No Content Found
-      </section>
+      <div className="empty-state">
+        No Content Available
+      </div>
     );
   }
 
-  if (activeTab === "notes") {
-    return (
-      <section className="topic-content">
-        <div className="topic-content__section">
-          <h2>{data.title}</h2>
+  switch (activeTab) {
+    case "notes":
+      return (
+        <div className="learning-content">
+          {data.title && (
+            <h2 className="learning-title">
+              {data.title}
+            </h2>
+          )}
 
-          <p>
-            {data.definition}
-          </p>
+          {data.definition && (
+            <div className="learning-section">
+              <h3>Definition</h3>
+              <p>{data.definition}</p>
+            </div>
+          )}
 
-          <ul>
-            {data.examples.map(
-              (example) => (
-                <li key={example}>
-                  {example}
-                </li>
-              )
-            )}
-          </ul>
+          {data.content && Array.isArray(data.content) && (
+            <div className="learning-section">
+              <h3>Content</h3>
+              {data.content.map((item) => (
+                <div
+                  key={item.id}
+                  className="learning-item"
+                >
+                  {item.heading && (
+                    <h4>{item.heading}</h4>
+                  )}
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {data.examples && Array.isArray(data.examples) && (
+            <div className="learning-section">
+              <h3>Examples</h3>
+              <ul>
+                {data.examples.map((example, index) => (
+                  <li key={index}>
+                    {example}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      </section>
-    );
+      );
+
+    case "mcq":
+      return (
+        <div className="practice-list">
+          {data.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="practice-card"
+            >
+              <h3>
+                {item.question}
+              </h3>
+
+              <div className="options">
+                {item.options.map((option, optIndex) => (
+                  <div
+                    key={optIndex}
+                    className={`option ${
+                      option === item.answer
+                        ? "correct"
+                        : ""
+                    }`}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+
+              <p className="answer">
+                Correct Answer: {item.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+
+    case "fill-blanks":
+      return (
+        <div className="practice-list">
+          {data.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="practice-card"
+            >
+              <h3>
+                {item.question}
+              </h3>
+
+              <p className="answer">
+                Answer: {item.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+
+    case "translation":
+      return (
+        <div className="practice-list">
+          {data.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="practice-card"
+            >
+              <h3>
+                {item.question}
+              </h3>
+
+              <p>
+                Answer:
+                {" "}
+                {item.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+
+    case "sentenceCorrection":
+      return (
+        <div className="practice-list">
+          {data.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="practice-card"
+            >
+              <p>
+                {item.incorrect}
+              </p>
+
+              <p>
+                Correct:
+                {" "}
+                {item.correct}
+              </p>
+            </div>
+          ))}
+        </div>
+      );
+
+    default:
+      return (
+        <div className="empty-state">
+          Content Not Found
+        </div>
+      );
   }
-
-  if (activeTab === "mcq") {
-    return (
-      <section className="topic-content">
-        {data.map((question) => (
-          <div
-            key={question.id}
-            className="topic-content__section"
-          >
-            <h3>
-              {question.question}
-            </h3>
-
-            {question.options.map(
-              (option) => (
-                <p key={option}>
-                  {option}
-                </p>
-              )
-            )}
-          </div>
-        ))}
-      </section>
-    );
-  }
-
-  if (activeTab === "fill-blanks") {
-    return (
-      <section className="topic-content">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="topic-content__section"
-          >
-            <p>
-              {item.question}
-            </p>
-          </div>
-        ))}
-      </section>
-    );
-  }
-
-  if (activeTab === "ai-practice") {
-    return (
-      <section className="topic-content">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="topic-content__section"
-          >
-            <p>
-              {item.prompt}
-            </p>
-          </div>
-        ))}
-      </section>
-    );
-  }
-
-  return null;
 }
 
 export default TopicContent;

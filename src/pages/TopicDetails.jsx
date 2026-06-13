@@ -10,28 +10,52 @@ import TopicContent from "../components/topic/TopicContent";
 import "../styles/topicdetails.css";
 
 function TopicDetails() {
-  const { levelSlug, subjectSlug, topicSlug } = useParams();
+  const {
+    levelSlug,
+    subjectSlug,
+    topicSlug,
+  } = useParams();
+
   const [activeTab, setActiveTab] =
     useState("notes");
 
   const level = learningData.find(
-    (item) => item.slug === levelSlug
+    (level) =>
+      level.slug === levelSlug
   );
 
-  const subject = level?.subjects.find(
-    (item) => item.slug === subjectSlug
-  );
+  const subject =
+    level?.subjects?.find(
+      (subject) =>
+        subject.slug ===
+        subjectSlug
+    );
 
-  const topic = subject?.topics.find(
-    (item) => item.slug === topicSlug
-  );
+  const topic =
+    subject?.topics?.find(
+      (topic) =>
+        topic.slug === topicSlug
+    );
 
-  const currentData = topic?.content[activeTab];
-  const availableTabs = topic?.content ? Object.keys(topic.content) : [];
-
-  if (!level || !subject || !topic) {
-    return <h2>Topic Not Found</h2>;
+  if (!topic) {
+    return (
+      <main className="topic-details-page">
+        <h2>
+          Topic Not Found
+        </h2>
+      </main>
+    );
   }
+
+  const availableTabs =
+    Object.keys(
+      topic.content || {}
+    );
+
+  const currentData =
+    topic.content?.[
+      activeTab
+    ] || [];
 
   return (
     <main className="topic-details-page">
@@ -44,13 +68,18 @@ function TopicDetails() {
 
       <TopicTabs
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        availableTabs={availableTabs}
+        setActiveTab={
+          setActiveTab
+        }
+        availableTabs={
+          availableTabs
+        }
       />
 
       <TopicContent
         activeTab={activeTab}
         data={currentData}
+        topic={topic}
       />
 
     </main>
