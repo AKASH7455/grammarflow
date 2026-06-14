@@ -1,4 +1,4 @@
-import "../fillblank/fillblank.css";
+import "../../../styles/fillblank.css";
 
 function FillBlank({
   sentence,

@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-import MCQ from "../mcq/MCQ";
-import FillBlank from "../fillblank/FillBlank";
+import MCQ from "./questions/MCQ";
+import FillBlank from "./questions/FillBlank";
+import Notes from "./Notes";
+import ExamHeader from "./exam/ExamHeader";
+import ExamNavigation from "./exam/ExamNavigation";
+import ReviewScreen from "./exam/ReviewScreen";
 
 import "../../styles/topiccontent.css";
 
@@ -32,38 +36,7 @@ function TopicContent({
 
   /* NOTES */
   if (activeTab === "notes") {
-    return (
-      <div className="learning-content">
-        {data.title && (
-          <h2 className="learning-title">{data.title}</h2>
-        )}
-
-        {data.definition && (
-          <div className="learning-section">
-            <h3>Definition</h3>
-            <p>{data.definition}</p>
-          </div>
-        )}
-
-        {data.content?.map((item) => (
-          <div key={item.id} className="learning-item">
-            <h4>{item.heading}</h4>
-            <p>{item.text}</p>
-          </div>
-        ))}
-
-        {data.examples?.length > 0 && (
-          <div className="learning-section">
-            <h3>Examples</h3>
-            <ul>
-              {data.examples.map((example, index) => (
-                <li key={index}>{example}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    );
+    return <Notes data={data} />;
   }
 
   if (!Array.isArray(data)) {
@@ -77,12 +50,7 @@ function TopicContent({
 
   const progress = (answers.length / data.length) * 100;
 
-  const score = data.filter((question) => {
-    const answer = answers.find(
-      (item) => item.questionId === question.id
-    );
-    return answer?.selectedAnswer === question.answer;
-  }).length;
+  
 
   const handleAnswer = (questionId, selectedAnswer) => {
     setAnswers((prev) => {
@@ -110,77 +78,17 @@ function TopicContent({
 
   /* REVIEW */
   if (showReview) {
-    return (
-      <section className="review-section">
-        <div className="score-box">
-          <h2>Exam Completed</h2>
-          <h3>
-            {score} / {data.length}
-          </h3>
-          <p>
-            {Math.round((score / data.length) * 100)}% Accuracy
-          </p>
-        </div>
-
-        {data.map((question) => {
-          const userAnswer = answers.find(
-            (item) => item.questionId === question.id
-          );
-
-          const isCorrect =
-            userAnswer?.selectedAnswer === question.answer;
-
-          return (
-            <div key={question.id} className="review-card">
-              <h3>{question.question}</h3>
-
-              <p>
-                <strong>Your Answer:</strong> {userAnswer?.selectedAnswer || "Not answered"}
-              </p>
-
-              <p>
-                <strong>Correct Answer:</strong> {question.answer}
-              </p>
-
-              <p
-                className={
-                  isCorrect ? "result-correct" : "result-wrong"
-                }
-              >
-                {isCorrect ? "✓ Correct" : "✗ Wrong"}
-              </p>
-
-              {question.explanation && (
-                <div className="review-explanation">
-                  <strong>Explanation</strong>
-                  <p>{question.explanation}</p>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </section>
-    );
+    return <ReviewScreen data={data} answers={answers} />;
   }
 
   /* EXAM MODE */
   return (
     <section className="exam-wrapper">
-      <div className="question-header">
-        <div className="question-counter">
-          Question {currentIndex + 1} / {data.length}
-        </div>
-        <div className="progress-percentage">
-          {Math.round(progress)}%
-        </div>
-      </div>
-
-      <div className="progress-bar">
-        <div
-          className="progress-fill"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+      <ExamHeader
+        currentIndex={currentIndex}
+        totalQuestions={data.length}
+        progress={progress}
+      />
 
       {activeTab === "mcq" && (
         <MCQ
@@ -203,36 +111,15 @@ function TopicContent({
         />
       )}
 
-      <div className="question-navigation">
-        <button
-          type="button"
-          className="nav-btn"
-          disabled={currentIndex === 0}
-          onClick={() => setCurrentIndex((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-
-        {currentIndex === data.length - 1 ? (
-          <button
-            type="button"
-            className="nav-btn nav-btn-primary"
-            disabled={answers.length !== data.length}
-            onClick={() => setShowReview(true)}
-          >
-            Submit
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="nav-btn nav-btn-primary"
-            disabled={!currentAnswer}
-            onClick={() => setCurrentIndex((prev) => prev + 1)}
-          >
-            Next
-          </button>
-        )}
-      </div>
+      <ExamNavigation
+        currentIndex={currentIndex}
+        totalQuestions={data.length}
+        hasAnswer={!!currentAnswer}
+        allAnswered={answers.length === data.length}
+        onPrevious={() => setCurrentIndex((prev) => prev - 1)}
+        onNext={() => setCurrentIndex((prev) => prev + 1)}
+        onSubmit={() => setShowReview(true)}
+      />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import "../mcq/mcq.css";
+import "../../../styles/mcq.css";
 
 function MCQ({
   question,

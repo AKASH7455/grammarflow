@@ -1,18 +1,112 @@
-.notes-page {
+.notes-container {
+  padding: 0.75rem;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-card {
+  background: var(--white-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   padding: 1rem;
+  border: 1px solid var(--border-color);
 }
 
-.notes-header {
-  margin-bottom: 1.5rem;
-}
-
-.notes-header h1 {
-  font-size: 1.5rem;
+.notes-title {
+  margin: 0;
   color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
-.notes-header p {
-  margin-top: 0.35rem;
+.notes-heading {
+  margin: 0 0 0.5rem;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
 
+.notes-text {
+  margin: 0;
   color: var(--text-light);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.notes-content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notes-content-item {
+  padding: 0.75rem;
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--primary-color);
+}
+
+.notes-item-heading {
+  margin: 0 0 0.25rem;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.examples-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.example-chip {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  background: var(--primary-soft-color);
+  color: var(--primary-color);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .notes-container {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .section-card {
+    padding: 0.75rem;
+  }
+
+  .notes-title {
+    font-size: 1.25rem;
+  }
+
+  .notes-heading {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .notes-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .notes-content-item {
+    padding: 0.6rem;
+  }
+
+  .notes-item-heading {
+    font-size: 0.9rem;
+  }
+
+  .example-chip {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+  }
 }
