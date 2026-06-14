@@ -14,61 +14,56 @@ function TopicTabs({
 }) {
   const tabConfig = {
     notes: {
-      id: "notes",
       label: "Notes",
       icon: <FiBookOpen />,
     },
+
     mcq: {
-      id: "mcq",
       label: "MCQ",
       icon: <FiHelpCircle />,
     },
+
     "fill-blanks": {
-      id: "fill-blanks",
       label: "Fill",
       icon: <FiEdit3 />,
     },
-    "ai-practice": {
-      id: "ai-practice",
-      label: "AI",
-      icon: <FiCpu />,
-    },
+
     translation: {
-      id: "translation",
       label: "Translation",
       icon: <FiGlobe />,
     },
+
     "sentence-correction": {
-      id: "sentence-correction",
       label: "Correction",
       icon: <FiCheckSquare />,
     },
-  };
 
-  const tabs = availableTabs
-    ? availableTabs.map((tabKey) => tabConfig[tabKey])
-    : Object.values(tabConfig);
+    "ai-practice": {
+      label: "AI",
+      icon: <FiCpu />,
+    },
+  };
 
   return (
     <section className="topic-tabs">
-      {tabs.map((tab) => (
+      {availableTabs.map((tab) => (
         <button
-          key={tab.id}
+          key={tab}
           className={`topic-tabs__button ${
-            activeTab === tab.id
+            activeTab === tab
               ? "active"
               : ""
           }`}
           onClick={() =>
-            setActiveTab(tab.id)
+            setActiveTab(tab)
           }
         >
           <span className="topic-tabs__icon">
-            {tab.icon}
+            {tabConfig[tab]?.icon}
           </span>
 
           <span className="topic-tabs__label">
-            {tab.label}
+            {tabConfig[tab]?.label}
           </span>
         </button>
       ))}

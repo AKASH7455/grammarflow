@@ -9,15 +9,19 @@ import "../mcq/mcq.css";
 
 function MCQ({
   question,
-  options,
+  options = [],
   correctAnswer,
+  explanation,
   onAnswer,
 }) {
   const [selectedAnswer, setSelectedAnswer] =
     useState(null);
 
+  const isAnswered =
+    selectedAnswer !== null;
+
   const handleOptionClick = (option) => {
-    if (selectedAnswer) return;
+    if (selectedAnswer !== null) return;
 
     setSelectedAnswer(option);
 
@@ -30,9 +34,6 @@ function MCQ({
     setSelectedAnswer(null);
   };
 
-  const isAnswered =
-    selectedAnswer !== null;
-
   return (
     <div className="mcq-container">
       <h3 className="mcq-question-text">
@@ -41,20 +42,24 @@ function MCQ({
 
       <div className="mcq-options">
         {options.map((option, index) => {
+          const isCorrect =
+            option === correctAnswer;
+
+          const isSelected =
+            option === selectedAnswer;
+
           let className =
             "mcq-option";
 
           if (isAnswered) {
-            if (
-              option === correctAnswer
-            ) {
+            if (isCorrect) {
               className +=
                 " mcq-option-correct";
             }
 
             if (
-              option === selectedAnswer &&
-              option !== correctAnswer
+              isSelected &&
+              !isCorrect
             ) {
               className +=
                 " mcq-option-wrong";
@@ -63,7 +68,8 @@ function MCQ({
 
           return (
             <button
-              key={index}
+              key={option}
+              type="button"
               className={className}
               disabled={isAnswered}
               onClick={() =>
@@ -81,16 +87,13 @@ function MCQ({
               </span>
 
               {isAnswered &&
-                option ===
-                  correctAnswer && (
+                isCorrect && (
                   <FiCheck />
                 )}
 
               {isAnswered &&
-                option ===
-                  selectedAnswer &&
-                option !==
-                  correctAnswer && (
+                isSelected &&
+                !isCorrect && (
                   <FiX />
                 )}
             </button>
@@ -103,15 +106,27 @@ function MCQ({
           {selectedAnswer ===
           correctAnswer ? (
             <p className="mcq-result-correct">
-              Correct Answer
+              ✓ Correct Answer
             </p>
           ) : (
             <p className="mcq-result-wrong">
-              Wrong Answer
+              ✗ Wrong Answer
             </p>
           )}
 
+          {explanation && (
+            <div className="explanation-card">
+              <div className="explanation-header">
+                <strong>Explanation:</strong>
+              </div>
+              <div className="explanation-content">
+                {explanation}
+              </div>
+            </div>
+          )}
+
           <button
+            type="button"
             className="mcq-reset-btn"
             onClick={handleReset}
           >

@@ -9,6 +9,8 @@ const mcq = [
       "Quickly",
     ],
     answer: "Delhi",
+    explanation:
+      "A noun is the name of a person, place, animal, thing, or idea. Delhi is a place, so it is a noun. Run is a verb (action), Beautiful is an adjective, and Quickly is an adverb.",
   },
 
   {
@@ -21,6 +23,8 @@ const mcq = [
       "Adverb",
     ],
     answer: "Noun",
+    explanation:
+      "Ram is a name of a person, so Ram is a noun. A noun is the name of a person, place, animal, thing, or idea.",
   },
 
   {
@@ -33,6 +37,8 @@ const mcq = [
       "Fast",
     ],
     answer: "School",
+    explanation:
+      "A school is a place where people learn. Places are nouns. Run is a verb (action), Happy is an adjective (feeling), and Fast is an adverb.",
   },
 ];
 

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import {
+  import {
   FiCheck,
   FiX,
-  FiRotateCcw,
   FiHelpCircle,
 } from "react-icons/fi";
 
@@ -12,6 +11,7 @@ function FillBlank({
   sentence,
   correctAnswer,
   hint,
+  explanation,
   onAnswer,
 }) {
   const [userAnswer, setUserAnswer] =
@@ -23,41 +23,34 @@ function FillBlank({
   const [showHint, setShowHint] =
     useState(false);
 
+  const normalizeText = (text) =>
+    text.trim().toLowerCase();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const answer =
-      userAnswer.trim();
-
-    if (!answer) return;
+    if (!userAnswer.trim()) return;
 
     const result =
-      answer.toLowerCase() ===
-      correctAnswer.toLowerCase();
+      normalizeText(userAnswer) ===
+      normalizeText(correctAnswer);
 
     setIsAnswered(true);
 
     onAnswer?.(result);
   };
 
-  const handleReset = () => {
-    setUserAnswer("");
-    setIsAnswered(false);
-    setShowHint(false);
-  };
-
   const isCorrect =
-    userAnswer.trim().toLowerCase() ===
-    correctAnswer.toLowerCase();
+    normalizeText(userAnswer) ===
+    normalizeText(correctAnswer);
 
   const sentenceParts =
-    sentence.split("_______");
+    sentence.split("______");
 
   return (
     <div className="fillblank-container">
 
       <p className="fillblank-sentence">
-
         {sentenceParts[0]}
 
         <span
@@ -75,7 +68,6 @@ function FillBlank({
         </span>
 
         {sentenceParts[1]}
-
       </p>
 
       {!isAnswered && (
@@ -83,7 +75,6 @@ function FillBlank({
           className="fillblank-form"
           onSubmit={handleSubmit}
         >
-
           <input
             type="text"
             value={userAnswer}
@@ -111,7 +102,7 @@ function FillBlank({
                 className="fillblank-hint-btn"
                 onClick={() =>
                   setShowHint(
-                    !showHint
+                    (prev) => !prev
                   )
                 }
               >
@@ -136,17 +127,13 @@ function FillBlank({
 
           {isCorrect ? (
             <div className="fillblank-success">
-
               <FiCheck />
-
               <span>
                 Correct Answer
               </span>
-
             </div>
           ) : (
             <div className="fillblank-error">
-
               <FiX />
 
               <span>
@@ -156,17 +143,19 @@ function FillBlank({
                   {correctAnswer}
                 </strong>
               </span>
-
             </div>
           )}
 
-          <button
-            className="fillblank-reset-btn"
-            onClick={handleReset}
-          >
-            <FiRotateCcw />
-            Try Again
-          </button>
+          {explanation && (
+            <div className="explanation-card">
+              <div className="explanation-header">
+                <strong>Explanation:</strong>
+              </div>
+              <div className="explanation-content">
+                {explanation}
+              </div>
+            </div>
+          )}
 
         </div>
       )}

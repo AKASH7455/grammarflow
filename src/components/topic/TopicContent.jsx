@@ -1,7 +1,15 @@
+import { useState } from "react";
+
+import MCQ from "../mcq/MCQ";
+import FillBlank from "../fillblank/FillBlank";
+
 function TopicContent({
   activeTab,
   data,
 }) {
+  const [currentIndex, setCurrentIndex] =
+    useState(0);
+
   if (!data) {
     return (
       <div className="empty-state">
@@ -10,161 +18,203 @@ function TopicContent({
     );
   }
 
-  switch (activeTab) {
-    case "notes":
-      return (
-        <div className="learning-content">
-          {data.title && (
-            <h2 className="learning-title">
-              {data.title}
-            </h2>
-          )}
+  /* =========================
+     NOTES
+  ========================= */
 
-          {data.definition && (
-            <div className="learning-section">
-              <h3>Definition</h3>
-              <p>{data.definition}</p>
-            </div>
-          )}
+  if (activeTab === "notes") {
+    return (
+      <div className="learning-content">
+        {data.title && (
+          <h2 className="learning-title">
+            {data.title}
+          </h2>
+        )}
 
-          {data.content && Array.isArray(data.content) && (
-            <div className="learning-section">
-              <h3>Content</h3>
-              {data.content.map((item) => (
-                <div
-                  key={item.id}
-                  className="learning-item"
-                >
-                  {item.heading && (
-                    <h4>{item.heading}</h4>
-                  )}
-                  <p>{item.text}</p>
-                </div>
-              ))}
-            </div>
-          )}
+        {data.definition && (
+          <div className="learning-section">
+            <h3>Definition</h3>
+            <p>{data.definition}</p>
+          </div>
+        )}
 
-          {data.examples && Array.isArray(data.examples) && (
-            <div className="learning-section">
-              <h3>Examples</h3>
-              <ul>
-                {data.examples.map((example, index) => (
+        {data.content?.map((item) => (
+          <div
+            key={item.id}
+            className="learning-item"
+          >
+            <h4>{item.heading}</h4>
+            <p>{item.text}</p>
+          </div>
+        ))}
+
+        {data.examples?.length > 0 && (
+          <div className="learning-section">
+            <h3>Examples</h3>
+
+            <ul>
+              {data.examples.map(
+                (example, index) => (
                   <li key={index}>
                     {example}
                   </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      );
-
-    case "mcq":
-      return (
-        <div className="practice-list">
-          {Array.isArray(data) ? data.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="practice-card"
-            >
-              <h3>
-                {item.question}
-              </h3>
-
-              <div className="options">
-                {item.options.map((option, optIndex) => (
-                  <div
-                    key={optIndex}
-                    className={`option ${
-                      option === item.answer
-                        ? "correct"
-                        : ""
-                    }`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-
-              <p className="answer">
-                Correct Answer: {item.answer}
-              </p>
-            </div>
-          )) : <div className="empty-state">No MCQ data available</div>}
-        </div>
-      );
-
-    case "fill-blanks":
-      return (
-        <div className="practice-list">
-          {Array.isArray(data) ? data.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="practice-card"
-            >
-              <h3>
-                {item.question}
-              </h3>
-
-              <p className="answer">
-                Answer: {item.answer}
-              </p>
-            </div>
-          )) : <div className="empty-state">No fill-in-the-blank data available</div>}
-        </div>
-      );
-
-    case "translation":
-      return (
-        <div className="practice-list">
-          {Array.isArray(data) ? data.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="practice-card"
-            >
-              <h3>
-                {item.question}
-              </h3>
-
-              <p>
-                Answer:
-                {" "}
-                {item.answer}
-              </p>
-            </div>
-          )) : <div className="empty-state">No translation data available</div>}
-        </div>
-      );
-
-    case "sentenceCorrection":
-      return (
-        <div className="practice-list">
-          {Array.isArray(data) ? data.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="practice-card"
-            >
-              <p>
-                {item.incorrect}
-              </p>
-
-              <p>
-                Correct:
-                {" "}
-                {item.correct}
-              </p>
-            </div>
-          )) : <div className="empty-state">No sentence correction data available</div>}
-        </div>
-      );
-
-    default:
-      return (
-        <div className="empty-state">
-          Content Not Found
-        </div>
-      );
+                )
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
   }
+
+  /* =========================
+     SAFETY CHECK
+  ========================= */
+
+  if (!Array.isArray(data)) {
+    return (
+      <div className="empty-state">
+        Invalid Data Format
+      </div>
+    );
+  }
+
+  const currentQuestion =
+    data[currentIndex];
+
+  /* =========================
+     MCQ
+  ========================= */
+
+  if (activeTab === "mcq") {
+    return (
+      <div className="practice-wrapper">
+
+        <div className="question-counter">
+          Question {currentIndex + 1} of{" "}
+          {data.length}
+        </div>
+
+        <MCQ
+          key={currentQuestion.id}
+          question={
+            currentQuestion.question
+          }
+          options={
+            currentQuestion.options
+          }
+          correctAnswer={
+            currentQuestion.answer
+          }
+          explanation={
+            currentQuestion.explanation
+          }
+        />
+
+        <div className="question-navigation">
+          <button
+            type="button"
+            className="nav-btn"
+            disabled={currentIndex === 0}
+            onClick={() =>
+              setCurrentIndex(
+                (prev) => prev - 1
+              )
+            }
+          >
+            Previous
+          </button>
+
+          <button
+            type="button"
+            className="nav-btn"
+            disabled={
+              currentIndex ===
+              data.length - 1
+            }
+            onClick={() =>
+              setCurrentIndex(
+                (prev) => prev + 1
+              )
+            }
+          >
+            Next
+          </button>
+        </div>
+
+      </div>
+    );
+  }
+
+  /* =========================
+     FILL BLANKS
+  ========================= */
+
+  if (activeTab === "fill-blanks") {
+    return (
+      <div className="practice-wrapper">
+
+        <div className="question-counter">
+          Question {currentIndex + 1} of{" "}
+          {data.length}
+        </div>
+
+        <FillBlank
+          key={currentQuestion.id}
+          sentence={
+            currentQuestion.question
+          }
+          correctAnswer={
+            currentQuestion.answer
+          }
+          hint={
+            currentQuestion.hintOptions?.join(", ")
+          }
+          explanation={
+            currentQuestion.explanation
+          }
+        />
+
+        <div className="question-navigation">
+          <button
+            type="button"
+            className="nav-btn"
+            disabled={currentIndex === 0}
+            onClick={() =>
+              setCurrentIndex(
+                (prev) => prev - 1
+              )
+            }
+          >
+            Previous
+          </button>
+
+          <button
+            type="button"
+            className="nav-btn"
+            disabled={
+              currentIndex ===
+              data.length - 1
+            }
+            onClick={() =>
+              setCurrentIndex(
+                (prev) => prev + 1
+              )
+            }
+          >
+            Next
+          </button>
+        </div>
+
+      </div>
+    );
+  }
+
+  return (
+    <div className="empty-state">
+      Content Not Found
+    </div>
+  );
 }
 
 export default TopicContent;

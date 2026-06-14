@@ -27,8 +27,7 @@ function TopicDetails() {
   const subject =
     level?.subjects?.find(
       (subject) =>
-        subject.slug ===
-        subjectSlug
+        subject.slug === subjectSlug
     );
 
   const topic =
@@ -40,26 +39,19 @@ function TopicDetails() {
   if (!topic) {
     return (
       <main className="topic-details-page">
-        <h2>
-          Topic Not Found
-        </h2>
+        <h2>Topic Not Found</h2>
       </main>
     );
   }
 
   const availableTabs =
-    Object.keys(
-      topic.content || {}
-    );
+    Object.keys(topic.content || {});
 
   const currentData =
-    topic.content?.[
-      activeTab
-    ] || [];
+    topic.content?.[activeTab];
 
   return (
     <main className="topic-details-page">
-
       <TopicProgress
         progress={35}
         completedLessons={7}
@@ -68,20 +60,15 @@ function TopicDetails() {
 
       <TopicTabs
         activeTab={activeTab}
-        setActiveTab={
-          setActiveTab
-        }
-        availableTabs={
-          availableTabs
-        }
+        setActiveTab={setActiveTab}
+        availableTabs={availableTabs}
       />
 
       <TopicContent
+        key={`${activeTab}-${currentData?.length || 0}`}
         activeTab={activeTab}
         data={currentData}
-        topic={topic}
       />
-
     </main>
   );
 }
