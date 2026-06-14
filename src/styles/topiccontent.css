@@ -1,0 +1,354 @@
+/* =========================
+   TOPIC CONTENT BASE
+========================= */
+
+.learning-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.learning-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.learning-section {
+  padding: 1rem;
+  background: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.learning-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+}
+
+.learning-section p {
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.learning-item {
+  padding: 1rem;
+  background: var(--white-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.learning-item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.learning-item p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.learning-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.learning-section li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.learning-section li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+/* =========================
+   EXAM WRAPPER
+========================= */
+
+.exam-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* =========================
+   QUESTION HEADER
+========================= */
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.question-counter {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.progress-percentage {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark-color));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* =========================
+   NAVIGATION BUTTONS
+========================= */
+
+.question-navigation {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--white-color);
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-color: var(--primary-color);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-btn-primary {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-color: var(--primary-color);
+}
+
+.nav-btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark-color);
+  border-color: var(--primary-dark-color);
+}
+
+/* =========================
+   REVIEW SECTION
+========================= */
+
+.review-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-soft-color) 0%, var(--surface-color) 100%);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.score-box h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.score-box h3 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.score-box p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+/* =========================
+   REVIEW CARD
+========================= */
+
+.review-card {
+  padding: 1.5rem;
+  background: var(--white-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.review-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.review-card p {
+  margin-bottom: 0.75rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.review-card strong {
+  color: var(--text-color);
+}
+
+/* =========================
+   RESULT INDICATORS
+========================= */
+
+.result-correct {
+  color: #047857;
+  font-weight: 600;
+  padding: 0.5rem;
+  background: #ecfdf5;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.result-wrong {
+  color: #b91c1c;
+  font-weight: 600;
+  padding: 0.5rem;
+  background: #fef2f2;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* =========================
+   REVIEW EXPLANATION
+========================= */
+
+.review-explanation {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface-color);
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.review-explanation strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark-color);
+  font-size: 0.95rem;
+}
+
+.review-explanation p {
+  margin: 0;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 768px) {
+  .learning-content,
+  .exam-wrapper,
+  .review-section {
+    padding: 1rem;
+  }
+
+  .question-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .score-box h3 {
+    font-size: 2rem;
+  }
+
+  .question-navigation {
+    flex-direction: column;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .learning-title {
+    font-size: 1.25rem;
+  }
+
+  .score-box h2 {
+    font-size: 1.25rem;
+  }
+
+  .score-box h3 {
+    font-size: 1.75rem;
+  }
+
+  .score-box p {
+    font-size: 1rem;
+  }
+}

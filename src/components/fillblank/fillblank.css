@@ -6,13 +6,10 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
   padding: 1rem;
-
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
+  background: var(--white-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
 }
 
 /* =========================
@@ -22,7 +19,7 @@
 .fillblank-sentence {
   font-size: 1rem;
   line-height: 1.8;
-  color: #111827;
+  color: var(--text-color);
 }
 
 /* =========================
@@ -33,39 +30,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-width: 100px;
-
   padding: 0.3rem 0.75rem;
   margin: 0 0.25rem;
-
-  font-weight: 600;
-}
-
-.fillblank-correct {
-  color: #0f766e;
-  background: #ccfbf1;
-
-  border-radius: 0.5rem;
-  border-bottom: none;
-}
-
-.fillblank-wrong {
-  color: #dc2626;
-  background: #fef2f2;
-
-  border-radius: 0.5rem;
-  border-bottom: none;
-}
-
-/* =========================
-   FORM
-========================= */
-
-.fillblank-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 /* =========================
@@ -74,244 +43,60 @@
 
 .fillblank-input {
   width: 100%;
-
   padding: 0.9rem 1rem;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-
-  background: #ffffff;
-
-  color: #111827;
-
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--white-color);
+  color: var(--text-color);
   outline: none;
+  font-size: 1rem;
+  transition: border-color 0.25s ease;
 }
 
 .fillblank-input:focus {
-  border-color: #14b8a6;
+  border-color: var(--primary-color);
+}
+
+.fillblank-input::placeholder {
+  color: var(--text-light);
 }
 
 /* =========================
-   BUTTON GROUP
+   RESPONSIVE DESIGN
 ========================= */
 
-.fillblank-actions {
-  display: flex;
-  gap: 0.75rem;
+@media (max-width: 768px) {
+  .fillblank-container {
+    padding: 0.75rem;
+  }
+
+  .fillblank-sentence {
+    font-size: 0.95rem;
+  }
+
+  .fillblank-input {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .fillblank-blank {
+    min-width: 80px;
+    padding: 0.25rem 0.5rem;
+  }
 }
 
-/* =========================
-   SUBMIT BUTTON
-========================= */
+@media (max-width: 480px) {
+  .fillblank-sentence {
+    font-size: 0.9rem;
+  }
 
-.fillblank-submit-btn {
-  flex: 1;
+  .fillblank-input {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9rem;
+  }
 
-  border: none;
-  border-radius: 0.75rem;
-
-  padding: 0.9rem 1rem;
-
-  background: #14b8a6;
-  color: #ffffff;
-
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-.fillblank-submit-btn:hover {
-  background: #0f766e;
-}
-
-/* =========================
-   HINT BUTTON
-========================= */
-
-.fillblank-hint-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-
-  padding: 0.9rem 1rem;
-
-  border: none;
-  border-radius: 0.75rem;
-
-  background: #f1f5f9;
-  color: #111827;
-
-  cursor: pointer;
-}
-
-/* =========================
-   HINT BOX
-========================= */
-
-.fillblank-hint {
-  padding: 0.9rem;
-
-  border-radius: 0.75rem;
-
-  background: #fff7ed;
-  color: #c2410c;
-
-  font-size: 0.95rem;
-}
-
-/* =========================
-   RESULT
-========================= */
-
-.fillblank-result {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-/* =========================
-   SUCCESS
-========================= */
-
-.fillblank-success {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  padding: 1rem;
-
-  border-radius: 0.75rem;
-
-  background: #ccfbf1;
-  color: #0f766e;
-
-  font-weight: 600;
-}
-
-/* =========================
-   ERROR
-========================= */
-
-.fillblank-error {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  padding: 1rem;
-
-  border-radius: 0.75rem;
-
-  background: #fef2f2;
-  color: #dc2626;
-
-  font-weight: 600;
-}
-
-/* =========================
-   RESET BUTTON
-========================= */
-
-.fillblank-reset-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  width: 100%;
-
-  border: none;
-  border-radius: 0.75rem;
-
-  padding: 0.9rem 1rem;
-
-  background: #f1f5f9;
-  color: #111827;
-
-  cursor: pointer;
-}
-
-.fillblank-reset-btn:hover {
-  background: #e5e7eb;
-}
-
-/* =========================
-   CORRECT ANSWER DISPLAY
-========================= */
-
-.fillblank-correct-answer {
-  padding: 0.85rem;
-
-  background: #f0fdf4;
-  border: 1px solid #22c55e;
-  border-radius: 0.75rem;
-
-  font-size: 0.95rem;
-  color: #166534;
-}
-
-/* =========================
-   EXPLANATION CARD
-========================= */
-
-.explanation-card {
-  padding: 1rem;
-
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.explanation-header {
-  margin-bottom: 0.5rem;
-
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #0f766e;
-}
-
-.explanation-content {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #111827;
-}
-
-/* =========================
-   NAVIGATION BUTTONS
-========================= */
-
-.question-navigation {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.nav-btn {
-  flex: 1;
-
-  padding: 0.875rem 1rem;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-
-  background: #ffffff;
-  color: #111827;
-
-  font-weight: 600;
-  cursor: pointer;
-
-  transition: all 0.25s ease;
-}
-
-.nav-btn:hover:not(:disabled) {
-  background: #14b8a6;
-  color: #ffffff;
-  border-color: #14b8a6;
-}
-
-.nav-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  .fillblank-blank {
+    min-width: 70px;
+    font-size: 0.9rem;
+  }
 }
