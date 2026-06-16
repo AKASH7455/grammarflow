@@ -6,14 +6,6 @@ import LevelSubjects from "../pages/LevelSubjects";
 import LevelTopics from "../pages/LevelTopics";
 import TopicDetails from "../pages/TopicDetails";
 
-import Notes from "../pages/Notes";
-import Practice from "../pages/Practice";
-import Quiz from "../pages/Quiz";
-import FillBlanks from "../pages/FillBlanks";
-import Translation from "../pages/Translation";
-import VerbPractice from "../pages/VerbPractice";
-import SentenceCorrection from "../pages/SentenceCorrection";
-import AiPractice from "../pages/AiPractice";
 import Progress from "../pages/Progress";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
@@ -21,10 +13,14 @@ import NotFound from "../pages/NotFound";
 function AppRoutes() {
   return (
     <Routes>
+      {/* Home */}
       <Route path="/" element={<Home />} />
 
-      {/* Learning Module */}
-      <Route path="/learning" element={<Learning />} />
+      {/* Learning Flow */}
+      <Route
+        path="/learning"
+        element={<Learning />}
+      />
 
       <Route
         path="/learning/:levelSlug"
@@ -41,24 +37,22 @@ function AppRoutes() {
         element={<TopicDetails />}
       />
 
-      {/* Practice Pages */}
-      <Route path="/practice" element={<Practice />} />
-      <Route path="/notes" element={<Notes />} />
-      <Route path="/quiz" element={<Quiz />} />
-      <Route path="/fill-blanks" element={<FillBlanks />} />
-      <Route path="/translation" element={<Translation />} />
-      <Route path="/verbs" element={<VerbPractice />} />
+      {/* User */}
       <Route
-        path="/sentence-correction"
-        element={<SentenceCorrection />}
+        path="/progress"
+        element={<Progress />}
       />
-      <Route path="/ai-practice" element={<AiPractice />} />
 
-      {/* Other Pages */}
-      <Route path="/progress" element={<Progress />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={<Profile />}
+      />
 
-      <Route path="*" element={<NotFound />} />
+      {/* 404 */}
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
     </Routes>
   );
 }

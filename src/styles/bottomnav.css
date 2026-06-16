@@ -58,17 +58,16 @@
 }
 
 .bottom-nav__link--active {
-  background: var(--primary-soft-color);
-
-  color: var(--primary-dark-color);
+  color: var(--primary-color);
 }
 
 .bottom-nav__link--active .bottom-nav__icon {
   transform: translateY(-2px) scale(1.05);
+  color: var(--primary-color);
 }
 
 .bottom-nav__link--active .bottom-nav__label {
-  color: var(--primary-dark-color);
+  color: var(--primary-color);
 }
 
 .bottom-nav__link:active {

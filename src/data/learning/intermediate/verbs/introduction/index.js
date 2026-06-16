@@ -1,7 +1,6 @@
 import notes from "./notes";
 import mcq from "./mcq";
 import fillBlanks from "./fillBlanks";
-import aiPractice from "./aiPractice";
 
 const introduction = {
   slug: "introduction",
@@ -11,7 +10,7 @@ const introduction = {
     notes,
     mcq,
     "fill-blanks": fillBlanks,
-    "ai-practice": aiPractice,
+    "ai-practice": [],
   },
 };
 

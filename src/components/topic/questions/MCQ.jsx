@@ -13,32 +13,34 @@ function MCQ({
       </h3>
 
       <div className="mcq-options">
-        {options.map(
-          (option, index) => (
-            <button
+        {options.map((option) => {
+          const isSelected =
+            selectedAnswer === option;
+
+          return (
+            <label
               key={option}
-              type="button"
               className={`mcq-option ${
-                selectedAnswer === option
+                isSelected
                   ? "mcq-option-selected"
                   : ""
               }`}
-              onClick={() =>
-                onAnswer(option)
-              }
             >
-              <span className="mcq-option-label">
-                {String.fromCharCode(
-                  65 + index
-                )}
-              </span>
+              <input
+                type="radio"
+                name="mcq-option"
+                value={option}
+                checked={isSelected}
+                onChange={() => onAnswer(option)}
+                className="mcq-radio"
+              />
 
               <span className="mcq-option-text">
                 {option}
               </span>
-            </button>
-          )
-        )}
+            </label>
+          );
+        })}
       </div>
     </div>
   );

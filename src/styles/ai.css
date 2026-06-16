@@ -1,0 +1,57 @@
+.ai-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  min-height: 400px;
+}
+
+.ai-illustration {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-soft-color);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.ai-robot-icon {
+  font-size: 4rem;
+  color: var(--primary-color);
+}
+
+.ai-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0 0 1rem 0;
+}
+
+.ai-badge {
+  padding: 0.5rem 1.25rem;
+  background: var(--primary-color);
+  color: var(--white-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+.ai-description {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  margin: 0 0 0.75rem 0;
+  max-width: 280px;
+}
+
+.ai-cta {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}

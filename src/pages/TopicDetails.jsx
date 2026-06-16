@@ -6,6 +6,7 @@ import learningData from "../data/learning";
 import TopicProgress from "../components/topic/ui/TopicProgress";
 import TopicTabs from "../components/topic/ui/TopicTabs";
 import TopicContent from "../components/topic/TopicContent";
+import TopicHeader from "../components/topic/ui/TopicHeader";
 
 import "../styles/topicdetails.css";
 
@@ -52,11 +53,7 @@ function TopicDetails() {
 
   return (
     <main className="topic-details-page">
-      <TopicProgress
-        progress={35}
-        completedLessons={7}
-        totalLessons={20}
-      />
+      <TopicHeader />
 
       <TopicTabs
         activeTab={activeTab}

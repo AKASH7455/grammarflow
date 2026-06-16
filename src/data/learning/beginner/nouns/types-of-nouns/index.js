@@ -1,8 +1,6 @@
 import notes from "./notes";
 import mcq from "./mcq";
 import fillBlanks from "./fillBlanks";
-import sentenceCorrection from "./sentenceCorrection";
-import aiPractice from "./aiPractice";
 
 const typesOfNouns = {
   slug: "types-of-nouns",
@@ -12,8 +10,7 @@ const typesOfNouns = {
     notes,
     mcq,
     "fill-blanks": fillBlanks,
-    "sentence-correction": sentenceCorrection,
-    "ai-practice": aiPractice,
+    "ai-practice": [],
   },
 };
 

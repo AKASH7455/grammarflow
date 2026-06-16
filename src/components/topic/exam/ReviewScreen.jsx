@@ -1,4 +1,16 @@
 import { useState } from "react";
+
+import {
+  HiOutlineDocumentText,
+  HiOutlineArrowLeft,
+  HiOutlineBadgeCheck,
+  HiOutlineExclamationCircle,
+  HiOutlineCheckCircle,
+  HiOutlineXCircle,
+  HiOutlineClipboardList,
+} from "react-icons/hi";
+import { FaTrophy } from "react-icons/fa";
+
 import "../../../styles/topiccontent.css";
 
 function ReviewScreen({ data, answers }) {
@@ -8,47 +20,84 @@ function ReviewScreen({ data, answers }) {
     const answer = answers.find(
       (item) => item.questionId === question.id
     );
-    return answer?.selectedAnswer === question.answer;
+
+    return (
+      answer?.selectedAnswer === question.answer
+    );
   }).length;
 
   const wrongAnswers = data.length - score;
-  const accuracy = Math.round((score / data.length) * 100);
+
+  const accuracy = Math.round(
+    (score / data.length) * 100
+  );
 
   return (
     <section className="review-section">
       {!showReview ? (
-        <div className="progress-summary">
-          <div className="score-box">
-            <h2>Quiz Completed!</h2>
-            <div className="score-display">
-              <span className="score-number">{score}</span>
-              <span className="score-divider">/</span>
-              <span className="score-total">{data.length}</span>
+        <div className="result-compact">
+          <div className="result-header">
+            <div className="result-title">
+              <FaTrophy />
+              <span>Quiz Completed</span>
             </div>
-            <p className="accuracy-text">{accuracy}% Accuracy</p>
-          </div>
-
-          <div className="stats-grid">
-            <div className="stat-item">
-              <span className="stat-label">Total Questions</span>
-              <span className="stat-value">{data.length}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Correct</span>
-              <span className="stat-value stat-correct">{score}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Wrong</span>
-              <span className="stat-value stat-wrong">{wrongAnswers}</span>
+            <div className="result-accuracy">
+              {accuracy}% Accuracy
             </div>
           </div>
 
-          <button
-            className="review-button"
-            onClick={() => setShowReview(true)}
-          >
-            Review Answers
-          </button>
+          <div className="result-score">
+            {score} / {data.length} Correct
+          </div>
+
+          <div className="result-progress-row">
+            <div className="result-progress-bar">
+              <div
+                className="result-progress-fill"
+                style={{ width: `${accuracy}%` }}
+              />
+            </div>
+            <div className="result-progress-percent">
+              {accuracy}%
+            </div>
+          </div>
+
+          <div className="result-stats-row">
+            <div className="result-stat-item">
+              <HiOutlineCheckCircle />
+              <span>{score} Correct</span>
+            </div>
+            <div className="result-stat-item">
+              <HiOutlineXCircle />
+              <span>{wrongAnswers} Wrong</span>
+            </div>
+            <div className="result-stat-item">
+              <HiOutlineClipboardList />
+              <span>{data.length} Total</span>
+            </div>
+          </div>
+
+          <div className="result-status">
+            <HiOutlineExclamationCircle />
+            <span>Needs More Practice</span>
+          </div>
+
+          <div className="result-buttons">
+            <button
+              className="result-btn"
+              onClick={() => setShowReview(true)}
+            >
+              <HiOutlineDocumentText />
+              <span>Review Answers</span>
+            </button>
+            <button
+              className="result-btn result-btn-secondary"
+              onClick={() => window.location.reload()}
+            >
+              <HiOutlineArrowLeft />
+              <span>Retry Quiz</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="answer-review">
@@ -56,49 +105,81 @@ function ReviewScreen({ data, answers }) {
             className="back-button"
             onClick={() => setShowReview(false)}
           >
-            ← Back to Summary
+            <HiOutlineArrowLeft />
+            <span>Back to Summary</span>
           </button>
 
           {data.map((question) => {
             const userAnswer = answers.find(
-              (item) => item.questionId === question.id
+              (item) =>
+                item.questionId === question.id
             );
 
             const isCorrect =
-              userAnswer?.selectedAnswer === question.answer;
+              userAnswer?.selectedAnswer ===
+              question.answer;
 
             return (
-              <div key={question.id} className="review-card">
-                <h3 className="review-question">{question.question}</h3>
+              <div
+                key={question.id}
+                className="review-card"
+              >
+                <h3 className="review-question">
+                  {question.question}
+                </h3>
 
                 <div className="review-answers">
                   <p className="review-answer">
-                    <span className="answer-label">Your Answer:</span>
+                    <span className="answer-label">
+                      Your Answer:
+                    </span>
+
                     <span className="answer-value">
-                      {userAnswer?.selectedAnswer || "Not answered"}
+                      {userAnswer?.selectedAnswer ||
+                        "Not Answered"}
                     </span>
                   </p>
 
                   <p className="review-answer">
-                    <span className="answer-label">Correct Answer:</span>
+                    <span className="answer-label">
+                      Correct Answer:
+                    </span>
+
                     <span className="answer-value">
                       {question.answer}
                     </span>
                   </p>
                 </div>
 
-                <p
+                <div
                   className={`review-status ${
-                    isCorrect ? "status-correct" : "status-wrong"
+                    isCorrect
+                      ? "status-correct"
+                      : "status-wrong"
                   }`}
                 >
-                  {isCorrect ? "✓ Correct" : "✗ Wrong"}
-                </p>
+                  {isCorrect ? (
+                    <>
+                      <HiOutlineBadgeCheck />
+                      <span>Correct</span>
+                    </>
+                  ) : (
+                    <>
+                      <HiOutlineExclamationCircle />
+                      <span>Wrong</span>
+                    </>
+                  )}
+                </div>
 
                 {question.explanation && (
                   <div className="review-explanation">
-                    <strong>Explanation</strong>
-                    <p>{question.explanation}</p>
+                    <strong>
+                      Explanation
+                    </strong>
+
+                    <p>
+                      {question.explanation}
+                    </p>
                   </div>
                 )}
               </div>

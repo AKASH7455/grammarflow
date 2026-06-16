@@ -1,0 +1,90 @@
+.ai-coming-soon {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 24px;
+}
+
+.ai-coming-soon__icon {
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1rem;
+
+  border-radius: 50%;
+
+  background: var(--primary-soft-color);
+
+  color: var(--primary-color);
+
+  font-size: 2rem;
+}
+
+.ai-coming-soon__title {
+  margin-bottom: 0.75rem;
+
+  font-size: 1.5rem;
+  font-weight: 800;
+
+  color: var(--text-color);
+}
+
+.ai-coming-soon__description {
+  max-width: 400px;
+
+  line-height: 1.8;
+
+  color: var(--text-light);
+
+  margin-bottom: 1.5rem;
+}
+
+.ai-features {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.ai-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  padding: 0.9rem;
+
+  background: var(--surface-color);
+
+  border-radius: 14px;
+
+  font-weight: 600;
+}
+
+.ai-coming-soon__badge {
+  padding: 0.7rem 1.2rem;
+
+  background: var(--primary-color);
+
+  color: white;
+
+  border-radius: 999px;
+
+  font-weight: 700;
+}

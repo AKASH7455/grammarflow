@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import MCQ from "./questions/MCQ";
 import FillBlank from "./questions/FillBlank";
+import AI from "./questions/AI";
 import Notes from "./Notes";
 import ExamHeader from "./exam/ExamHeader";
 import ExamNavigation from "./exam/ExamNavigation";
@@ -37,6 +38,11 @@ function TopicContent({
   /* NOTES */
   if (activeTab === "notes") {
     return <Notes data={data} />;
+  }
+
+  /* AI */
+  if (activeTab === "ai-practice") {
+    return <AI />;
   }
 
   if (!Array.isArray(data)) {
@@ -108,6 +114,7 @@ function TopicContent({
           onAnswer={(answer) =>
             handleAnswer(currentQuestion.id, answer)
           }
+          hintOptions={currentQuestion.hintOptions}
         />
       )}
 

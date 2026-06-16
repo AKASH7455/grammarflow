@@ -1,3 +1,9 @@
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiCheckCircle,
+} from "react-icons/fi";
+
 import "../../../styles/topiccontent.css";
 
 function ExamNavigation({
@@ -9,6 +15,9 @@ function ExamNavigation({
   onNext,
   onSubmit,
 }) {
+  const isLastQuestion =
+    currentIndex === totalQuestions - 1;
+
   return (
     <div className="question-navigation">
       <button
@@ -17,17 +26,19 @@ function ExamNavigation({
         disabled={currentIndex === 0}
         onClick={onPrevious}
       >
-        Previous
+        <FiChevronLeft />
+        <span>Previous</span>
       </button>
 
-      {currentIndex === totalQuestions - 1 ? (
+      {isLastQuestion ? (
         <button
           type="button"
           className="nav-btn nav-btn-primary"
           disabled={!allAnswered}
           onClick={onSubmit}
         >
-          Submit
+          <FiCheckCircle />
+          <span>Submit</span>
         </button>
       ) : (
         <button
@@ -36,7 +47,8 @@ function ExamNavigation({
           disabled={!hasAnswer}
           onClick={onNext}
         >
-          Next
+          <span>Next</span>
+          <FiChevronRight />
         </button>
       )}
     </div>

@@ -22,7 +22,6 @@ function Navbar() {
           to="/verb-practice"
           className="navbar__verb-button"
         >
-          <TbBook2 />
           <span>Verbs</span>
         </Link>
 

@@ -3,14 +3,12 @@ import {
   FiHelpCircle,
   FiEdit3,
   FiCpu,
-  FiGlobe,
-  FiCheckSquare,
 } from "react-icons/fi";
 
 function TopicTabs({
   activeTab,
   setActiveTab,
-  availableTabs,
+  availableTabs = [],
 }) {
   const tabConfig = {
     notes: {
@@ -28,45 +26,54 @@ function TopicTabs({
       icon: <FiEdit3 />,
     },
 
-    translation: {
-      label: "Translation",
-      icon: <FiGlobe />,
-    },
-
-    "sentence-correction": {
-      label: "Correction",
-      icon: <FiCheckSquare />,
-    },
-
     "ai-practice": {
       label: "AI",
       icon: <FiCpu />,
+      comingSoon: true,
     },
   };
 
+  const tabsToShow =
+    availableTabs.length > 0
+      ? availableTabs
+      : Object.keys(tabConfig);
+
   return (
     <section className="topic-tabs">
-      {availableTabs.map((tab) => (
-        <button
-          key={tab}
-          className={`topic-tabs__button ${
-            activeTab === tab
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setActiveTab(tab)
-          }
-        >
-          <span className="topic-tabs__icon">
-            {tabConfig[tab]?.icon}
-          </span>
+      {tabsToShow.map((tab) => {
+        const config = tabConfig[tab];
 
-          <span className="topic-tabs__label">
-            {tabConfig[tab]?.label}
-          </span>
-        </button>
-      ))}
+        if (!config) return null;
+
+        return (
+          <button
+            key={tab}
+            type="button"
+            className={`topic-tabs__button ${
+              activeTab === tab
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              setActiveTab(tab)
+            }
+          >
+            <span className="topic-tabs__icon">
+              {config.icon}
+            </span>
+
+            <span className="topic-tabs__label">
+              {config.label}
+            </span>
+
+            {config.comingSoon && (
+              <span className="topic-tabs__badge">
+                Soon
+              </span>
+            )}
+          </button>
+        );
+      })}
     </section>
   );
 }

@@ -1,33 +1,49 @@
 import { FiArrowLeft } from "react-icons/fi";
 import { PiStudent } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function TopicHeader() {
+  const {
+    levelSlug,
+    subjectSlug,
+    topicSlug,
+  } = useParams();
+
+  const topicName = topicSlug
+    ? topicSlug
+        .split("-")
+        .map(
+          (word) =>
+            word.charAt(0).toUpperCase() +
+            word.slice(1)
+        )
+        .join(" ")
+    : "Topic";
+
+  const levelName = levelSlug
+    ? levelSlug.charAt(0).toUpperCase() +
+      levelSlug.slice(1)
+    : "Beginner";
+
   return (
     <header className="topic-header">
-
-      {/* Back Button */}
       <Link
-        to="/learning/beginner"
+        to={`/learning/${levelSlug}/${subjectSlug}`}
         className="topic-header__back-btn"
       >
         <FiArrowLeft />
       </Link>
 
-      {/* Topic Info */}
       <div className="topic-header__top">
-
         <h1 className="topic-header__title">
-          Nouns
+          {topicName}
         </h1>
 
         <span className="topic-header__level">
           <PiStudent />
-          Beginner
+          {levelName}
         </span>
-
       </div>
-
     </header>
   );
 }

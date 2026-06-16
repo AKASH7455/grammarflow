@@ -46,8 +46,8 @@
 
   border-radius: 999px;
 
-  background: var(--expert-bg);
-  color: var(--expert-text);
+  background: #8b5cf6;
+  color: #ffffff;
 
   font-size: 0.875rem;
   font-weight: 600;
@@ -56,7 +56,7 @@
 }
 
 .navbar__verb-button:hover {
-  background: var(--expert-text);
+  background: #7c3aed;
   color: var(--white-color);
 }
 
