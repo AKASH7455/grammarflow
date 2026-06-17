@@ -1,4 +1,4 @@
-import { FiBell } from "react-icons/fi";
+import { FiBell, FiGlobe } from "react-icons/fi";
 import { TbBook2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../hooks/useLanguage";
@@ -8,7 +8,7 @@ import logo from "../../assets/images/logo.png";
 import "../../styles/navbar.css";
 
 function Navbar() {
-  const { language, toggleLanguage, isNotesTab } = useLanguage();
+  const { language, toggleLanguage, isLearningPage } = useLanguage();
 
   return (
     <header className="navbar">
@@ -21,12 +21,13 @@ function Navbar() {
       </Link>
 
       <div className="navbar__actions">
-        {isNotesTab ? (
+        {isLearningPage ? (
           <button
             type="button"
             className="navbar__verb-button"
             onClick={toggleLanguage}
           >
+            <FiGlobe />
             <span>{language === "english" ? "हिंदी" : "English"}</span>
           </button>
         ) : (

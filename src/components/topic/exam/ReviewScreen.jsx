@@ -235,7 +235,7 @@ function ReviewScreen({
                   </h3>
 
                   <div className="review-answers">
-                    <p className="review-answer">
+                    <p className={`review-answer ${isCorrect ? 'correct-answer' : 'wrong-answer'}`}>
                       <span className="answer-label">
                         Your Answer:
                       </span>
@@ -246,7 +246,7 @@ function ReviewScreen({
                       </span>
                     </p>
 
-                    <p className="review-answer">
+                    <p className="review-answer correct-answer">
                       <span className="answer-label">
                         Correct
                         Answer:

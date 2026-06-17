@@ -18,7 +18,7 @@ function TopicDetails() {
     topicSlug,
   } = useParams();
 
-  const { setIsNotesTab } = useLanguage();
+  const { setIsLearningPage } = useLanguage();
 
   const [activeTab, setActiveTab] =
     useState("notes");
@@ -41,8 +41,9 @@ function TopicDetails() {
     );
 
   useEffect(() => {
-    setIsNotesTab(activeTab === "notes");
-  }, [activeTab, setIsNotesTab]);
+    setIsLearningPage(true);
+    return () => setIsLearningPage(false);
+  }, [setIsLearningPage]);
 
   if (!topic) {
     return (
