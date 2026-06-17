@@ -73,3 +73,39 @@
 .bottom-nav__link:active {
   transform: scale(0.96);
 }
+
+/* ===================================
+   KEYBOARD HANDLING
+=================================== */
+
+/* Hide BottomNav when virtual keyboard is open on mobile */
+@supports (padding: max(0px)) {
+  .bottom-nav {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* On iOS, when keyboard is open, the viewport shrinks.
+   We use env(keyboard-inset-height) when available. */
+@supports (env(keyboard-inset-height: 0px)) {
+  .bottom-nav {
+    bottom: max(12px, env(keyboard-inset-height, 12px));
+  }
+}
+
+/* Fallback for browsers without keyboard-inset-height support.
+   When the viewport height is significantly reduced (keyboard open),
+   hide the BottomNav to prevent overlap. */
+@media (max-height: 500px) and (orientation: portrait) {
+  .bottom-nav {
+    transform: translateY(150%);
+    transition: transform 0.3s ease;
+  }
+}
+
+@media (max-height: 400px) and (orientation: landscape) {
+  .bottom-nav {
+    transform: translateY(150%);
+    transition: transform 0.3s ease;
+  }
+}
