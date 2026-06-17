@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import learningData from "../data/learning";
@@ -7,6 +7,7 @@ import TopicProgress from "../components/topic/ui/TopicProgress";
 import TopicTabs from "../components/topic/ui/TopicTabs";
 import TopicContent from "../components/topic/TopicContent";
 import TopicHeader from "../components/topic/ui/TopicHeader";
+import { useLanguage } from "../hooks/useLanguage";
 
 import "../styles/topicdetails.css";
 
@@ -16,6 +17,8 @@ function TopicDetails() {
     subjectSlug,
     topicSlug,
   } = useParams();
+
+  const { setIsNotesTab } = useLanguage();
 
   const [activeTab, setActiveTab] =
     useState("notes");
@@ -36,6 +39,10 @@ function TopicDetails() {
       (topic) =>
         topic.slug === topicSlug
     );
+
+  useEffect(() => {
+    setIsNotesTab(activeTab === "notes");
+  }, [activeTab, setIsNotesTab]);
 
   if (!topic) {
     return (

@@ -4,13 +4,14 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState("english");
+  const [isNotesTab, setIsNotesTab] = useState(false);
 
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "english" ? "hindi" : "english"));
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, isNotesTab, setIsNotesTab }}>
       {children}
     </LanguageContext.Provider>
   );

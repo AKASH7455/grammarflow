@@ -8,7 +8,7 @@ import logo from "../../assets/images/logo.png";
 import "../../styles/navbar.css";
 
 function Navbar() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, isNotesTab } = useLanguage();
 
   return (
     <header className="navbar">
@@ -21,13 +21,22 @@ function Navbar() {
       </Link>
 
       <div className="navbar__actions">
-        <button
-          type="button"
-          className="navbar__verb-button"
-          onClick={toggleLanguage}
-        >
-          <span>{language === "english" ? "हिंदी" : "English"}</span>
-        </button>
+        {isNotesTab ? (
+          <button
+            type="button"
+            className="navbar__verb-button"
+            onClick={toggleLanguage}
+          >
+            <span>{language === "english" ? "हिंदी" : "English"}</span>
+          </button>
+        ) : (
+          <Link
+            to="/verb-practice"
+            className="navbar__verb-button"
+          >
+            <span>Verbs</span>
+          </Link>
+        )}
 
         <button
           type="button"
