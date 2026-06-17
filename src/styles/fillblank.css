@@ -1,84 +1,136 @@
+/* =========================
+   CONTAINER
+========================= */
+
 .fillblank-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
+
+/* =========================
+   QUESTION CARD
+========================= */
 
 .fillblank-question-card {
   padding: 20px;
-  background-color: var(--white-color);
+
+  background: var(--white-color);
+
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
+
   box-shadow: var(--shadow-sm);
 }
 
 .fillblank-sentence {
+  margin: 0;
+
+  text-align: center;
+
   font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-color);
   font-weight: 500;
-  word-break: break-word;
+  line-height: 1.9;
+
+  color: var(--text-color);
 }
+
+/* =========================
+   BLANK
+========================= */
 
 .fillblank-blank {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 100px;
-  margin: 0 6px;
-  padding-bottom: 2px;
-  border-bottom: 2px solid var(--primary-color);
+
+  min-width: 70px;
+
+  margin: 0 4px;
+
   color: var(--primary-color);
   font-weight: 700;
+
+  border-bottom: 2px solid var(--primary-color);
 }
 
-.fillblank-input-wrapper {
-  width: 100%;
+/* =========================
+   HINTS
+========================= */
+
+.fillblank-hint-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fillblank-hint-title {
+  margin: 0;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  color: var(--text-light);
+}
+
+.fillblank-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fillblank-hint-chip {
+  padding: 6px 12px;
+
+  background: var(--surface-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+
+  color: var(--text-color);
+
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.fillblank-input-section {
+  position: sticky;
+  bottom: 0;
+
+  padding-top: 8px;
+
+  background: var(--body-bg-color);
 }
 
 .fillblank-input {
   width: 100%;
-  height: 52px;
-  padding: 0 16px;
+  height: 50px;
+
+  padding: 0 14px;
+
+  background: var(--white-color);
+
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background-color: var(--white-color);
+
   color: var(--text-color);
   font-size: 1rem;
-  outline: none;
-  transition: var(--transition);
-}
 
-.fillblank-input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-soft-color);
+  transition: var(--transition);
 }
 
 .fillblank-input::placeholder {
   color: var(--text-light);
 }
 
-.fillblank-hint-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
-}
+.fillblank-input:focus {
+  outline: none;
 
-.fillblank-hint-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-light);
-  margin: 0;
-}
+  border-color: var(--primary-color);
 
-.fillblank-hint-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-color);
-  margin: 0;
-  padding: 12px;
-  background: var(--surface-color);
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-soft-color);
 }
