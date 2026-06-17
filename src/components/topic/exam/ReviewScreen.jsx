@@ -12,6 +12,8 @@ import {
 
 import { FaTrophy } from "react-icons/fa";
 
+import { useLanguage } from "../../../hooks/useLanguage";
+
 import "../../../styles/topiccontent.css";
 
 function ReviewScreen({
@@ -19,6 +21,7 @@ function ReviewScreen({
   answers = [],
   onRetry,
 }) {
+  const { language } = useLanguage();
   const [showReview, setShowReview] =
     useState(false);
 
@@ -216,6 +219,10 @@ function ReviewScreen({
                 userAnswer ===
                 question.answer;
 
+              const explanationText = typeof question.explanation === 'object' 
+                ? question.explanation[language] || question.explanation.english 
+                : question.explanation;
+
               return (
                 <div
                   key={`${question.id}-${index}`}
@@ -277,16 +284,14 @@ function ReviewScreen({
                     )}
                   </div>
 
-                  {question.explanation && (
+                  {explanationText && (
                     <div className="review-explanation">
                       <strong>
                         Explanation
                       </strong>
 
                       <p>
-                        {
-                          question.explanation
-                        }
+                        {explanationText}
                       </p>
                     </div>
                   )}

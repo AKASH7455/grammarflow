@@ -1,103 +1,120 @@
 const notes = {
-  title: "Introduction to Noun",
+  english: {
+    title: "Types of Nouns",
 
-  sections: [
-    {
-      heading: "What is a Noun?",
-      content: [
-        {
-          type: "paragraph",
-          text: "A noun is a word that names a person, place, thing, or idea. It is one of the most fundamental parts of speech in English grammar."
-        },
-        {
-          type: "paragraph",
-          text: "Nouns are everywhere in our daily language. Every time we speak about people, places, objects, or abstract concepts, we use nouns."
-        }
-      ]
-    },
-    {
-      heading: "Types of Nouns",
-      content: [
-        {
-          type: "heading",
-          level: "h3",
-          text: "Person"
-        },
-        {
-          type: "paragraph",
-          text: "Nouns that name people include names like Ram, Sita, and common nouns like teacher, doctor, or student."
-        },
-        {
-          type: "example",
-          text: "Ram is a good student. The teacher is kind."
-        },
-        {
-          type: "heading",
-          level: "h3",
-          text: "Place"
-        },
-        {
-          type: "paragraph",
-          text: "Nouns that name places include cities, countries, buildings, and geographical locations."
-        },
-        {
-          type: "example",
-          text: "Delhi is the capital of India. The school is near my house."
-        },
-        {
-          type: "heading",
-          level: "h3",
-          text: "Thing"
-        },
-        {
-          type: "paragraph",
-          text: "Nouns that name things include objects, animals, and physical items that we can see or touch."
-        },
-        {
-          type: "example",
-          text: "I have a book. The cat is sleeping."
-        },
-        {
-          type: "heading",
-          level: "h3",
-          text: "Idea"
-        },
-        {
-          type: "paragraph",
-          text: "Nouns that name ideas include abstract concepts like emotions, qualities, and states of being."
-        },
-        {
-          type: "example",
-          text: "Honesty is important. Love makes the world beautiful."
-        }
-      ]
-    },
-    {
-      heading: "Key Points to Remember",
-      content: [
-        {
-          type: "list",
-          items: [
-            "Every sentence must have at least one noun",
-            "Nouns can be singular (one) or plural (more than one)",
-            "Nouns can be common (general) or proper (specific names)",
-            "Nouns act as subjects or objects in sentences"
-          ]
-        },
-        {
-          type: "important",
-          text: "Always capitalize proper nouns like names of people, places, and organizations."
-        }
-      ]
-    }
-  ],
+    sections: [
+      {
+        heading: "Common Nouns",
+        content: [
+          {
+            type: "paragraph",
+            text: "Common nouns are general names for people, places, things, or ideas. They are not capitalized unless they begin a sentence."
+          },
+          {
+            type: "example",
+            text: "The boy is playing. The city is beautiful."
+          }
+        ]
+      },
+      {
+        heading: "Proper Nouns",
+        content: [
+          {
+            type: "paragraph",
+            text: "Proper nouns are specific names for people, places, organizations, or things. They are always capitalized."
+          },
+          {
+            type: "example",
+            text: "Ram is playing. Delhi is beautiful."
+          }
+        ]
+      },
+      {
+        heading: "Countable Nouns",
+        content: [
+          {
+            type: "paragraph",
+            text: "Countable nouns can be counted and have both singular and plural forms."
+          },
+          {
+            type: "example",
+            text: "One book, two books, three books."
+          }
+        ]
+      },
+      {
+        heading: "Uncountable Nouns",
+        content: [
+          {
+            type: "paragraph",
+            text: "Uncountable nouns cannot be counted and do not have a plural form."
+          },
+          {
+            type: "example",
+            text: "Water, rice, sugar, happiness."
+          }
+        ]
+      }
+    ]
+  },
+  hindi: {
+    title: "संज्ञा के प्रकार",
 
-  examples: [
-    "The sun rises in the east",
-    "My brother plays football",
-    "Honesty is the best policy",
-    "The Taj Mahal is in Agra"
-  ]
+    sections: [
+      {
+        heading: "सामान्य संज्ञा",
+        content: [
+          {
+            type: "paragraph",
+            text: "सामान्य संज्ञाएं लोगों, स्थानों, वस्तुओं या विचारों के सामान्य नाम होते हैं। इन्हें बड़े अक्षरों में नहीं लिखा जाता जब तक कि वे वाक्य की शुरुआत न करें।"
+          },
+          {
+            type: "example",
+            text: "लड़का खेल रहा है। शहर सुंदर है।"
+          }
+        ]
+      },
+      {
+        heading: "विशेष संज्ञा",
+        content: [
+          {
+            type: "paragraph",
+            text: "विशेष संज्ञाएं लोगों, स्थानों, संगठनों या वस्तुओं के विशिष्ट नाम होते हैं। इन्हें हमेशा बड़े अक्षरों में लिखा जाता है।"
+          },
+          {
+            type: "example",
+            text: "राम खेल रहा है। दिल्ली सुंदर है।"
+          }
+        ]
+      },
+      {
+        heading: "गणनीय संज्ञा",
+        content: [
+          {
+            type: "paragraph",
+            text: "गणनीय संज्ञाओं की गिनती की जा सकती है और इनके एकवचन और बहुवचन दोनों रूप होते हैं।"
+          },
+          {
+            type: "example",
+            text: "एक किताब, दो किताबें, तीन किताबें।"
+          }
+        ]
+      },
+      {
+        heading: "अगणनीय संज्ञा",
+        content: [
+          {
+            type: "paragraph",
+            text: "अगणनीय संज्ञाओं की गिनती नहीं की जा सकती और इनका बहुवचन रूप नहीं होता।"
+          },
+          {
+            type: "example",
+            text: "पानी, चावल, चीनी, खुशी।"
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export default notes;

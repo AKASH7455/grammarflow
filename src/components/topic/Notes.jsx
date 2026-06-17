@@ -7,21 +7,27 @@ import {
   FiAward,
 } from "react-icons/fi";
 
+import { useLanguage } from "../../hooks/useLanguage";
+
 import "../../styles/notes.css";
 
 function Notes({ data }) {
+  const { language } = useLanguage();
+
   if (!data) return null;
+
+  const content = data[language] || data;
 
   return (
     <article className="notes-article">
-      {data.title && (
+      {content.title && (
         <h1 className="notes-article-title">
           <FiBookOpen className="notes-title-icon" />
-          {data.title}
+          {content.title}
         </h1>
       )}
 
-      {data.sections?.map((section, index) => (
+      {content.sections?.map((section, index) => (
         <section key={index} className="notes-section">
           {section.heading && (
             <h2 className="notes-section-heading">
@@ -129,14 +135,14 @@ function Notes({ data }) {
         </section>
       ))}
 
-      {data.examples?.length > 0 && (
+      {content.examples?.length > 0 && (
         <section className="notes-section">
           <h2 className="notes-section-heading">
             Examples
           </h2>
 
           <div className="notes-examples">
-            {data.examples.map((example, index) => (
+            {content.examples.map((example, index) => (
               <div
                 key={index}
                 className="notes-example-item"
