@@ -1,5 +1,4 @@
 import { FiBell, FiGlobe } from "react-icons/fi";
-import { TbBook2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../hooks/useLanguage";
 
