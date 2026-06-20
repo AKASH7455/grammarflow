@@ -1,176 +1,167 @@
 /**
- * Streak Service Layer
- * Handles all streak data operations with Local Storage
- * Designed to be easily replaceable with API calls in the future
+ * Streak Service
+ * Manages learning streak data and calculations
  */
 
-import {
-  getTodayDate,
-  calculateStreak,
-  getCurrentWeekDates,
-  isToday,
-} from '../utils/streakUtils';
-
-const STORAGE_KEY = 'grammarflow_streak_data';
+const STORAGE_KEY = "grammar_streak_data";
 
 /**
- * Get streak data from Local Storage
- * @returns {Object} Streak data object
+ * Default streak object
  */
-export const getStreakData = () => {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : getInitialStreakData();
-  } catch (error) {
-    console.error('Error reading streak data:', error);
-    return getInitialStreakData();
-  }
-};
-
-/**
- * Save streak data to Local Storage
- * @param {Object} data - Streak data object
- */
-export const saveStreakData = (data) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.error('Error saving streak data:', error);
-  }
-};
-
-/**
- * Get initial streak data structure
- * @returns {Object} Initial streak data
- */
-export const getInitialStreakData = () => ({
+const defaultData = {
   currentStreak: 0,
   longestStreak: 0,
   completedDates: [],
-  lastStudyDate: null,
-});
+  lastCompletedDate: null,
+};
 
 /**
- * Mark today as completed
- * @returns {Object} Updated streak data
+ * Get today's date string
  */
-export const markTodayCompleted = () => {
-  const data = getStreakData();
-  const today = getTodayDate();
-  
-  // If today is already marked, return existing data
-  if (data.completedDates.includes(today)) {
-    return data;
+const getTodayString = () => {
+  return new Date().toISOString().split("T")[0];
+};
+
+/**
+ * Save streak information
+ */
+const saveStreakInfo = (data) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Error saving streak data:", error);
   }
-  
-  // Add today to completed dates
-  data.completedDates.push(today);
-  data.lastStudyDate = today;
-  
-  // Recalculate streak
-  data.currentStreak = calculateStreak(data.completedDates);
-  
-  // Update longest streak if needed
+};
+
+/**
+ * Get streak information
+ */
+export const getStreakInfo = () => {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+
+    if (!data) {
+      return { ...defaultData };
+    }
+
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Error reading streak data:", error);
+    return { ...defaultData };
+  }
+};
+
+/**
+ * Check if date is today
+ */
+const isToday = (date) => {
+  return date === getTodayString();
+};
+
+/**
+ * Check if date is yesterday
+ */
+const isYesterday = (date) => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  return (
+    new Date(date).toDateString() === yesterday.toDateString()
+  );
+};
+
+/**
+ * Calculate streak from completed dates
+ */
+const calculateStreak = (completedDates) => {
+  if (!completedDates?.length) {
+    return 0;
+  }
+
+  const sortedDates = [...completedDates].sort(
+    (a, b) => new Date(b) - new Date(a)
+  );
+
+  const latestDate = sortedDates[0];
+
+  if (!isToday(latestDate) && !isYesterday(latestDate)) {
+    return 0;
+  }
+
+  let streak = 1;
+
+  for (let i = 0; i < sortedDates.length - 1; i++) {
+    const current = new Date(sortedDates[i]);
+    const next = new Date(sortedDates[i + 1]);
+
+    const diffDays = Math.round(
+      (current - next) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays === 1) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+};
+
+/**
+ * Recalculate streak
+ */
+export const checkAndRecalculateStreak = () => {
+  const data = getStreakInfo();
+
+  data.currentStreak = calculateStreak(
+    data.completedDates
+  );
+
   if (data.currentStreak > data.longestStreak) {
     data.longestStreak = data.currentStreak;
   }
-  
-  saveStreakData(data);
+
+  saveStreakInfo(data);
+
   return data;
 };
 
 /**
- * Get current streak count
- * @returns {number} Current streak
+ * Mark today as completed
  */
-export const getCurrentStreak = () => {
-  const data = getStreakData();
-  return calculateStreak(data.completedDates);
+export const markTodayCompleted = () => {
+  const data = getStreakInfo();
+
+  const today = getTodayString();
+
+  // Already completed today
+  if (data.completedDates.includes(today)) {
+    return checkAndRecalculateStreak();
+  }
+
+  data.completedDates.push(today);
+
+  data.lastCompletedDate = today;
+
+  data.currentStreak = calculateStreak(
+    data.completedDates
+  );
+
+  if (data.currentStreak > data.longestStreak) {
+    data.longestStreak = data.currentStreak;
+  }
+
+  saveStreakInfo(data);
+
+  return data;
 };
 
 /**
- * Get current week progress
- * @returns {Object} Week progress data
- */
-export const getWeekProgress = () => {
-  const data = getStreakData();
-  const weekDates = getCurrentWeekDates();
-  const today = getTodayDate();
-  
-  const weekProgress = weekDates.map(date => ({
-    date,
-    dayName: getDayName(date),
-    isCompleted: data.completedDates.includes(date),
-    isToday: isToday(date),
-  }));
-  
-  return {
-    weekProgress,
-    completedDays: weekProgress.filter(day => day.isCompleted).length,
-    totalDays: 7,
-  };
-};
-
-/**
- * Reset streak (for testing or manual reset)
+ * Reset streak data
  */
 export const resetStreak = () => {
-  const initialData = getInitialStreakData();
-  saveStreakData(initialData);
-  return initialData;
-};
+  saveStreakInfo(defaultData);
 
-/**
- * Get complete streak information
- * @returns {Object} Complete streak info
- */
-export const getStreakInfo = () => {
-  const data = getStreakData();
-  const weekProgress = getWeekProgress();
-  
-  return {
-    currentStreak: calculateStreak(data.completedDates),
-    longestStreak: data.longestStreak,
-    lastStudyDate: data.lastStudyDate,
-    ...weekProgress,
-  };
-};
-
-/**
- * Check if streak needs to be recalculated (called on app load)
- * This handles cases where the app wasn't opened for multiple days
- */
-export const checkAndRecalculateStreak = () => {
-  const data = getStreakData();
-  const today = getTodayDate();
-  const yesterday = getDateDaysAgo(1);
-  
-  // If neither today nor yesterday is completed, streak is broken
-  if (!data.completedDates.includes(today) && !data.completedDates.includes(yesterday)) {
-    data.currentStreak = 0;
-    saveStreakData(data);
-  } else {
-    // Recalculate streak to ensure accuracy
-    data.currentStreak = calculateStreak(data.completedDates);
-    saveStreakData(data);
-  }
-  
-  return data;
-};
-
-// Helper function for getWeekProgress
-const getDayName = (dateString) => {
-  const date = new Date(dateString);
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  return days[date.getDay()];
-};
-
-// Helper function for checkAndRecalculateStreak
-const getDateDaysAgo = (daysAgo) => {
-  const date = new Date();
-  date.setDate(date.getDate() - daysAgo);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return { ...defaultData };
 };
