@@ -13,6 +13,7 @@ import "../../styles/topiccontent.css";
 function TopicContent({
   activeTab,
   data,
+  onReviewModeChange,
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -30,6 +31,12 @@ function TopicContent({
       prevDataRef.current = data;
     }
   }, [activeTab, data]);
+
+  useEffect(() => {
+    if (onReviewModeChange) {
+      onReviewModeChange(showReview);
+    }
+  }, [showReview, onReviewModeChange]);
 
   if (!data) {
     return <div className="empty-state">No Content Available</div>;
@@ -84,7 +91,17 @@ function TopicContent({
 
   /* REVIEW */
   if (showReview) {
-    return <ReviewScreen data={data} answers={answers} />;
+    return (
+      <ReviewScreen
+        data={data}
+        answers={answers}
+        onRetry={() => {
+          setCurrentIndex(0);
+          setAnswers([]);
+          setShowReview(false);
+        }}
+      />
+    );
   }
 
   /* EXAM MODE */

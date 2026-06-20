@@ -5,7 +5,10 @@ import {
   useParams,
 } from "react-router-dom";
 
-function TopicHeader() {
+function TopicHeader({
+  isReviewMode = false,
+  onBackToNotes,
+}) {
   const {
     levelSlug,
     subjectSlug,
@@ -28,12 +31,21 @@ function TopicHeader() {
 
   return (
     <header className="topic-header">
-      <Link
-        to={`/learning/${levelSlug}/${subjectSlug}`}
-        className="topic-header__back-btn"
-      >
-        <FiArrowLeft />
-      </Link>
+      {isReviewMode ? (
+        <button
+          onClick={onBackToNotes}
+          className="topic-header__back-btn"
+        >
+          <FiArrowLeft />
+        </button>
+      ) : (
+        <Link
+          to={`/learning/${levelSlug}/${subjectSlug}`}
+          className="topic-header__back-btn"
+        >
+          <FiArrowLeft />
+        </Link>
+      )}
 
       <div className="topic-header__info">
         <div className="topic-header__top">

@@ -22,6 +22,9 @@ function TopicDetails() {
   const [activeTab, setActiveTab] =
     useState("notes");
 
+  const [isReviewMode, setIsReviewMode] =
+    useState(false);
+
   const level = learningData.find(
     (level) =>
       level.slug === levelSlug
@@ -60,7 +63,13 @@ function TopicDetails() {
 
   return (
     <main className="topic-details-page">
-      <TopicHeader />
+      <TopicHeader
+        isReviewMode={isReviewMode}
+        onBackToNotes={() => {
+          setActiveTab("notes");
+          setIsReviewMode(false);
+        }}
+      />
 
       <TopicTabs
         activeTab={activeTab}
@@ -72,6 +81,7 @@ function TopicDetails() {
         key={`${activeTab}-${currentData?.length || 0}`}
         activeTab={activeTab}
         data={currentData}
+        onReviewModeChange={setIsReviewMode}
       />
     </main>
   );

@@ -4,7 +4,17 @@
 ===================================================== */
 
 .learning-page {
-  padding: var(--container-padding, 1rem);
+  padding: 0;
+}
+
+/* =====================================================
+   SECTION HEADER
+   Choose Your Level
+===================================================== */
+
+.section-header {
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
 }
 
 /* =====================================================
@@ -77,11 +87,14 @@
 
 .levels-grid {
   display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  padding: 0 0.5rem;
+
+  width: 100%;
+  align-items: stretch;
 }
+
 
 /* =====================================================
    SUBJECTS / TOPICS LIST
@@ -103,22 +116,21 @@
    Intermediate
 ===================================================== */
 
-.level-card {
+.learning-page .level-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   gap: 0.75rem;
 
+  width: 100%;
   min-height: 150px;
 
   padding: 1rem;
 
   background: var(--white-color);
-
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 
   text-decoration: none;
 
@@ -127,7 +139,7 @@
   transition: var(--transition);
 }
 
-.level-card:hover {
+.learning-page .level-card:hover {
   transform: translateY(-4px);
 
   border-color: var(--primary-color);
@@ -135,7 +147,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.level-card:active {
+.learning-page .level-card:active {
   transform: scale(0.98);
 }
 
@@ -185,7 +197,7 @@
    Topic Icon
 ===================================================== */
 
-.level-card__icon,
+.learning-page .level-card__icon,
 .subject-card__icon {
   display: flex;
   align-items: center;
@@ -196,16 +208,16 @@
   width: 56px;
   height: 56px;
 
-  border-radius: 16px;
+  border-radius: 14px;
 
-  font-size: 1.4rem;
+  font-size: 1.35rem;
 }
 
 /* =====================================================
    LEVEL CARD TEXT
 ===================================================== */
 
-.level-card__title {
+.learning-page .level-card__title {
   text-align: center;
 
   font-size: 0.95rem;
@@ -214,8 +226,8 @@
   color: var(--text-color);
 }
 
-.level-card__topics {
-  padding: 0.35rem 0.75rem;
+.learning-page .level-card__topics {
+  padding: 0.4rem 0.875rem;
 
   border-radius: 999px;
 
@@ -266,7 +278,7 @@
    BEGINNER COLORS
 ===================================================== */
 
-.level-card--beginner .level-card__icon,
+.learning-page .level-card--beginner .level-card__icon,
 .subject-card--beginner .subject-card__icon {
   background: var(--beginner-bg);
   color: var(--beginner-text);
@@ -276,7 +288,7 @@
    INTERMEDIATE COLORS
 ===================================================== */
 
-.level-card--intermediate .level-card__icon,
+.learning-page .level-card--intermediate .level-card__icon,
 .subject-card--intermediate .subject-card__icon {
   background: var(--intermediate-bg);
   color: var(--intermediate-text);
@@ -286,7 +298,7 @@
    ADVANCED COLORS
 ===================================================== */
 
-.level-card--advanced .level-card__icon,
+.learning-page .level-card--advanced .level-card__icon,
 .subject-card--advanced .subject-card__icon {
   background: var(--advanced-bg);
   color: var(--advanced-text);
@@ -296,7 +308,7 @@
    MASTER COLORS
 ===================================================== */
 
-.level-card--master .level-card__icon,
+.learning-page .level-card--master .level-card__icon,
 .subject-card--master .subject-card__icon {
   background: var(--master-bg);
   color: var(--master-text);
