@@ -7,6 +7,8 @@
   border: 1px solid var(--border-color);
 
   border-radius: 1.25rem;
+
+  box-shadow: var(--shadow-md);
 }
 
 .streak-header {
@@ -19,7 +21,7 @@
 
 .streak-label {
   font-size: 0.85rem;
-  color: var(--text-light);
+  color: var(--text-color);
 
   margin-bottom: 0.35rem;
 }
@@ -28,7 +30,7 @@
   font-size: 1.8rem;
   font-weight: 700;
 
-  color: var(--text-color);
+  color: var(--primary-color);
 }
 
 .streak-icon {
@@ -41,7 +43,7 @@
 
   font-size: 1.6rem;
 
-  background: #fff7ed;
+  background: var(--primary-soft-color);
 
   border-radius: 50%;
 }
@@ -89,7 +91,7 @@
 .streak-text {
   font-size: 0.85rem;
 
-  color: var(--text-light);
+  color: var(--text-color);
 
   line-height: 1.5;
 }
