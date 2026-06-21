@@ -6,6 +6,7 @@ import LevelSubjects from "../pages/LevelSubjects";
 import LevelTopics from "../pages/LevelTopics";
 import TopicDetails from "../pages/TopicDetails";
 
+import Practice from "../pages/Practice";
 import Progress from "../pages/Progress";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
@@ -38,6 +39,11 @@ function AppRoutes() {
       />
 
       {/* User */}
+      <Route
+        path="/practice"
+        element={<Practice />}
+      />
+
       <Route
         path="/progress"
         element={<Progress />}
