@@ -7,6 +7,10 @@ import TopicTabs from "../components/topic/ui/TopicTabs";
 import TopicContent from "../components/topic/TopicContent";
 import TopicHeader from "../components/topic/ui/TopicHeader";
 import { useLanguage } from "../hooks/useLanguage";
+import {
+  loadActiveQuizTab,
+  persistActiveQuizTab,
+} from "../services/quizSessionService";
 
 import "../styles/topicdetails.css";
 
@@ -19,8 +23,15 @@ function TopicDetails() {
 
   const { setIsLearningPage } = useLanguage();
 
-  const [activeTab, setActiveTab] =
-    useState("notes");
+  const topicId = levelSlug + "/" + subjectSlug + "/" + topicSlug;
+
+  const [activeTab, setActiveTabState] =
+    useState(() => loadActiveQuizTab(topicId));
+
+  const setActiveTab = (nextTab) => {
+    setActiveTabState(nextTab);
+    persistActiveQuizTab(topicId, nextTab);
+  };
 
   const [isReviewMode, setIsReviewMode] =
     useState(false);
@@ -82,10 +93,11 @@ function TopicDetails() {
         activeTab={activeTab}
         data={currentData}
         onReviewModeChange={setIsReviewMode}
-        topicId={levelSlug + "/" + subjectSlug + "/" + topicSlug}
+        topicId={topicId}
       />
     </main>
   );
 }
 
 export default TopicDetails;
+

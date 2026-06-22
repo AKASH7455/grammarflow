@@ -93,7 +93,7 @@ class ProgressApiService {
    * @param {number} month - Month
    * @returns {Promise<Array>} Daily activity data
    */
-  async getMonthlyActivity(year, month) {
+  async getMonthlyActivity() {
     // Future: const response = await fetch(`/api/activity/monthly?year=${year}&month=${month}`);
     // Future: return response.json();
     const data = getProgressData();
@@ -205,3 +205,4 @@ class ProgressApiService {
 // Export singleton instance
 export const progressApiService = new ProgressApiService();
 export default progressApiService;
+

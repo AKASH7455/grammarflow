@@ -1,16 +1,235 @@
-const KEY="grammarflow-data";
-const base={user:{xp:0,level:1,streak:0,longestStreak:0,lastActivity:null,completedDates:[]},progress:{overallProgress:0,completedTopics:[],completedQuizzes:[],completedPractice:[],achievements:[]},quizResults:[],topicProgress:[],translationProgress:[],fillBlankProgress:[],sentenceCorrectionProgress:[],verbProgress:[],activityLogs:[],settings:{theme:"light",language:"hinglish"}};
-const fresh=()=>JSON.parse(JSON.stringify(base));const merge=(x={})=>({...fresh(),...x,user:{...base.user,...x.user},progress:{...base.progress,...x.progress},settings:{...base.settings,...x.settings}});
-export const getProgress=()=>{try{const x=localStorage.getItem(KEY);return x?merge(JSON.parse(x)):fresh()}catch(e){console.error(e);return fresh()}};
-export const saveProgress=x=>{const d=merge(x);localStorage.setItem(KEY,JSON.stringify(d));return d};
-const put=(a,k,x)=>{const i=a.findIndex(v=>v[k]===x[k]);if(i<0)return[...a,x];const n=[...a];n[i]={...n[i],...x};return n};
-const calc=d=>{const u=a=>[...new Set(a)],t=u(d.topicProgress.filter(x=>x.completed).map(x=>x.topicId)),q=u(d.quizResults.map(x=>x.quizId)),p=u([...d.fillBlankProgress,...d.translationProgress,...d.sentenceCorrectionProgress].filter(x=>x.completed).map(x=>x.exerciseId).concat(d.verbProgress.filter(x=>x.completed).map(x=>x.verbId))),n=d.topicProgress.length+d.quizResults.length+d.fillBlankProgress.length+d.translationProgress.length+d.sentenceCorrectionProgress.length+d.verbProgress.length;d.progress={...d.progress,completedTopics:t,completedQuizzes:q,completedPractice:p,overallProgress:n?Math.round((t.length+q.length+p.length)/n*100):0};d.user.level=Math.floor(d.user.xp/500)+1;return d};
-export const updateProgress=fn=>saveProgress(calc(typeof fn==="function"?fn(getProgress()):merge({...getProgress(),...fn})));
-const done=(d,type,id,xp,at)=>{const key=type+":"+id;if(!d.activityLogs.some(x=>x.id===key)){d.user.xp+=xp;d.activityLogs.unshift({id:key,type,text:"Completed "+id,timestamp:at,xp})}const day=at.slice(0,10);d.user.completedDates=[...new Set([...d.user.completedDates,day])];d.user.streak=d.user.completedDates.length;d.user.lastActivity=at};
-export const saveQuizResult=x=>updateProgress(d=>{const at=x.completedAt||new Date().toISOString();d.quizResults=put(d.quizResults,"quizId",{...x,correctAnswers:x.correctAnswers??x.score,completedAt:at});done(d,"quiz",x.quizId,50,at);return d});
-export const saveTopicResult=x=>updateProgress(d=>{const at=x.completedAt||new Date().toISOString();d.topicProgress=put(d.topicProgress,"topicId",{completed:true,...x,completedAt:at});done(d,"topic",x.topicId,25,at);return d});
-const ex=(list,key,x)=>updateProgress(d=>{const at=new Date().toISOString();d[list]=put(d[list],key,{...x,completedAt:at});if(x.completed)done(d,"practice",x[key],30,at);return d});
-export const saveFillBlankResult=x=>ex("fillBlankProgress","exerciseId",x);export const saveTranslationResult=x=>ex("translationProgress","exerciseId",x);export const saveSentenceCorrectionResult=x=>ex("sentenceCorrectionProgress","exerciseId",x);export const saveVerbResult=x=>ex("verbProgress","verbId",x);
-export const saveSetting=(k,v)=>updateProgress(d=>{d.settings[k]=v;return d});export const resetProgress=()=>saveProgress(fresh());
+import { readStorage, writeStorage } from "../utils/localStorage";
+
+export const STORAGE_KEY = "grammarflow-data";
+
+export const defaultData = {
+  user: {
+    xp: 0,
+    level: 1,
+    streak: 0,
+    longestStreak: 0,
+    lastActivity: null,
+    completedDates: [],
+  },
+  progress: {
+    overallProgress: 0,
+    completedTopics: [],
+    completedSubjects: [],
+    completedQuizzes: [],
+    completedPractice: [],
+    achievements: [],
+  },
+  quizResults: [],
+  quizSessions: {},
+  topicProgress: [],
+  translationProgress: [],
+  fillBlankProgress: [],
+  sentenceCorrectionProgress: [],
+  verbProgress: [],
+  activityLogs: [],
+  settings: { theme: "light", language: "hinglish" },
+};
+
+const freshData = () => JSON.parse(JSON.stringify(defaultData));
+const unique = (items) => [...new Set(items)];
+
+const normalize = (value) => {
+  const safe =
+    value && typeof value === "object" && !Array.isArray(value)
+      ? value
+      : {};
+
+  return {
+    ...freshData(),
+    ...safe,
+    user: {
+      ...defaultData.user,
+      ...(safe.user && typeof safe.user === "object" ? safe.user : {}),
+    },
+    progress: {
+      ...defaultData.progress,
+      ...(safe.progress && typeof safe.progress === "object"
+        ? safe.progress
+        : {}),
+    },
+    quizResults: Array.isArray(safe.quizResults) ? safe.quizResults : [],
+    topicProgress: Array.isArray(safe.topicProgress) ? safe.topicProgress : [],
+    translationProgress: Array.isArray(safe.translationProgress)
+      ? safe.translationProgress
+      : [],
+    fillBlankProgress: Array.isArray(safe.fillBlankProgress)
+      ? safe.fillBlankProgress
+      : [],
+    sentenceCorrectionProgress: Array.isArray(safe.sentenceCorrectionProgress)
+      ? safe.sentenceCorrectionProgress
+      : [],
+    verbProgress: Array.isArray(safe.verbProgress) ? safe.verbProgress : [],
+    activityLogs: Array.isArray(safe.activityLogs) ? safe.activityLogs : [],
+    settings: {
+      ...defaultData.settings,
+      ...(safe.settings && typeof safe.settings === "object"
+        ? safe.settings
+        : {}),
+    },
+    quizSessions:
+      safe.quizSessions &&
+      typeof safe.quizSessions === "object" &&
+      !Array.isArray(safe.quizSessions)
+        ? safe.quizSessions
+        : {},
+  };
+};
+
+export const getProgress = () =>
+  normalize(readStorage(STORAGE_KEY, freshData()));
+
+export const saveProgress = (value) => {
+  const data = normalize(value);
+  writeStorage(STORAGE_KEY, data);
+  return data;
+};
+
+const upsert = (items, key, record) => {
+  const index = items.findIndex((item) => item[key] === record[key]);
+  if (index < 0) return [...items, record];
+  const next = [...items];
+  next[index] = { ...next[index], ...record };
+  return next;
+};
+
+const calculateProgress = (data) => {
+  const topics = unique(
+    data.topicProgress.filter((item) => item.completed).map((item) => item.topicId)
+  );
+  const quizzes = unique(data.quizResults.map((item) => item.quizId));
+  const practice = unique([
+    ...data.fillBlankProgress.filter((item) => item.completed).map((item) => item.exerciseId),
+    ...data.translationProgress.filter((item) => item.completed).map((item) => item.exerciseId),
+    ...data.sentenceCorrectionProgress.filter((item) => item.completed).map((item) => item.exerciseId),
+    ...data.verbProgress.filter((item) => item.completed).map((item) => item.verbId),
+  ]);
+  const total =
+    data.topicProgress.length +
+    data.quizResults.length +
+    data.fillBlankProgress.length +
+    data.translationProgress.length +
+    data.sentenceCorrectionProgress.length +
+    data.verbProgress.length;
+
+  data.progress = {
+    ...data.progress,
+    completedTopics: topics,
+    completedSubjects: unique(
+      topics.map((topicId) => topicId.split("/").slice(0, 2).join("/"))
+    ),
+    completedQuizzes: quizzes,
+    completedPractice: practice,
+    overallProgress: total
+      ? Math.round(((topics.length + quizzes.length + practice.length) / total) * 100)
+      : 0,
+  };
+  data.user.level = Math.floor(data.user.xp / 500) + 1;
+  return data;
+};
+
+export const updateProgress = (updater) => {
+  const current = getProgress();
+  const next =
+    typeof updater === "function"
+      ? updater(current)
+      : normalize({ ...current, ...updater });
+  return saveProgress(calculateProgress(next));
+};
+
+const recordActivity = (data, type, id, xp, timestamp) => {
+  const activityId = `${type}:${id}`;
+  if (!data.activityLogs.some((item) => item.id === activityId)) {
+    data.user.xp += xp;
+    data.activityLogs.unshift({
+      id: activityId,
+      type,
+      text: `Completed ${id}`,
+      timestamp,
+      xp,
+    });
+  }
+  const date = timestamp.slice(0, 10);
+  data.user.completedDates = unique([...data.user.completedDates, date]);
+  data.user.streak = data.user.completedDates.length;
+  data.user.longestStreak = Math.max(data.user.longestStreak, data.user.streak);
+  data.user.lastActivity = timestamp;
+};
+
+export const saveQuizResult = (result) =>
+  updateProgress((data) => {
+    const completedAt = result.completedAt || new Date().toISOString();
+    data.quizResults = upsert(data.quizResults, "quizId", {
+      ...result,
+      correctAnswers: result.correctAnswers ?? result.score,
+      completedAt,
+    });
+    recordActivity(data, "quiz", result.quizId, 50, completedAt);
+    return data;
+  });
+
+export const saveTopicResult = (result) =>
+  updateProgress((data) => {
+    const completedAt = result.completedAt || new Date().toISOString();
+    const record = { completed: true, ...result, completedAt };
+    data.topicProgress = upsert(data.topicProgress, "topicId", record);
+    recordActivity(data, "topic", result.topicId, 25, completedAt);
+    return data;
+  });
+
+const saveExercise = (collection, key, result) =>
+  updateProgress((data) => {
+    const completedAt = new Date().toISOString();
+    const record = { ...result, completedAt };
+    data[collection] = upsert(data[collection], key, record);
+    if (result.completed) {
+      recordActivity(data, "practice", result[key], 30, completedAt);
+    }
+    return data;
+  });
+
+export const saveFillBlankResult = (result) =>
+  saveExercise("fillBlankProgress", "exerciseId", result);
+export const saveTranslationResult = (result) =>
+  saveExercise("translationProgress", "exerciseId", result);
+export const saveSentenceCorrectionResult = (result) =>
+  saveExercise("sentenceCorrectionProgress", "exerciseId", result);
+export const saveVerbResult = (result) =>
+  saveExercise("verbProgress", "verbId", result);
+
+export const saveQuizSession = (quizId, session) =>
+  updateProgress((data) => {
+    data.quizSessions[quizId] = {
+      ...session,
+      quizId,
+      updatedAt: new Date().toISOString(),
+    };
+    return data;
+  });
+
+export const getQuizSession = (quizId) => {
+  const session = getProgress().quizSessions[quizId];
+  return session && typeof session === "object" ? session : null;
+};
+
+export const clearQuizSession = (quizId) =>
+  updateProgress((data) => {
+    delete data.quizSessions[quizId];
+    return data;
+  });
+
+export const saveSetting = (key, value) =>
+  updateProgress((data) => {
+    data.settings[key] = value;
+    return data;
+  });
+
+export const resetProgress = () => saveProgress(freshData());
+
+
 
 

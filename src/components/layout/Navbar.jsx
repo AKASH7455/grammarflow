@@ -31,7 +31,7 @@ function Navbar() {
           </button>
         ) : (
           <Link
-            to="/verb-practice"
+            to="/learning/intermediate/verbs"
             className="navbar__verb-button"
           >
             <span>Verbs</span>
@@ -51,3 +51,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

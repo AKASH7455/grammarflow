@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap");
 
 @import "./variables.css";
 
@@ -10,15 +10,59 @@
 
 html {
   font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: "Poppins", "Noto Sans Devanagari", sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.006em;
   background: var(--surface-color);
   color: var(--text-color);
-
   min-height: 100dvh;
   min-height: 100vh;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+:lang(hi),
+[lang="hi"] {
+  font-family: var(--font-hindi);
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+
+p,
+li,
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 #root {
@@ -36,6 +80,29 @@ button {
   outline: none;
   cursor: pointer;
   background: transparent;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+button:active:not(:disabled),
+a:active {
+  transform: scale(0.975);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary-color) 35%, transparent);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 img {
@@ -46,3 +113,181 @@ img {
 ul {
   list-style: none;
 }
+
+.app-main > * {
+  animation: page-enter 280ms var(--ease-out) both;
+}
+
+:is(
+  .welcome-card,
+  .streak-card,
+  .quick-action-card,
+  .subject-card,
+  .topic-card,
+  .stat-card,
+  .activity-heatmap,
+  .achievement-card,
+  .recent-activity,
+  .modern-result-card,
+  .review-card
+) {
+  animation: card-enter 260ms var(--ease-out) both;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition),
+    color var(--transition);
+}
+
+:is(
+  .quick-action-card,
+  .subject-card,
+  .topic-card,
+  .stat-card,
+  .achievement-card,
+  .review-card
+):hover {
+  box-shadow: var(--shadow-md);
+}
+
+:is(
+  .progress-fill,
+  .hero-progress-fill,
+  .streak-progress-fill,
+  .achievement-summary-fill,
+  .progress-bar-fill
+) {
+  transition: width 320ms var(--ease-out);
+  will-change: width;
+}
+
+.achievement-card.unlocked .achievement-icon,
+.achievement-card.unlocked .achievement-badge {
+  animation: achievement-unlock 320ms var(--ease-out) both;
+}
+
+.modern-result-card {
+  animation: result-reveal 320ms var(--ease-out) both;
+}
+
+.navbar,
+.bottom-nav {
+  transition:
+    background-color var(--transition),
+    box-shadow var(--transition),
+    color var(--transition);
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes result-reveal {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes achievement-unlock {
+  from { opacity: 0.5; transform: scale(0.88); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+
+/* Non-structural polish: existing grids and card markup remain unchanged. */
+.section-title,
+.page-title,
+.stats-row-title,
+.level-journey-title,
+.achievement-summary-title,
+.recent-activity-title {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+:is(
+  .nav-btn,
+  .modern-btn,
+  .back-button,
+  .topic-tabs__button,
+  .navbar__verb-button,
+  .navbar__icon-button,
+  .heatmap-nav-button
+) {
+  min-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+:is(
+  .nav-btn,
+  .modern-btn,
+  .back-button,
+  .topic-tabs__button
+):hover:not(:disabled) {
+  box-shadow: var(--shadow-sm);
+}
+
+:is(
+  .nav-btn,
+  .modern-btn,
+  .back-button,
+  .topic-tabs__button
+):active:not(:disabled) {
+  transform: scale(0.975);
+}
+
+:is(
+  .mcq-option,
+  .fillblank-input,
+  .nav-btn,
+  .modern-btn,
+  .topic-tabs__button
+) {
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.mcq-option:hover,
+.fillblank-input:focus {
+  box-shadow: var(--shadow-sm);
+}
+
+.exam-wrapper,
+.review-section,
+.notes-article {
+  line-height: 1.65;
+}
+
+@media (hover: none) {
+  :is(
+    .quick-action-card,
+    .subject-card,
+    .topic-card,
+    .stat-card,
+    .achievement-card,
+    .review-card
+  ):hover {
+    transform: none;
+  }
+}
+

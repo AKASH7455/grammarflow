@@ -1,1 +1,39 @@
-import{createContext,useContext,useEffect,useState}from"react";import{getProgress,saveSetting}from"../services/grammarFlowStorage";const C=createContext();export function ThemeProvider({children}){const[theme,setState]=useState(()=>getProgress().settings.theme);const setTheme=x=>{setState(x);saveSetting("theme",x)};useEffect(()=>{document.documentElement.className=theme+"-theme"},[theme]);return <C.Provider value={{theme,setTheme,toggleTheme:()=>setTheme(theme==="light"?"dark":"light")}}>{children}</C.Provider>}export const useTheme=()=>useContext(C);
+import { useEffect, useState } from "react";
+import {
+  getProgress,
+  saveSetting,
+} from "../services/grammarFlowStorage";
+import { ThemeContext } from "./AppContexts";
+
+export function ThemeProvider({ children }) {
+  const [theme, setThemeState] = useState(
+    () => getProgress().settings.theme
+  );
+
+  const setTheme = (value) => {
+    setThemeState(value);
+    saveSetting("theme", value);
+  };
+
+  const toggleTheme = () =>
+    setTheme(theme === "light" ? "dark" : "light");
+
+  useEffect(() => {
+    document.documentElement.classList.remove(
+      "light-theme",
+      "dark-theme"
+    );
+    document.documentElement.classList.add(
+      `${theme}-theme`
+    );
+  }, [theme]);
+
+  return (
+    <ThemeContext.Provider
+      value={{ theme, setTheme, toggleTheme }}
+    >
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+

@@ -8,6 +8,11 @@ import ExamHeader from "./exam/ExamHeader";
 import ExamNavigation from "./exam/ExamNavigation";
 import ReviewScreen from "./exam/ReviewScreen";
 import { useProgress } from "../../hooks/useProgress";
+import {
+  loadQuizSession,
+  persistQuizSession,
+  restartQuizSession,
+} from "../../services/quizSessionService";
 
 import "../../styles/topiccontent.css";
 
@@ -17,41 +22,78 @@ function TopicContent({
   onReviewModeChange,
   topicId,
 }) {
-  const { saveQuizResult, saveFillBlankResult, saveTopicProgress } = useProgress();
+  const {
+    saveQuizResult,
+    saveFillBlankResult,
+    saveTopicProgress,
+  } = useProgress();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [showReview, setShowReview] = useState(false);
+  const quizId = `${topicId}/${activeTab}`;
+  const [initialSession] = useState(() =>
+    loadQuizSession(
+      quizId,
+      Array.isArray(data) ? data.length : 0
+    )
+  );
 
-  const prevActiveTabRef = useRef(activeTab);
-  const prevDataRef = useRef(data);
+  const [currentIndex, setCurrentIndex] = useState(
+    initialSession.currentIndex
+  );
+  const [answers, setAnswers] = useState(
+    initialSession.answers
+  );
+  const [showReview, setShowReview] = useState(
+    initialSession.showReview
+  );
+  const [scoreData, setScoreData] = useState(
+    initialSession.score
+  );
+  const [showAnswerReview, setShowAnswerReview] = useState(
+    Boolean(initialSession.showAnswerReview)
+  );
+  const skipPersistRef = useRef(false);
 
   useEffect(() => {
-    if (prevActiveTabRef.current !== activeTab || prevDataRef.current !== data) {
-      setCurrentIndex(0);
-      setAnswers([]);
-      setShowReview(false);
-      prevActiveTabRef.current = activeTab;
-      prevDataRef.current = data;
+    if (!Array.isArray(data) || !["mcq", "fill-blanks"].includes(activeTab)) return;
+    if (skipPersistRef.current) {
+      skipPersistRef.current = false;
+      return;
     }
-  }, [activeTab, data]);
+
+    persistQuizSession(quizId, {
+      currentIndex,
+      answers,
+      score: scoreData,
+      completed: showReview,
+      showReview,
+      showAnswerReview,
+      subjectId: topicId.split("/").slice(0, 2).join("/"),
+      topicId,
+    });
+  }, [
+    answers,
+    currentIndex,
+    data,
+    activeTab,
+    quizId,
+    scoreData,
+    showReview,
+    showAnswerReview,
+    topicId,
+  ]);
 
   useEffect(() => {
-    if (onReviewModeChange) {
-      onReviewModeChange(showReview);
-    }
+    onReviewModeChange?.(showReview);
   }, [showReview, onReviewModeChange]);
 
   if (!data) {
     return <div className="empty-state">No Content Available</div>;
   }
 
-  /* NOTES */
   if (activeTab === "notes") {
     return <Notes data={data} />;
   }
 
-  /* AI */
   if (activeTab === "ai-practice") {
     return <AI />;
   }
@@ -64,60 +106,87 @@ function TopicContent({
   const currentAnswer = answers.find(
     (item) => item.questionId === currentQuestion.id
   );
-
   const progress = (answers.length / data.length) * 100;
 
-  
-
   const handleAnswer = (questionId, selectedAnswer) => {
-    setAnswers((prev) => {
-      const exists = prev.find(
+    setAnswers((previous) => {
+      const exists = previous.find(
         (item) => item.questionId === questionId
       );
 
       if (exists) {
-        return prev.map((item) =>
+        return previous.map((item) =>
           item.questionId === questionId
             ? { ...item, selectedAnswer }
             : item
         );
       }
 
-      return [
-        ...prev,
-        {
-          questionId,
-          selectedAnswer,
-        },
-      ];
+      return [...previous, { questionId, selectedAnswer }];
     });
   };
 
   const handleSubmit = () => {
-    const score = data.reduce((sum, question) => sum + (answers.find((item) => item.questionId === question.id)?.selectedAnswer === question.answer ? 1 : 0), 0);
-    const id = topicId + "/" + activeTab;
-    if (activeTab === "mcq") saveQuizResult({ quizId: id, score, totalQuestions: data.length, correctAnswers: score });
-    if (activeTab === "fill-blanks") saveFillBlankResult({ exerciseId: id, completed: true, score });
+    const score = data.reduce(
+      (sum, question) =>
+        sum +
+        (answers.find(
+          (item) => item.questionId === question.id
+        )?.selectedAnswer === question.answer
+          ? 1
+          : 0),
+      0
+    );
+
+    setScoreData({
+      score,
+      totalQuestions: data.length,
+      correctAnswers: score,
+    });
+
+    if (activeTab === "mcq") {
+      saveQuizResult({
+        quizId,
+        score,
+        totalQuestions: data.length,
+        correctAnswers: score,
+      });
+    }
+
+    if (activeTab === "fill-blanks") {
+      saveFillBlankResult({
+        exerciseId: quizId,
+        completed: true,
+        score,
+      });
+    }
+
     saveTopicProgress({ topicId, completed: true });
     setShowReview(true);
   };
 
-  /* REVIEW */
+  const handleRestart = () => {
+    skipPersistRef.current = true;
+    restartQuizSession(quizId);
+    setCurrentIndex(0);
+    setAnswers([]);
+    setScoreData(null);
+    setShowAnswerReview(false);
+    setShowReview(false);
+  };
+
   if (showReview) {
     return (
       <ReviewScreen
         data={data}
         answers={answers}
-        onRetry={() => {
-          setCurrentIndex(0);
-          setAnswers([]);
-          setShowReview(false);
-        }}
+        onRetry={handleRestart}
+        initialShowAnswers={showAnswerReview}
+        onReviewViewChange={setShowAnswerReview}
       />
     );
   }
 
-  /* EXAM MODE */
   return (
     <section className="exam-wrapper">
       <ExamHeader
@@ -153,8 +222,12 @@ function TopicContent({
         totalQuestions={data.length}
         hasAnswer={!!currentAnswer}
         allAnswered={answers.length === data.length}
-        onPrevious={() => setCurrentIndex((prev) => prev - 1)}
-        onNext={() => setCurrentIndex((prev) => prev + 1)}
+        onPrevious={() =>
+          setCurrentIndex((previous) => previous - 1)
+        }
+        onNext={() =>
+          setCurrentIndex((previous) => previous + 1)
+        }
         onSubmit={handleSubmit}
       />
     </section>
@@ -162,4 +235,13 @@ function TopicContent({
 }
 
 export default TopicContent;
+
+
+
+
+
+
+
+
+
 

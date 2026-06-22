@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useProgress } from "../../hooks/useProgress";
 
 import "../../styles/progresscard.css";
@@ -31,9 +30,8 @@ function ProgressCard() {
     "Keep pushing, you're doing great!",
   ];
 
-  const randomQuote = useMemo(() => {
-    return motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
-  }, []);
+  const randomQuote =
+    motivationalQuotes[completedDates.length % motivationalQuotes.length];
 
   return (
     <section className="progress-card">
@@ -127,5 +125,7 @@ function ProgressCard() {
 }
 
 export default ProgressCard;
+
+
 
 

@@ -12,12 +12,12 @@ import "../../styles/quickactions.css";
 const actions = [
   {
     title: "Notes",
-    path: "/notes",
+    path: "/learning",
     icon: <FaBookOpen />,
   },
   {
     title: "Quiz",
-    path: "/quiz",
+    path: "/learning",
     icon: <FaClipboardList />,
   },
   {
@@ -27,7 +27,7 @@ const actions = [
   },
   {
     title: "Verbs",
-    path: "/verbs",
+    path: "/learning/intermediate/verbs",
     icon: <FaBolt />,
   },
 ];
@@ -65,3 +65,4 @@ function QuickActions() {
 }
 
 export default QuickActions;
+

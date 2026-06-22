@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   HiOutlineDocumentText,
@@ -20,10 +20,16 @@ function ReviewScreen({
   data = [],
   answers = [],
   onRetry,
+initialShowAnswers = false,
+  onReviewViewChange,
 }) {
   const { language } = useLanguage();
   const [showReview, setShowReview] =
-    useState(false);
+    useState(initialShowAnswers);
+
+  useEffect(() => {
+    onReviewViewChange?.(showReview);
+  }, [showReview, onReviewViewChange]);
 
   const answerMap = useMemo(
     () =>
@@ -189,7 +195,7 @@ function ReviewScreen({
             >
               <HiOutlineArrowLeft />
               <span>
-                Retry Quiz
+                Restart Quiz
               </span>
             </button>
           </div>
@@ -306,3 +312,5 @@ function ReviewScreen({
 }
 
 export default ReviewScreen;
+
+

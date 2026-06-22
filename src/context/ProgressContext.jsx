@@ -1,1 +1,37 @@
-import{createContext,useContext,useState}from"react";import*as s from"../services/grammarFlowStorage";const C=createContext();export function ProgressProvider({children}){const[data,setData]=useState(s.getProgress);const run=fn=>{const x=fn();setData(x);return x};const value={data,saveQuizResult:x=>run(()=>s.saveQuizResult(x)),saveTopicProgress:x=>run(()=>s.saveTopicResult(x)),saveFillBlankResult:x=>run(()=>s.saveFillBlankResult(x)),saveTranslationResult:x=>run(()=>s.saveTranslationResult(x)),saveSentenceCorrectionResult:x=>run(()=>s.saveSentenceCorrectionResult(x)),saveVerbResult:x=>run(()=>s.saveVerbResult(x)),resetProgress:()=>run(s.resetProgress)};return <C.Provider value={value}>{children}</C.Provider>}export function useProgress(){const x=useContext(C);if(!x)throw Error("ProgressProvider missing");return x}
+import { useState } from "react";
+import * as progressService from "../services/grammarFlowStorage";
+import { ProgressContext } from "./AppContexts";
+
+export function ProgressProvider({ children }) {
+  const [data, setData] = useState(progressService.getProgress);
+
+  const run = (operation) => {
+    const next = operation();
+    setData(next);
+    return next;
+  };
+
+  const value = {
+    data,
+    saveQuizResult: (result) =>
+      run(() => progressService.saveQuizResult(result)),
+    saveTopicProgress: (result) =>
+      run(() => progressService.saveTopicResult(result)),
+    saveFillBlankResult: (result) =>
+      run(() => progressService.saveFillBlankResult(result)),
+    saveTranslationResult: (result) =>
+      run(() => progressService.saveTranslationResult(result)),
+    saveSentenceCorrectionResult: (result) =>
+      run(() => progressService.saveSentenceCorrectionResult(result)),
+    saveVerbResult: (result) =>
+      run(() => progressService.saveVerbResult(result)),
+    resetProgress: () => run(progressService.resetProgress),
+  };
+
+  return (
+    <ProgressContext.Provider value={value}>
+      {children}
+    </ProgressContext.Provider>
+  );
+}
+
