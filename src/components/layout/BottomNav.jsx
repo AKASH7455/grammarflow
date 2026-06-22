@@ -25,6 +25,7 @@ const navItems = [
     label: "Practice",
     path: "/practice",
     icon: FiTarget,
+    comingSoon: true,
   },
   {
     label: "Progress",
@@ -46,20 +47,29 @@ function BottomNav() {
 
         return (
           <NavLink
-            key={item.path}
-            to={item.path}
-            end={item.path === "/"}
-            className={({ isActive }) =>
-              isActive
-                ? "bottom-nav__link bottom-nav__link--active"
-                : "bottom-nav__link"
-            }
-          >
-            <Icon className="bottom-nav__icon" />
-            <span className="bottom-nav__label">
-              {item.label}
-            </span>
-          </NavLink>
+  key={item.path}
+  to={item.path}
+  end={item.path === "/"}
+  className={({ isActive }) =>
+    isActive
+      ? "bottom-nav__link bottom-nav__link--active"
+      : "bottom-nav__link"
+  }
+>
+  <div className="bottom-nav__icon-wrapper">
+    <Icon className="bottom-nav__icon" />
+
+    {item.comingSoon && (
+      <span className="bottom-nav__badge">
+        Soon
+      </span>
+    )}
+  </div>
+
+  <span className="bottom-nav__label">
+    {item.label}
+  </span>
+</NavLink>
         );
       })}
     </nav>

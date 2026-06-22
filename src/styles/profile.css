@@ -1,0 +1,223 @@
+.profile {
+  min-height: 100vh;
+  padding: 1rem;
+  padding-bottom: 6rem;
+  background: var(--surface-color);
+}
+
+.profile__container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* =========================
+   COMMON CARD
+========================= */
+
+.profile__card {
+  background: var(--white-color);
+  border-radius: 1.25rem;
+  padding: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================
+   PROFILE HEADER
+========================= */
+
+.profile__card--header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile__avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--primary-soft-color);
+
+  flex-shrink: 0;
+}
+
+.profile__avatar-icon {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+.profile__info {
+  flex: 1;
+}
+
+.profile__name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.profile__role {
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  color: var(--text-light);
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.profile__section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-bottom: 0.75rem;
+
+  color: var(--text-color);
+}
+
+.profile__section-header svg {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.profile__section-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* =========================
+   ACTIVITY CARD
+========================= */
+
+.profile__card--calendar {
+  overflow: hidden;
+}
+
+/* =========================
+   DEVELOPER CARD
+========================= */
+
+.developer-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-bottom: 1rem;
+}
+
+.developer-card__icon {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.developer-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.developer-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.developer-card__name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.developer-card__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  width: fit-content;
+
+  text-decoration: none;
+
+  padding: 0.75rem 1rem;
+
+  border-radius: 999px;
+
+  background: var(--primary-soft-color);
+
+  color: var(--primary-dark-color);
+
+  font-weight: 600;
+
+  transition: transform 0.2s ease;
+}
+
+.developer-card__contact:active {
+  transform: scale(0.98);
+}
+
+.developer-card__phone-icon {
+  font-size: 1rem;
+}
+
+/* =========================
+   APP INFO CARD
+========================= */
+
+.profile__card--info {
+  text-align: center;
+}
+
+.profile__info-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.profile__info-text {
+  margin: 0.75rem 0;
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  color: var(--text-light);
+}
+
+.profile__version {
+  display: inline-block;
+
+  padding: 0.4rem 0.8rem;
+
+  border-radius: 999px;
+
+  background: var(--primary-soft-color);
+
+  color: var(--primary-dark-color);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* =========================
+   SMALL ANIMATIONS
+========================= */
+
+.profile__card,
+.developer-card__contact {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile__card:hover {
+  transform: translateY(-2px);
+}

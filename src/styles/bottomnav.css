@@ -138,3 +138,30 @@
     transition: transform 0.3s ease;
   }
 }
+.bottom-nav__icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav__badge {
+  position: absolute;
+
+  top: -0.45rem;
+  right: -0.9rem;
+
+  padding: 0.12rem 0.35rem;
+
+  border-radius: 999px;
+
+  font-size: 0.45rem;
+  font-weight: 700;
+  line-height: 1;
+
+  background: var(--primary-color);
+  color: var(--white-color);
+
+  white-space: nowrap;
+  pointer-events: none;
+}
