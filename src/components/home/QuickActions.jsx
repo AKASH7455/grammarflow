@@ -27,7 +27,7 @@ const actions = [
   },
   {
     title: "Verbs",
-    path: "/learning/intermediate/verbs",
+    path: "/verbs",
     icon: <FaBolt />,
   },
 ];

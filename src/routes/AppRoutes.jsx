@@ -9,6 +9,8 @@ import TopicDetails from "../pages/TopicDetails";
 import Practice from "../pages/Practice";
 import Progress from "../pages/Progress";
 import Profile from "../pages/Profile";
+import VerbDashboard from "../pages/VerbDashboard";
+import VerbSetDetail from "../pages/VerbSetDetail";
 import NotFound from "../pages/NotFound";
 
 function AppRoutes() {
@@ -52,6 +54,16 @@ function AppRoutes() {
       <Route
         path="/profile"
         element={<Profile />}
+      />
+
+      {/* Verb Forms */}
+      <Route
+        path="/verbs"
+        element={<VerbDashboard />}
+      />
+      <Route
+        path="/verbs/:setName"
+        element={<VerbSetDetail />}
       />
 
       {/* 404 */}
