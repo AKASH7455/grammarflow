@@ -15,7 +15,8 @@ const ActivityHeatmap = React.memo(({ activityData = [] }) => {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
       const dayIndex = day - 1;
-      const activity = activityData[dayIndex] || Math.random() * 100;
+      const dateKey = date.toISOString().slice(0, 10);
+      const activity = activityData.includes(dateKey) ? 100 : (activityData[dayIndex] || 0);
       
       data.push({
         day,
@@ -114,3 +115,4 @@ const ActivityHeatmap = React.memo(({ activityData = [] }) => {
 ActivityHeatmap.displayName = "ActivityHeatmap";
 
 export default ActivityHeatmap;
+

@@ -5,6 +5,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import { LanguageProvider } from "./context/LanguageContext";
+import { ProgressProvider } from "./context/ProgressContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 import App from "./App";
 
@@ -20,7 +22,9 @@ createRoot(document.getElementById("root")).render(
 
   <StrictMode>
 
-    <LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <ProgressProvider>
 
       <BrowserRouter>
 
@@ -28,9 +32,12 @@ createRoot(document.getElementById("root")).render(
 
       </BrowserRouter>
 
-    </LanguageProvider>
+    </ProgressProvider>
+      </LanguageProvider>
+    </ThemeProvider>
 
   </StrictMode>
 
 );
+
 

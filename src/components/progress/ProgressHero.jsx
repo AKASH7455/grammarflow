@@ -7,7 +7,7 @@ import { FaTrophy } from "react-icons/fa";
 
 import "../../styles/progresspage.css";
 
-const ProgressHero = React.memo(({ progress = 0, currentXP = 1240, xpToNextLevel = 260 }) => {
+const ProgressHero = React.memo(({ progress = 0, currentXP = 0, xpToNextLevel = 500 }) => {
   const safeProgress = Math.min(100, Math.max(0, progress));
 
   const currentLevel = useMemo(

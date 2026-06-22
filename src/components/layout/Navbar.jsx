@@ -27,7 +27,7 @@ function Navbar() {
             onClick={toggleLanguage}
           >
             <FiGlobe />
-            <span>{language === "english" ? "हिंदी" : "English"}</span>
+            <span>{language !== "hindi" ? "हिंदी" : "English"}</span>
           </button>
         ) : (
           <Link

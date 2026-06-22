@@ -8,8 +8,8 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-import { useStreak } from "../hooks/useStreak";
-import { getProgressData } from "../services/progressService";
+
+import { useProgress } from "../hooks/useProgress";
 
 import ProgressHero from "../components/progress/ProgressHero";
 import StatsRow from "../components/progress/StatsRow";
@@ -22,9 +22,20 @@ import RecentActivity from "../components/progress/RecentActivity";
 import "../styles/progresspage.css";
 
 function Progress() {
-  const { currentStreak = 0, longestStreak = 0 } = useStreak();
+  const { data } = useProgress();
 
-  const progressData = useMemo(() => getProgressData(), []);
+  const currentStreak = data?.user?.streak || 0;
+  const longestStreak = data?.user?.longestStreak || currentStreak;
+  const progressData = {
+    overallProgress: data.progress.overallProgress,
+    topicsCompleted: data.progress.completedTopics.length,
+    notesRead: data.progress.completedTopics.length,
+    mcqSolved: data.progress.completedQuizzes.length,
+    practiceCompleted: data.progress.completedPractice.length,
+    weeklyActivity: data.user.completedDates,
+    currentXP: data.user.xp,
+    xpToNextLevel: 500 - (data.user.xp % 500),
+  };
 
   const {
     overallProgress = 0,
@@ -33,8 +44,8 @@ function Progress() {
     mcqSolved = 0,
     practiceCompleted = 0,
     weeklyActivity = [],
-    currentXP = 1240,
-    xpToNextLevel = 260,
+    currentXP = 0,
+    xpToNextLevel = 500,
   } = progressData;
 
   const achievements = useMemo(
@@ -91,39 +102,7 @@ function Progress() {
     ]
   );
 
-  const recentActivities = useMemo(
-    () => [
-      {
-        id: 1,
-        type: "quiz",
-        text: "Completed Nouns Quiz",
-        timestamp: "2026-06-21T10:00:00.000Z",
-        xp: 50,
-      },
-      {
-        id: 2,
-        type: "xp",
-        text: "Earned 50 XP",
-        timestamp: "2026-06-21T09:00:00.000Z",
-        xp: 50,
-      },
-      {
-        id: 3,
-        type: "achievement",
-        text: "Unlocked Achievement",
-        timestamp: "2026-06-21T08:00:00.000Z",
-        xp: 100,
-      },
-      {
-        id: 4,
-        type: "practice",
-        text: "Completed Practice Session",
-        timestamp: "2026-06-20T10:00:00.000Z",
-        xp: 30,
-      },
-    ],
-    []
-  );
+  const recentActivities = data.activityLogs;
 
   const stats = useMemo(
     () => ({
@@ -175,3 +154,6 @@ function Progress() {
 }
 
 export default Progress;
+
+
+

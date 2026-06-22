@@ -82,6 +82,7 @@ function TopicDetails() {
         activeTab={activeTab}
         data={currentData}
         onReviewModeChange={setIsReviewMode}
+        topicId={levelSlug + "/" + subjectSlug + "/" + topicSlug}
       />
     </main>
   );

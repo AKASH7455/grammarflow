@@ -16,7 +16,7 @@ function Notes({ data }) {
 
   if (!data) return null;
 
-  const content = data[language] || data;
+  const content = data[language] || data.english || data;
 
   return (
     <article className="notes-article">

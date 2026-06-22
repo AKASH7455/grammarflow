@@ -1,25 +1,20 @@
 import { useMemo } from "react";
-import { useStreak } from "../../hooks/useStreak";
+import { useProgress } from "../../hooks/useProgress";
 
 import "../../styles/progresscard.css";
 
 function ProgressCard() {
-  const { currentStreak, longestStreak, completedDates } = useStreak();
+  const { data } = useProgress();
+  const currentStreak = data.user.streak || 0;
+  const longestStreak = data.user.longestStreak || 0;
+  const completedDates = data.user.completedDates || [];
+  const overallProgress = data.progress.overallProgress || 0;
+  const lessonsCompleted = data.progress.completedTopics.length;
 
-  // Mock data for progress (in real app, this would come from a service)
-  const overallProgress = 65;
-  const lessonsCompleted = 24;
-
-  const grammarTopics = [
-    { name: "Nouns", progress: 90 },
-    { name: "Pronouns", progress: 75 },
-    { name: "Verbs", progress: 60 },
-    { name: "Tenses", progress: 45 },
-    { name: "Adjectives", progress: 30 },
-    { name: "Adverbs", progress: 20 },
-    { name: "Articles", progress: 15 },
-    { name: "Prepositions", progress: 10 },
-  ];
+  const grammarTopics = data.topicProgress.map((topic) => ({
+    name: topic.topicId,
+    progress: topic.completed ? 100 : 0,
+  }));
 
   const achievements = [
     { icon: "🏆", title: "Grammar Master", unlocked: overallProgress >= 100 },
@@ -132,3 +127,5 @@ function ProgressCard() {
 }
 
 export default ProgressCard;
+
+

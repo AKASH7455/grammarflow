@@ -7,6 +7,7 @@ import Notes from "./Notes";
 import ExamHeader from "./exam/ExamHeader";
 import ExamNavigation from "./exam/ExamNavigation";
 import ReviewScreen from "./exam/ReviewScreen";
+import { useProgress } from "../../hooks/useProgress";
 
 import "../../styles/topiccontent.css";
 
@@ -14,7 +15,10 @@ function TopicContent({
   activeTab,
   data,
   onReviewModeChange,
+  topicId,
 }) {
+  const { saveQuizResult, saveFillBlankResult, saveTopicProgress } = useProgress();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [showReview, setShowReview] = useState(false);
@@ -89,6 +93,15 @@ function TopicContent({
     });
   };
 
+  const handleSubmit = () => {
+    const score = data.reduce((sum, question) => sum + (answers.find((item) => item.questionId === question.id)?.selectedAnswer === question.answer ? 1 : 0), 0);
+    const id = topicId + "/" + activeTab;
+    if (activeTab === "mcq") saveQuizResult({ quizId: id, score, totalQuestions: data.length, correctAnswers: score });
+    if (activeTab === "fill-blanks") saveFillBlankResult({ exerciseId: id, completed: true, score });
+    saveTopicProgress({ topicId, completed: true });
+    setShowReview(true);
+  };
+
   /* REVIEW */
   if (showReview) {
     return (
@@ -142,10 +155,11 @@ function TopicContent({
         allAnswered={answers.length === data.length}
         onPrevious={() => setCurrentIndex((prev) => prev - 1)}
         onNext={() => setCurrentIndex((prev) => prev + 1)}
-        onSubmit={() => setShowReview(true)}
+        onSubmit={handleSubmit}
       />
     </section>
   );
 }
 
 export default TopicContent;
+

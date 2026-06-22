@@ -10,7 +10,7 @@ const MonthlyActivity = React.memo(({ activity = [] }) => {
       return Math.min(100, Math.max(0, Number(activity[index]) || 0));
     }
     // Generate realistic learning activity pattern
-    const baseActivity = Math.random() * 80;
+    const baseActivity = 0;
     const weekendBoost = (index % 7 === 0 || index % 7 === 6) ? 20 : 0;
     return Math.min(100, Math.max(0, baseActivity + weekendBoost));
   });
@@ -77,3 +77,4 @@ const MonthlyActivity = React.memo(({ activity = [] }) => {
 MonthlyActivity.displayName = "MonthlyActivity";
 
 export default MonthlyActivity;
+

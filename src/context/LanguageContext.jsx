@@ -1,13 +1,14 @@
 import { createContext, useContext, useState } from "react";
+import { getProgress, saveSetting } from "../services/grammarFlowStorage";
 
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState("english");
+  const [language, setLanguage] = useState(() => getProgress().settings.language || "hinglish");
   const [isLearningPage, setIsLearningPage] = useState(false);
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "english" ? "hindi" : "english"));
+    setLanguage((prev) => { const next = prev === "hindi" ? "hinglish" : "hindi"; saveSetting("language", next); return next; });
   };
 
   return (
@@ -24,3 +25,4 @@ export function useLanguage() {
   }
   return context;
 }
+
