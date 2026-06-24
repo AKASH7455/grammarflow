@@ -9,6 +9,11 @@ const dailyVerbs = [
     meaning: {
       hinglish: "Jana",
       hindi: "जाना"
+    },
+    sentence: {
+      english: "I go to school every day.",
+      hinglish: "Main har din school jata hu.",
+      hindi: "मैं हर दिन स्कूल जाता हूँ।"
     }
   },
   {
@@ -21,6 +26,11 @@ const dailyVerbs = [
     meaning: {
       hinglish: "Aana",
       hindi: "आना"
+    },
+    sentence: {
+      english: "She comes here every morning.",
+      hinglish: "Wo har subah yah aati hai.",
+      hindi: "वह हर सुबह यहाँ आती है।"
     }
   },
   {
@@ -33,6 +43,11 @@ const dailyVerbs = [
     meaning: {
       hinglish: "Khana",
       hindi: "खाना"
+    },
+    sentence: {
+      english: "We eat dinner together.",
+      hinglish: "Hum saath mein dinner khate hain.",
+      hindi: "हम साथ में डिनर खाते हैं।"
     }
   },
   {
@@ -45,6 +60,11 @@ const dailyVerbs = [
     meaning: {
       hinglish: "Peena",
       hindi: "पीना"
+    },
+    sentence: {
+      english: "He drinks water every hour.",
+      hinglish: "Wo har ghante paani peeta hai.",
+      hindi: "वह हर घंटे पानी पीता है।"
     }
   },
   {
@@ -57,6 +77,11 @@ const dailyVerbs = [
     meaning: {
       hinglish: "Sona",
       hindi: "सोना"
+    },
+    sentence: {
+      english: "I sleep at 10 PM.",
+      hinglish: "Main 10 baje sota hu.",
+      hindi: "मैं 10 बजे सोता हूँ।"
     }
   }
 ];

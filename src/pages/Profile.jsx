@@ -1,8 +1,11 @@
-import { FiUser, FiPhone, FiActivity } from "react-icons/fi";
+import { FiUser, FiPhone, FiActivity, FiMoon, FiSun } from "react-icons/fi";
 import ActivityHeatmap from "../components/progress/ActivityHeatmap";
+import { useTheme } from "../hooks/useTheme";
 import "../styles/profile.css";
 
 function Profile() {
+  const { theme, toggleTheme } = useTheme();
+  const isDarkTheme = theme === "dark";
   const profileData = {
     name: "User Name",
     role: "GrammarFlow Learner",
@@ -38,6 +41,44 @@ function Profile() {
           </div>
         </section>
 
+
+        {/* Appearance */}
+        <section className="profile__section">
+
+          <div className="profile__card profile__card--theme">
+            <div className="profile__theme-copy">
+              <span className="profile__theme-label">
+                Appearance
+              </span>
+
+              <h2 className="profile__theme-title">
+                {isDarkTheme ? "Dark Theme" : "Light Theme"}
+              </h2>
+
+              <p className="profile__theme-text">
+                {isDarkTheme
+                  ? "Dark mode is on for comfortable night learning."
+                  : "Switch to dark mode for softer late-night practice."}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className={`profile__theme-button ${isDarkTheme ? "profile__theme-button--dark" : ""}`}
+              onClick={toggleTheme}
+              aria-label={`Switch to ${isDarkTheme ? "light" : "dark"} theme`}
+            >
+              <span className="profile__theme-button-icon">
+                {isDarkTheme ? <FiSun /> : <FiMoon />}
+              </span>
+
+              <span>
+                {isDarkTheme ? "Light" : "Dark"}
+              </span>
+            </button>
+          </div>
+
+        </section>
         {/* Learning Activity */}
         <section className="profile__section">
 

@@ -1,4 +1,4 @@
-import { FiBookOpen, FiZap, FiLayers, FiGrid, FiStar } from "react-icons/fi";
+import { FiBookOpen, FiZap, FiLayers, FiGrid,  } from "react-icons/fi";
 
 import VerbDashboardCard from "../components/verbs/VerbDashboardCard";
 import verbService from "../services/verbService";
@@ -76,9 +76,6 @@ function VerbDashboard() {
 
         <h1 className="verb-dashboard-page__title">Verb Forms</h1>
 
-        <p className="verb-dashboard-page__description">
-          Master English verb forms with organized learning sets
-        </p>
       </section>
 
       <section className="verb-dashboard-page__cards">

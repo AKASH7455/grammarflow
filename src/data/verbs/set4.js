@@ -9,6 +9,11 @@ const set4 = [
     meaning: {
       hinglish: "Band karna",
       hindi: "बंद करना"
+    },
+    sentence: {
+      english: "I close the window at night.",
+      hinglish: "Main raat ko window band karta hu.",
+      hindi: "मैं रात को खिड़की बंद करता हूँ।"
     }
   },
   {
@@ -21,6 +26,11 @@ const set4 = [
     meaning: {
       hinglish: "Lana",
       hindi: "लाना"
+    },
+    sentence: {
+      english: "He brings food for everyone.",
+      hinglish: "Wo sabke liye khana lata hai.",
+      hindi: "वह सबके लिए खाना लाता है।"
     }
   },
   {
@@ -33,6 +43,11 @@ const set4 = [
     meaning: {
       hinglish: "Bhejna",
       hindi: "भेजना"
+    },
+    sentence: {
+      english: "I send emails every day.",
+      hinglish: "Main har din emails bhejta hu.",
+      hindi: "मैं हर दिन ईमेल भेजता हूँ।"
     }
   },
   {
@@ -45,6 +60,11 @@ const set4 = [
     meaning: {
       hinglish: "Prapt karna",
       hindi: "प्राप्त करना"
+    },
+    sentence: {
+      english: "She receives many messages.",
+      hinglish: "Wo bohot saare messages prapt karti hai.",
+      hindi: "वह बहुत सारे संदेश प्राप्त करती है।"
     }
   },
   {
@@ -57,6 +77,11 @@ const set4 = [
     meaning: {
       hinglish: "Dhundhna",
       hindi: "ढूंढना"
+    },
+    sentence: {
+      english: "I find my keys quickly.",
+      hinglish: "Main apni keys jaldi dhundhta hu.",
+      hindi: "मैं अपनी चाबियाँ जल्दी ढूंढता हूँ।"
     }
   },
   {
@@ -69,6 +94,11 @@ const set4 = [
     meaning: {
       hinglish: "Khona",
       hindi: "खोना"
+    },
+    sentence: {
+      english: "I lose my phone sometimes.",
+      hinglish: "Main kabhi kabhi apna phone kho deta hu.",
+      hindi: "मैं कभी कभी अपना फोन खो देता हूँ।"
     }
   },
   {
@@ -81,6 +111,11 @@ const set4 = [
     meaning: {
       hinglish: "Jeetna",
       hindi: "जीतना"
+    },
+    sentence: {
+      english: "They win every match.",
+      hinglish: "Wo har match jeet te hain.",
+      hindi: "वे हर मैच जीतते हैं।"
     }
   },
   {
@@ -93,6 +128,11 @@ const set4 = [
     meaning: {
       hinglish: "Ladna",
       hindi: "लड़ना"
+    },
+    sentence: {
+      english: "Brothers fight over small things.",
+      hinglish: "Bhai chhoti cheezon par ladte hain.",
+      hindi: "भाई छोटी चीज़ों पर लड़ते हैं।"
     }
   },
   {
@@ -105,6 +145,11 @@ const set4 = [
     meaning: {
       hinglish: "Pyar karna",
       hindi: "प्यार करना"
+    },
+    sentence: {
+      english: "I love my family very much.",
+      hinglish: "Main apne family se bahut pyar karta hu.",
+      hindi: "मैं अपने परिवार से बहुत प्यार करता हूँ।"
     }
   },
   {
@@ -117,6 +162,11 @@ const set4 = [
     meaning: {
       hinglish: "Nafrat karna",
       hindi: "नफरत करना"
+    },
+    sentence: {
+      english: "She hates lying.",
+      hinglish: "Wo jhooth se nafrat karti hai.",
+      hindi: "वह झूठ से नफरत करती है।"
     }
   }
 ];

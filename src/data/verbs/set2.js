@@ -9,6 +9,11 @@ const set2 = [
     meaning: {
       hinglish: "Dena",
       hindi: "देना"
+    },
+    sentence: {
+      english: "I give him a gift every year.",
+      hinglish: "Main use har saal ek gift deta hu.",
+      hindi: "मैं उसे हर साल एक उपहार देता हूँ।"
     }
   },
   {
@@ -21,6 +26,11 @@ const set2 = [
     meaning: {
       hinglish: "Lena",
       hindi: "लेना"
+    },
+    sentence: {
+      english: "She takes the bus to work.",
+      hinglish: "Wo kaam ke liye bus leti hai.",
+      hindi: "वह काम के लिए बस लेती है।"
     }
   },
   {
@@ -33,6 +43,11 @@ const set2 = [
     meaning: {
       hinglish: "Banana",
       hindi: "बनाना"
+    },
+    sentence: {
+      english: "He makes tea every morning.",
+      hinglish: "Wo har subah chai banata hai.",
+      hindi: "वह हर सुबह चाय बनाता है।"
     }
   },
   {
@@ -45,6 +60,11 @@ const set2 = [
     meaning: {
       hinglish: "Karna",
       hindi: "करना"
+    },
+    sentence: {
+      english: "I do my homework every day.",
+      hinglish: "Main har din apna homework karta hu.",
+      hindi: "मैं हर दिन अपना होमवर्क करता हूँ।"
     }
   },
   {
@@ -57,6 +77,11 @@ const set2 = [
     meaning: {
       hinglish: "Kehna",
       hindi: "कहना"
+    },
+    sentence: {
+      english: "She says hello to everyone.",
+      hinglish: "Wo har kisi hello kehti hai.",
+      hindi: "वह हर किसी को हैलो कहती है।"
     }
   },
   {
@@ -69,6 +94,11 @@ const set2 = [
     meaning: {
       hinglish: "Sochna",
       hindi: "सोचना"
+    },
+    sentence: {
+      english: "I think about my future.",
+      hinglish: "Main apne future ke baare mein sochta hu.",
+      hindi: "मैं अपने भविष्य के बारे में सोचता हूँ।"
     }
   },
   {
@@ -81,6 +111,11 @@ const set2 = [
     meaning: {
       hinglish: "Janna",
       hindi: "जानना"
+    },
+    sentence: {
+      english: "She knows the answer.",
+      hinglish: "Wo jawab janti hai.",
+      hindi: "वह जवाब जानती है।"
     }
   },
   {
@@ -93,6 +128,11 @@ const set2 = [
     meaning: {
       hinglish: "Samajhna",
       hindi: "समझना"
+    },
+    sentence: {
+      english: "I understand the lesson.",
+      hinglish: "Main lesson samajhta hu.",
+      hindi: "मैं पाठ समझता हूँ।"
     }
   },
   {
@@ -105,6 +145,11 @@ const set2 = [
     meaning: {
       hinglish: "Sikhna",
       hindi: "सीखना"
+    },
+    sentence: {
+      english: "We learn new things every day.",
+      hinglish: "Hum har din nayi cheezein sikhate hain.",
+      hindi: "हम हर दिन नई चीजें सीखते हैं।"
     }
   },
   {
@@ -117,6 +162,11 @@ const set2 = [
     meaning: {
       hinglish: "Padhana",
       hindi: "पढ़ाना"
+    },
+    sentence: {
+      english: "He teaches English at school.",
+      hinglish: "Wo school mein English padhata hai.",
+      hindi: "वह स्कूल में अंग्रेज़ी पढ़ाता है।"
     }
   }
 ];

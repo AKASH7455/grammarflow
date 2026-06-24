@@ -9,6 +9,11 @@ const set3 = [
     meaning: {
       hinglish: "Padhai karna",
       hindi: "पढ़ाई करना"
+    },
+    sentence: {
+      english: "I study for exams every night.",
+      hinglish: "Main har raat exams ke liye padhai karta hu.",
+      hindi: "मैं हर रात परीक्षा के लिए पढ़ाई करता हूँ।"
     }
   },
   {
@@ -21,6 +26,11 @@ const set3 = [
     meaning: {
       hinglish: "Kaam karna",
       hindi: "काम करना"
+    },
+    sentence: {
+      english: "He works in a big company.",
+      hinglish: "Wo ek badi company mein kaam karta hai.",
+      hindi: "वह एक बड़ी कंपनी में काम करता है।"
     }
   },
   {
@@ -33,6 +43,11 @@ const set3 = [
     meaning: {
       hinglish: "Khelna",
       hindi: "खेलना"
+    },
+    sentence: {
+      english: "They play football every weekend.",
+      hinglish: "Wo har weekend football khelte hain.",
+      hindi: "वे हर सप्ताहांत फुटबॉल खेलते हैं।"
     }
   },
   {
@@ -45,6 +60,11 @@ const set3 = [
     meaning: {
       hinglish: "Kharidna",
       hindi: "खरीदना"
+    },
+    sentence: {
+      english: "I buy groceries every week.",
+      hinglish: "Main har hafte groceries kharidta hu.",
+      hindi: "मैं हर हफ्ते किराना खरीदता हूँ।"
     }
   },
   {
@@ -57,6 +77,11 @@ const set3 = [
     meaning: {
       hinglish: "Bechna",
       hindi: "बेचना"
+    },
+    sentence: {
+      english: "She sells clothes in the market.",
+      hinglish: "Wo market mein kapde bechti hai.",
+      hindi: "वह बाज़ार में कपड़े बेचती है।"
     }
   },
   {
@@ -69,6 +94,11 @@ const set3 = [
     meaning: {
       hinglish: "Shuru karna",
       hindi: "शुरू करना"
+    },
+    sentence: {
+      english: "The class begins at 9 AM.",
+      hinglish: "Class 9 baje shuru hoti hai.",
+      hindi: "कक्षा 9 बजे शुरू होती है।"
     }
   },
   {
@@ -81,6 +111,11 @@ const set3 = [
     meaning: {
       hinglish: "Start karna",
       hindi: "स्टार्ट करना"
+    },
+    sentence: {
+      english: "I start my work early.",
+      hinglish: "Main apna kaam jaldi start karta hu.",
+      hindi: "मैं अपना काम जल्दी शुरू करता हूँ।"
     }
   },
   {
@@ -93,6 +128,11 @@ const set3 = [
     meaning: {
       hinglish: "Khatam karna",
       hindi: "खत्म करना"
+    },
+    sentence: {
+      english: "We finish our work on time.",
+      hinglish: "Hum apna kaam time par khatam karte hain.",
+      hindi: "हम अपना काम समय पर खत्म करते हैं।"
     }
   },
   {
@@ -105,6 +145,11 @@ const set3 = [
     meaning: {
       hinglish: "End karna",
       hindi: "एंड करना"
+    },
+    sentence: {
+      english: "The movie ends at 10 PM.",
+      hinglish: "Movie 10 baje end hoti hai.",
+      hindi: "फिल्म 10 बजे खत्म होती है।"
     }
   },
   {
@@ -117,6 +162,11 @@ const set3 = [
     meaning: {
       hinglish: "Kholna",
       hindi: "खोलना"
+    },
+    sentence: {
+      english: "She opens the door slowly.",
+      hinglish: "Wo darwaze aaram se kholti hai.",
+      hindi: "वह दरवाज़े आराम से खोलती है।"
     }
   }
 ];

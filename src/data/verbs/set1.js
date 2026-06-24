@@ -9,6 +9,11 @@ const set1 = [
     meaning: {
       hinglish: "Jagana",
       hindi: "जगाना"
+    },
+    sentence: {
+      english: "I wake up early every morning.",
+      hinglish: "Main har subah jaldi utha hu.",
+      hindi: "मैं हर सुबह जल्दी उठता हूँ।"
     }
   },
   {
@@ -21,6 +26,11 @@ const set1 = [
     meaning: {
       hinglish: "Dekhna",
       hindi: "देखना"
+    },
+    sentence: {
+      english: "I see a bird in the sky.",
+      hinglish: "Main aasmaan mein ek pakshi dekhta hu.",
+      hindi: "मैं आसमान में एक पक्षी देखता हूँ।"
     }
   },
   {
@@ -33,6 +43,11 @@ const set1 = [
     meaning: {
       hinglish: "Sunnna",
       hindi: "सुनना"
+    },
+    sentence: {
+      english: "I hear music from the radio.",
+      hinglish: "Main radio se music sunta hu.",
+      hindi: "मैं रेडियो से संगीत सुनता हूँ।"
     }
   },
   {
@@ -45,6 +60,11 @@ const set1 = [
     meaning: {
       hinglish: "Bolna",
       hindi: "बोलना"
+    },
+    sentence: {
+      english: "She speaks English very well.",
+      hinglish: "Wo English bahut achi bolti hai.",
+      hindi: "वह अंग्रेज़ी बहुत अच्छी बोलती है।"
     }
   },
   {
@@ -57,6 +77,11 @@ const set1 = [
     meaning: {
       hinglish: "Likhna",
       hindi: "लिखना"
+    },
+    sentence: {
+      english: "I write a letter every day.",
+      hinglish: "Main har din ek letter likhta hu.",
+      hindi: "मैं हर दिन एक पत्र लिखता हूँ।"
     }
   },
   {
@@ -69,6 +94,11 @@ const set1 = [
     meaning: {
       hinglish: "Padhna",
       hindi: "पढ़ना"
+    },
+    sentence: {
+      english: "He reads books every night.",
+      hinglish: "Wo har raat kitabein padhta hai.",
+      hindi: "वह हर रात किताबें पढ़ता है।"
     }
   },
   {
@@ -81,6 +111,11 @@ const set1 = [
     meaning: {
       hinglish: "Daudna",
       hindi: "दौड़ना"
+    },
+    sentence: {
+      english: "They run in the park daily.",
+      hinglish: "Wo har din park mein daudte hain.",
+      hindi: "वे हर दिन पार्क में दौड़ते हैं।"
     }
   },
   {
@@ -93,6 +128,11 @@ const set1 = [
     meaning: {
       hinglish: "Chalna",
       hindi: "चलना"
+    },
+    sentence: {
+      english: "I walk to school every day.",
+      hinglish: "Main har din school chalta hu.",
+      hindi: "मैं हर दिन स्कूल चलता हूँ।"
     }
   },
   {
@@ -105,6 +145,11 @@ const set1 = [
     meaning: {
       hinglish: "Baithna",
       hindi: "बैठना"
+    },
+    sentence: {
+      english: "She sits on the chair.",
+      hinglish: "Wo chair par baithti hai.",
+      hindi: "वह कुर्सी पर बैठती है।"
     }
   },
   {
@@ -117,6 +162,11 @@ const set1 = [
     meaning: {
       hinglish: "Khara hona",
       hindi: "खड़ा होना"
+    },
+    sentence: {
+      english: "He stands near the door.",
+      hinglish: "Wo darwaze ke paas khada hai.",
+      hindi: "वह दरवाज़े के पास खड़ा है।"
     }
   }
 ];

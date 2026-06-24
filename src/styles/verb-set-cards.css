@@ -1,0 +1,248 @@
+@import "./variables.css";
+
+/* Grid */
+.verb-set-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+/* Card */
+.verb-set-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 14px;
+  min-height: 160px;
+
+  background: var(--white-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+
+  text-decoration: none;
+
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden;
+
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.verb-set-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.verb-set-card:active {
+  transform: scale(0.98);
+}
+
+/* Top Decoration */
+.verb-set-card::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+}
+
+/* Header */
+.verb-set-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Icon */
+.verb-set-card__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: var(--radius-md);
+
+  flex-shrink: 0;
+}
+
+.verb-set-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Percentage */
+.verb-set-card__percentage {
+  padding: 4px 8px;
+
+  border-radius: var(--radius-sm);
+
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+/* Content */
+.verb-set-card__content {
+  flex: 1;
+}
+
+.verb-set-card__title {
+  margin: 0;
+
+  font-size: var(--text-md);
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+.verb-set-card__count {
+  margin-top: 4px;
+
+  font-size: var(--text-sm);
+
+  color: var(--text-light);
+}
+
+/* Level */
+.verb-set-card__level {
+  display: inline-block;
+
+  margin-top: 6px;
+
+  font-size: var(--text-xs);
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+/* Badge */
+.verb-set-card__badge {
+  width: fit-content;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+/* Progress */
+.verb-set-card__progress {
+  margin-top: auto;
+}
+
+.verb-set-card__progress-bar {
+  width: 100%;
+  height: 7px;
+
+  border-radius: 999px;
+
+  background: var(--surface-color);
+
+  overflow: hidden;
+}
+
+.verb-set-card__progress-fill {
+  height: 100%;
+
+  border-radius: 999px;
+
+  transition: width 0.4s ease;
+}
+
+.verb-set-card__progress-text {
+  display: block;
+
+  margin-top: 6px;
+
+  text-align: right;
+
+  font-size: var(--text-xs);
+  font-weight: 700;
+
+  color: var(--text-light);
+}
+
+/* Beginner */
+.verb-set-card--beginner::before {
+  background: var(--beginner-text);
+}
+
+.verb-set-card--beginner .verb-set-card__icon-wrapper,
+.verb-set-card--beginner .verb-set-card__badge,
+.verb-set-card--beginner .verb-set-card__percentage {
+  background: var(--beginner-bg);
+  color: var(--beginner-text);
+}
+
+.verb-set-card--beginner .verb-set-card__level,
+.verb-set-card--beginner .verb-set-card__progress-fill {
+  color: var(--beginner-text);
+  background: var(--beginner-text);
+}
+
+/* Intermediate */
+.verb-set-card--intermediate::before {
+  background: var(--intermediate-text);
+}
+
+.verb-set-card--intermediate .verb-set-card__icon-wrapper,
+.verb-set-card--intermediate .verb-set-card__badge,
+.verb-set-card--intermediate .verb-set-card__percentage {
+  background: var(--intermediate-bg);
+  color: var(--intermediate-text);
+}
+
+.verb-set-card--intermediate .verb-set-card__level,
+.verb-set-card--intermediate .verb-set-card__progress-fill {
+  color: var(--intermediate-text);
+  background: var(--intermediate-text);
+}
+
+/* Advanced */
+.verb-set-card--advanced::before {
+  background: var(--advanced-text);
+}
+
+.verb-set-card--advanced .verb-set-card__icon-wrapper,
+.verb-set-card--advanced .verb-set-card__badge,
+.verb-set-card--advanced .verb-set-card__percentage {
+  background: var(--advanced-bg);
+  color: var(--advanced-text);
+}
+
+.verb-set-card--advanced .verb-set-card__level,
+.verb-set-card--advanced .verb-set-card__progress-fill {
+  color: var(--advanced-text);
+  background: var(--advanced-text);
+}
+
+/* Master */
+.verb-set-card--master::before {
+  background: var(--master-text);
+}
+
+.verb-set-card--master .verb-set-card__icon-wrapper,
+.verb-set-card--master .verb-set-card__badge,
+.verb-set-card--master .verb-set-card__percentage {
+  background: var(--master-bg);
+  color: var(--master-text);
+}
+
+.verb-set-card--master .verb-set-card__level,
+.verb-set-card--master .verb-set-card__progress-fill {
+  color: var(--master-text);
+  background: var(--master-text);
+}

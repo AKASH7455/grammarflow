@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, } from "react-icons/fi";
 
 import VerbSearch from "../components/verbs/VerbSearch";
 import VerbFilter from "../components/verbs/VerbFilter";
-import ViewToggle from "../components/verbs/ViewToggle";
 import VerbTable from "../components/verbs/VerbTable";
 import VerbCard from "../components/verbs/VerbCard";
 import EmptyState from "../components/verbs/EmptyState";
@@ -13,94 +12,101 @@ import verbService from "../services/verbService";
 import "../styles/verbforms.css";
 
 function VerbSetDetail() {
-  const { setName } = useParams();
-  const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [viewMode, setViewMode] = useState("table");
+const { setName } = useParams();
+const navigate = useNavigate();
 
-  const setTitles = {
-    daily: "Daily Verbs",
-    set1: "Verb Set 1",
-    set2: "Verb Set 2",
-    set3: "Verb Set 3",
-    set4: "Verb Set 4",
-    set5: "Verb Set 5",
-    all: "All Verbs"
-  };
+const [searchTerm, setSearchTerm] = useState("");
+const [activeFilter, setActiveFilter] = useState("all");
+const [viewMode, setViewMode] = useState("table");
 
-  const filters = [
-    { label: "All", value: "all" },
-    { label: "Regular", value: "regular" },
-    { label: "Irregular", value: "irregular" },
-    { label: "Daily", value: "daily" },
-    { label: "Most Used", value: "most-used" }
-  ];
+const setTitles = {
+daily: "Daily Verbs",
+set1: "Verb Set 1",
+set2: "Verb Set 2",
+set3: "Verb Set 3",
+set4: "Verb Set 4",
+set5: "Verb Set 5",
+all: "All Verbs",
+};
 
-  const verbs = verbService.getVerbsBySet(setName);
-  const filteredVerbs = verbService.filterVerbs(activeFilter, verbs);
-  const searchedVerbs = verbService.searchVerbs(searchTerm, filteredVerbs);
+const filters = [
+{ label: "All", value: "all" },
+{ label: "Regular", value: "regular" },
+{ label: "Irregular", value: "irregular" },
+{ label: "Daily", value: "daily" },
+{ label: "Most Used", value: "most-used" },
+];
 
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
+const verbs = verbService.getVerbsBySet(setName);
 
-  const handleFilterChange = (filter) => {
-    setActiveFilter(filter);
-  };
+const filteredVerbs = verbService.filterVerbs(
+activeFilter,
+verbs
+);
 
-  const handleViewChange = (mode) => {
-    setViewMode(mode);
-  };
+const searchedVerbs = verbService.searchVerbs(
+searchTerm,
+filteredVerbs
+);
 
-  return (
-    <main className="verb-set-detail-page">
-      <section className="verb-set-detail-page__header">
-        <button
-          className="verb-set-detail-page__back"
-          onClick={() => navigate("/verbs")}
-        >
-          <FiArrowLeft />
-          <span>Back</span>
-        </button>
+return ( <main className="verb-set-detail-page">
 
-        <h1 className="verb-set-detail-page__title">{setTitles[setName] || "Verb Forms"}</h1>
-      </section>
+  <section className="verb-set-header">
 
-      <section className="verb-set-detail-page__controls">
-        <VerbSearch onSearch={handleSearch} placeholder="Search verbs..." />
-        
-        <div className="verb-set-detail-page__actions">
-          <VerbFilter
-            filters={filters}
-            activeFilter={activeFilter}
-            onFilterChange={handleFilterChange}
+  <button
+    className="verb-set-header__back-btn"
+    onClick={() => navigate("/verbs")}
+  >
+    <FiArrowLeft />
+  </button>
+
+  <h1 className="verb-set-header__title">
+    {setTitles[setName] || "Verb Forms"}
+  </h1>
+
+</section>
+
+  <section className="verb-toolbar">
+
+    <VerbSearch
+      value={searchTerm}
+      onSearch={setSearchTerm}
+      viewMode={viewMode}
+      onViewChange={setViewMode}
+    >
+      <VerbFilter
+        filters={filters}
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
+      />
+    </VerbSearch>
+
+  </section>
+
+  <section className="verb-set-detail-page__content">
+
+    {searchedVerbs.length === 0 ? (
+      <EmptyState
+        message="No verbs match your search"
+      />
+    ) : viewMode === "table" ? (
+      <VerbTable verbs={searchedVerbs} />
+    ) : (
+      <div className="verb-cards-grid">
+        {searchedVerbs.map((verb) => (
+          <VerbCard
+            key={verb.id}
+            verb={verb}
           />
-          <ViewToggle viewMode={viewMode} onViewChange={handleViewChange} />
-        </div>
-      </section>
+        ))}
+      </div>
+    )}
 
-      <section className="verb-set-detail-page__content">
-        {searchedVerbs.length === 0 ? (
-          <EmptyState message="No verbs match your search or filter" />
-        ) : viewMode === "table" ? (
-          <VerbTable verbs={searchedVerbs} />
-        ) : (
-          <div className="verb-cards-grid">
-            {searchedVerbs.map((verb) => (
-              <VerbCard key={verb.id} verb={verb} />
-            ))}
-          </div>
-        )}
-      </section>
+  </section>
 
-      <section className="verb-set-detail-page__stats">
-        <span className="verb-set-detail-page__count">
-          Showing {searchedVerbs.length} of {verbs.length} verbs
-        </span>
-      </section>
-    </main>
-  );
+</main>
+
+);
 }
 
 export default VerbSetDetail;

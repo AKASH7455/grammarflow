@@ -1,33 +1,64 @@
 import { useContext } from "react";
 import { LanguageContext } from "../../context/AppContexts";
 
-function VerbTable({ verbs }) {
+function VerbTable({ verbs = [] }) {
   const { language } = useContext(LanguageContext);
+
+  if (!verbs.length) {
+    return (
+      <div className="verb-table-empty">
+        No verbs found.
+      </div>
+    );
+  }
 
   return (
     <div className="verb-table-container">
       <table className="verb-table">
         <thead className="verb-table__head">
-          <tr className="verb-table__row">
-            <th className="verb-table__header">#</th>
-            <th className="verb-table__header">V1</th>
-            <th className="verb-table__header">V2</th>
-            <th className="verb-table__header">V3</th>
-            <th className="verb-table__header">Meaning</th>
+          <tr>
+            <th>#</th>
+            <th>V1</th>
+            <th>V2</th>
+            <th>V3</th>
+            <th>Meaning</th>
           </tr>
         </thead>
+
         <tbody className="verb-table__body">
-          {verbs.map((verb, index) => (
-            <tr key={verb.id} className="verb-table__row">
-              <td className="verb-table__cell" data-label="#">{index + 1}</td>
-              <td className="verb-table__cell" data-label="V1">{verb.v1}</td>
-              <td className="verb-table__cell" data-label="V2">{verb.v2}</td>
-              <td className="verb-table__cell" data-label="V3">{verb.v3}</td>
-              <td className="verb-table__cell" data-label="Meaning">
-                {verb.meaning[language] || verb.meaning.hinglish}
-              </td>
-            </tr>
-          ))}
+          {verbs.map((verb, index) => {
+            const meaning =
+              verb?.meaning?.[language] ||
+              verb?.meaning?.hinglish ||
+              "-";
+
+            return (
+              <tr
+                key={verb.id || `${verb.v1}-${index}`}
+                className="verb-table__row"
+              >
+                <td className="verb-table__cell verb-table__number">
+                  {index + 1}
+                </td>
+
+                <td className="verb-table__cell">
+                  <strong>{verb.v1 || "-"}</strong>
+                </td>
+
+                <td className="verb-table__cell">
+                  {verb.v2 || "-"}
+                </td>
+
+                <td className="verb-table__cell">
+                  {verb.v3 || "-"}
+                </td>
+
+                <td className="verb-table__cell verb-table__meaning">
+                  {meaning}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

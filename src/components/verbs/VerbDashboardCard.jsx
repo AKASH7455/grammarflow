@@ -1,19 +1,31 @@
 import { Link } from "react-router-dom";
-import { FiBookOpen, FiZap, FiLayers, FiGrid, FiStar } from "react-icons/fi";
 
-function VerbDashboardCard({ title, description, icon, path, count, color }) {
-  const Icon = icon;
-
+function VerbDashboardCard({
+  title,
+  icon: Icon,
+  path,
+  count = 0,
+  color = "primary",
+}) {
   return (
-    <Link to={path} className="verb-dashboard-card">
-      <div className={`verb-dashboard-card__icon verb-dashboard-card__icon--${color}`}>
-        <Icon />
+    <Link
+      to={path}
+      className="verb-dashboard-card"
+      aria-label={`${title} section`}
+    >
+      <div
+        className={`verb-dashboard-card__icon verb-dashboard-card__icon--${color}`}
+      >
+        <Icon size={22} />
       </div>
-      <div className="verb-dashboard-card__content">
-        <h3 className="verb-dashboard-card__title">{title}</h3>
-        <p className="verb-dashboard-card__description">{description}</p>
-        <span className="verb-dashboard-card__count">{count} verbs</span>
-      </div>
+
+      <h3 className="verb-dashboard-card__title">
+        {title}
+      </h3>
+
+      <span className="verb-dashboard-card__count">
+        {count}+
+      </span>
     </Link>
   );
 }
