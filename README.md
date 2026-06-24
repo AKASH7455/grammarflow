@@ -15,25 +15,3 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-
-
-
-
-{
-  id: 1,
-
-  v1: "Write",
-  v2: "Wrote",
-  v3: "Written",
-
-  meaning: {
-    hinglish: "Likhna",
-    hindi: "लिखना"
-  },
-
-  sentence: {
-    english: "I write a letter every day.",
-    hinglish: "Main har din ek letter likhta hu.",
-    hindi: "मैं हर दिन एक पत्र लिखता हूँ।"
-  }
-}

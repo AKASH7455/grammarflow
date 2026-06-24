@@ -3,7 +3,7 @@ Verb Dashboard Page
 ========================= */
 
 .verb-dashboard-page {
-  padding: 0.75rem;
+  padding: 0.4rem;
 
   display: flex;
   flex-direction: column;
@@ -335,7 +335,7 @@ Count Badge
 
   width: 100%;
 
-  padding: 8px 12px;
+  padding: 8px 8px; /* Reduced horizontal padding from 12px to 8px for tighter spacing */
 
   background: var(--white-color);
   border: 1px solid var(--border-color);
@@ -1136,7 +1136,7 @@ Empty State
   flex-direction: column;
   gap: 1rem;
 
-  padding: 1rem;
+  padding: 0.5rem; /* Reduced from 1rem to 0.5rem (8px) for edge-to-edge layout on mobile */
 
   min-height: 100vh;
 
@@ -1219,7 +1219,7 @@ Media Queries
   }
 
   .verb-set-detail-page {
-    padding: 1.25rem;
+    padding: 0.75rem; /* Reduced from 1.25rem to 0.75rem (12px) for tighter spacing */
   }
 
   .verb-cards-grid {

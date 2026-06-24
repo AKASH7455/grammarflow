@@ -33,6 +33,37 @@ export const defaultData = {
 const freshData = () => JSON.parse(JSON.stringify(defaultData));
 const unique = (items) => [...new Set(items)];
 
+const getCleanTitle = (id, type) => {
+  if (!id) return "Activity";
+  
+  const parts = id.split("/");
+  const lastPart = parts[parts.length - 1];
+  
+  switch (type) {
+    case "quiz":
+      const topicName = parts.length > 1 ? parts[parts.length - 2] : lastPart;
+      return `${formatTitle(topicName)} Quiz`;
+    case "topic":
+      return formatTitle(lastPart);
+    case "practice":
+      if (id.includes("translation")) return "Translation Practice";
+      if (id.includes("fillblank")) return "Fill in the Blanks";
+      if (id.includes("sentence")) return "Sentence Correction";
+      if (id.includes("verb")) return "Verb Forms Practice";
+      return "Practice Exercise";
+    default:
+      return formatTitle(lastPart);
+  }
+};
+
+const formatTitle = (text) => {
+  if (!text) return "Activity";
+  return text
+    .split(/[-_]/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
+
 const normalize = (value) => {
   const safe =
     value && typeof value === "object" && !Array.isArray(value)
@@ -142,13 +173,15 @@ export const updateProgress = (updater) => {
 };
 
 const recordActivity = (data, type, id, xp, timestamp) => {
-  const activityId = `${type}:${id}`;
+  const activityId = `${type}:${id}:${timestamp.slice(0, 10)}`;
+  const cleanTitle = getCleanTitle(id, type);
+  
   if (!data.activityLogs.some((item) => item.id === activityId)) {
     data.user.xp += xp;
     data.activityLogs.unshift({
       id: activityId,
       type,
-      text: `Completed ${id}`,
+      text: cleanTitle,
       timestamp,
       xp,
     });

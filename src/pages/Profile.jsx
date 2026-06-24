@@ -1,10 +1,12 @@
 import { FiUser, FiPhone, FiActivity, FiMoon, FiSun } from "react-icons/fi";
 import ActivityHeatmap from "../components/progress/ActivityHeatmap";
 import { useTheme } from "../hooks/useTheme";
+import { useProgress } from "../hooks/useProgress";
 import "../styles/profile.css";
 
 function Profile() {
   const { theme, toggleTheme } = useTheme();
+  const { data } = useProgress();
   const isDarkTheme = theme === "dark";
   const profileData = {
     name: "User Name",
@@ -43,42 +45,34 @@ function Profile() {
 
 
         {/* Appearance */}
-        <section className="profile__section">
+      <section className="profile__section">
 
-          <div className="profile__card profile__card--theme">
-            <div className="profile__theme-copy">
-              <span className="profile__theme-label">
-                Appearance
-              </span>
+  <div className="profile__settings-item">
 
-              <h2 className="profile__theme-title">
-                {isDarkTheme ? "Dark Theme" : "Light Theme"}
-              </h2>
+    <span className="profile__settings-label">
+      Theme
+    </span>
 
-              <p className="profile__theme-text">
-                {isDarkTheme
-                  ? "Dark mode is on for comfortable night learning."
-                  : "Switch to dark mode for softer late-night practice."}
-              </p>
-            </div>
+    <span
+      className={`profile__theme-toggle ${
+        isDarkTheme
+          ? "profile__theme-toggle--dark"
+          : ""
+      }`}
+      onClick={toggleTheme}
+      role="button"
+      tabIndex={0}
+    >
+      {isDarkTheme ? <FiSun /> : <FiMoon />}
 
-            <button
-              type="button"
-              className={`profile__theme-button ${isDarkTheme ? "profile__theme-button--dark" : ""}`}
-              onClick={toggleTheme}
-              aria-label={`Switch to ${isDarkTheme ? "light" : "dark"} theme`}
-            >
-              <span className="profile__theme-button-icon">
-                {isDarkTheme ? <FiSun /> : <FiMoon />}
-              </span>
+      <span>
+        {isDarkTheme ? "Light" : "Dark"}
+      </span>
+    </span>
 
-              <span>
-                {isDarkTheme ? "Light" : "Dark"}
-              </span>
-            </button>
-          </div>
+  </div>
 
-        </section>
+</section>
         {/* Learning Activity */}
         <section className="profile__section">
 
@@ -88,7 +82,7 @@ function Profile() {
           </div>
 
           <div className="profile__card profile__card--calendar">
-            <ActivityHeatmap />
+            <ActivityHeatmap activityData={data.activityLogs || []} completedDates={data.user?.completedDates || []} />
           </div>
 
         </section>

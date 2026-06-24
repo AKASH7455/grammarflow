@@ -1,4 +1,5 @@
 import { useProgress } from "../../hooks/useProgress";
+import { FiZap } from "react-icons/fi";
 import "../../styles/streakcard.css";
 
 function StreakCard() {
@@ -19,7 +20,7 @@ function StreakCard() {
     <section className="streak-card">
       <div className="streak-header">
         <div><p className="streak-label">Current Streak</p><h2 className="streak-days">{streak} Days</h2></div>
-        <div className="streak-icon">??</div>
+        <div className="streak-icon"><FiZap /></div>
       </div>
       <div className="streak-week">
         {week.map((item, index) => <div key={index} className={`day ${item.completed ? "completed" : ""} ${item.active ? "active" : ""}`}><span>{item.label}</span></div>)}
