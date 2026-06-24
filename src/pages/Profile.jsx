@@ -81,7 +81,7 @@ function Profile() {
             <h2>Learning Activity</h2>
           </div>
 
-          <div className="profile__card profile__card--calendar">
+          <div >
             <ActivityHeatmap activityData={data.activityLogs || []} completedDates={data.user?.completedDates || []} />
           </div>
 
