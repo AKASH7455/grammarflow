@@ -39,6 +39,7 @@
 }
 
 .hero-level,
+.hero-stage,
 .hero-xp,
 .hero-xp-needed {
   display: flex;
@@ -49,6 +50,7 @@
 }
 
 .hero-level-label,
+.hero-stage-label,
 .hero-xp-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -59,11 +61,17 @@
 }
 
 .hero-level-value,
+.hero-stage-value,
 .hero-xp-value {
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--white-color);
   line-height: 1;
+}
+
+.hero-stage-value {
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .hero-progress-bar {
@@ -857,6 +865,66 @@
 
 .achievement-card.compact .achievement-xp {
   font-size: 0.65rem;
+}
+
+/* =========================
+   ACHIEVEMENT RARITY
+========================= */
+
+.achievement-card.rarity-common {
+  border: 2px solid #9CA3AF;
+}
+
+.achievement-card.rarity-uncommon {
+  border: 2px solid #10B981;
+}
+
+.achievement-card.rarity-rare {
+  border: 2px solid #3B82F6;
+}
+
+.achievement-card.rarity-epic {
+  border: 2px solid #8B5CF6;
+}
+
+.achievement-card.rarity-legendary {
+  border: 2px solid #F59E0B;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.achievement-card.rarity-mythic {
+  border: 2px solid #EF4444;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+  animation: mythic-glow 2s ease-in-out infinite;
+}
+
+@keyframes mythic-glow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* =========================
+   ACHIEVEMENT PROGRESS BAR
+========================= */
+
+.achievement-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--surface-color);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.achievement-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark-color));
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 .achievement-badge {

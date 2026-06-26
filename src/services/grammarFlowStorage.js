@@ -1,4 +1,7 @@
 import { readStorage, writeStorage } from "../utils/localStorage";
+import { calculateXP, ACTIVITY_TYPES } from "./progress/experienceEngine";
+import { calculateLevel } from "./progress/levelEngine";
+import { checkAchievements, unlockAchievement, getNewlyUnlockedAchievements } from "./progress/achievementEngine";
 
 export const STORAGE_KEY = "grammarflow-data";
 
@@ -159,7 +162,9 @@ const calculateProgress = (data) => {
       ? Math.round(((topics.length + quizzes.length + practice.length) / total) * 100)
       : 0,
   };
-  data.user.level = Math.floor(data.user.xp / 500) + 1;
+  // Use new level engine for level calculation
+  const levelInfo = calculateLevel(data.user.xp);
+  data.user.level = levelInfo.level;
   return data;
 };
 
@@ -172,18 +177,27 @@ export const updateProgress = (updater) => {
   return saveProgress(calculateProgress(next));
 };
 
-const recordActivity = (data, type, id, xp, timestamp) => {
+const recordActivity = (data, type, id, metadata = {}, timestamp) => {
   const activityId = `${type}:${id}:${timestamp.slice(0, 10)}`;
   const cleanTitle = getCleanTitle(id, type);
   
   if (!data.activityLogs.some((item) => item.id === activityId)) {
+    // Calculate XP using the new experience engine
+    const xp = calculateXP(type, metadata);
     data.user.xp += xp;
+    
     data.activityLogs.unshift({
       id: activityId,
       type,
       text: cleanTitle,
       timestamp,
       xp,
+    });
+    
+    // Check for new achievements
+    const newAchievements = getNewlyUnlockedAchievements(data);
+    newAchievements.forEach((achievement) => {
+      data = unlockAchievement(achievement.id, data);
     });
   }
   const date = timestamp.slice(0, 10);
@@ -201,7 +215,8 @@ export const saveQuizResult = (result) =>
       correctAnswers: result.correctAnswers ?? result.score,
       completedAt,
     });
-    recordActivity(data, "quiz", result.quizId, 50, completedAt);
+    // Use new XP calculation with metadata for perfect quiz bonus
+    recordActivity(data, ACTIVITY_TYPES.QUIZ, result.quizId, { score: result.percentage || (result.correctAnswers / result.totalQuestions) * 100 }, completedAt);
     return data;
   });
 
@@ -210,29 +225,29 @@ export const saveTopicResult = (result) =>
     const completedAt = result.completedAt || new Date().toISOString();
     const record = { completed: true, ...result, completedAt };
     data.topicProgress = upsert(data.topicProgress, "topicId", record);
-    recordActivity(data, "topic", result.topicId, 25, completedAt);
+    recordActivity(data, ACTIVITY_TYPES.NOTE, result.topicId, {}, completedAt);
     return data;
   });
 
-const saveExercise = (collection, key, result) =>
+const saveExercise = (collection, key, result, activityType) =>
   updateProgress((data) => {
     const completedAt = new Date().toISOString();
     const record = { ...result, completedAt };
     data[collection] = upsert(data[collection], key, record);
     if (result.completed) {
-      recordActivity(data, "practice", result[key], 30, completedAt);
+      recordActivity(data, activityType, result[key], {}, completedAt);
     }
     return data;
   });
 
 export const saveFillBlankResult = (result) =>
-  saveExercise("fillBlankProgress", "exerciseId", result);
+  saveExercise("fillBlankProgress", "exerciseId", result, ACTIVITY_TYPES.FILL_BLANK);
 export const saveTranslationResult = (result) =>
-  saveExercise("translationProgress", "exerciseId", result);
+  saveExercise("translationProgress", "exerciseId", result, ACTIVITY_TYPES.TRANSLATION);
 export const saveSentenceCorrectionResult = (result) =>
-  saveExercise("sentenceCorrectionProgress", "exerciseId", result);
+  saveExercise("sentenceCorrectionProgress", "exerciseId", result, ACTIVITY_TYPES.SENTENCE_CORRECTION);
 export const saveVerbResult = (result) =>
-  saveExercise("verbProgress", "verbId", result);
+  saveExercise("verbProgress", "verbId", result, ACTIVITY_TYPES.VERB_FORMS);
 
 export const saveQuizSession = (quizId, session) =>
   updateProgress((data) => {

@@ -1,14 +1,25 @@
 import React, { useMemo, useState } from "react";
 import AchievementCard from "./AchievementCard";
+import { ACHIEVEMENT_CATEGORIES } from "../../utils/achievementDefinitions";
 import "../../styles/progresspage.css";
+
+const CATEGORY_LABELS = {
+  [ACHIEVEMENT_CATEGORIES.LEARNING]: "Learning",
+  [ACHIEVEMENT_CATEGORIES.PRACTICE]: "Practice",
+  [ACHIEVEMENT_CATEGORIES.QUIZ]: "Quiz",
+  [ACHIEVEMENT_CATEGORIES.STREAK]: "Streak",
+  [ACHIEVEMENT_CATEGORIES.TRANSLATION]: "Translation",
+  [ACHIEVEMENT_CATEGORIES.SPEED]: "Speed",
+  [ACHIEVEMENT_CATEGORIES.ACCURACY]: "Accuracy",
+  [ACHIEVEMENT_CATEGORIES.DAILY_LOGIN]: "Daily Login",
+  [ACHIEVEMENT_CATEGORIES.COMPLETION]: "Completion",
+  [ACHIEVEMENT_CATEGORIES.XP_MILESTONES]: "XP Milestones",
+  [ACHIEVEMENT_CATEGORIES.SPECIAL]: "Special",
+};
 
 const CATEGORIES = [
   { id: "all", label: "All" },
-  { id: "streak", label: "Streak" },
-  { id: "learning", label: "Learning" },
-  { id: "quiz", label: "Quiz" },
-  { id: "special", label: "Special" },
-  { id: "master", label: "Master" },
+  ...Object.entries(CATEGORY_LABELS).map(([id, label]) => ({ id, label })),
 ];
 
 const AchievementSection = React.memo(({ achievements = [] }) => {
@@ -57,7 +68,7 @@ const AchievementSection = React.memo(({ achievements = [] }) => {
           <div className="achievement-recent-scroll">
             {recentUnlocks.map((achievement) => (
               <AchievementCard
-                key={achievement.title}
+                key={achievement.id}
                 achievement={achievement}
                 compact
               />
@@ -86,7 +97,7 @@ const AchievementSection = React.memo(({ achievements = [] }) => {
         {filteredAchievements.length > 0 ? (
           filteredAchievements.map((achievement) => (
             <AchievementCard
-              key={achievement.title}
+              key={achievement.id}
               achievement={achievement}
               compact
             />

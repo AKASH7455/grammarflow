@@ -55,3 +55,101 @@
   color: var(--primary-color);
   margin: 0;
 }
+
+
+
+   /* media */
+
+
+   /* ========================================
+   Responsive Design
+======================================== */
+
+/* Large Mobile */
+@media (min-width: 480px) {
+  .ai-container {
+    padding: 3.5rem 2rem;
+  }
+
+  .ai-description {
+    max-width: 340px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .ai-container {
+    min-height: 500px;
+    padding: 4rem 2.5rem;
+  }
+
+  .ai-illustration {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2rem;
+  }
+
+  .ai-robot-icon {
+    font-size: 4.5rem;
+  }
+
+  .ai-title {
+    font-size: 2rem;
+  }
+
+  .ai-badge {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ai-description {
+    font-size: 1rem;
+    max-width: 500px;
+  }
+
+  .ai-cta {
+    font-size: 1.1rem;
+  }
+}
+
+/* Small Laptop */
+@media (min-width: 1024px) {
+  .ai-container {
+    min-height: 560px;
+    padding: 5rem 3rem;
+  }
+
+  .ai-illustration {
+    width: 160px;
+    height: 160px;
+  }
+
+  .ai-robot-icon {
+    font-size: 5rem;
+  }
+
+  .ai-title {
+    font-size: 2.25rem;
+  }
+
+  .ai-description {
+    max-width: 600px;
+    line-height: 1.8;
+  }
+
+  .ai-cta {
+    font-size: 1.15rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1280px) {
+  .ai-container {
+    padding: 6rem 4rem;
+  }
+
+  .ai-description {
+    max-width: 680px;
+  }
+}

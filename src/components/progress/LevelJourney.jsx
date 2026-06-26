@@ -1,27 +1,26 @@
 import React, { useMemo } from "react";
-import { calculateLevel, getAllLevels, getLevelConfig } from "../../utils/levelUtils";
+import { getAllStages, getStageConfig, getStageProgression } from "../../utils/levelUtils";
 import { FaCheck, FaLock } from "react-icons/fa";
-
 import "../../styles/progresspage.css";
 
-const LevelJourney = React.memo(({ currentProgress }) => {
-  const currentLevel = useMemo(() => calculateLevel(currentProgress), [currentProgress]);
-  const allLevels = useMemo(() => getAllLevels(), []);
-  const currentIndex = useMemo(() => allLevels.indexOf(currentLevel), [allLevels, currentLevel]);
+const LevelJourney = React.memo(({ currentProgress = 0, levelInfo = {} }) => {
+  const { stage: currentStage = 'Beginner' } = levelInfo;
+  const stageProgression = useMemo(() => getStageProgression(levelInfo.level ? levelInfo.level * 100 : currentProgress), [levelInfo, currentProgress]);
+  const allStages = useMemo(() => getAllStages(), []);
 
   return (
     <section className="level-journey">
-      <h2 className="level-journey-title">Level Journey</h2>
+      <h2 className="level-journey-title">Learning Journey</h2>
       <div className="level-journey-scroll">
-        {allLevels.map((level, index) => {
-          const config = getLevelConfig(level);
-          const isCurrent = index === currentIndex;
-          const isCompleted = index < currentIndex;
-          const isLocked = index > currentIndex;
+        {stageProgression.map((stageInfo, index) => {
+          const config = getStageConfig(stageInfo.stage);
+          const isCurrent = stageInfo.current;
+          const isCompleted = stageInfo.unlocked && !isCurrent;
+          const isLocked = !stageInfo.unlocked;
 
           return (
             <div
-              key={level}
+              key={stageInfo.stage}
               className={`level-card ${isCurrent ? "current" : ""} ${isCompleted ? "completed" : ""} ${isLocked ? "locked" : ""}`}
             >
               <div className="level-card-icon">
@@ -35,7 +34,7 @@ const LevelJourney = React.memo(({ currentProgress }) => {
                   config.icon
                 )}
               </div>
-              <span className="level-card-name">{level}</span>
+              <span className="level-card-name">{stageInfo.stage}</span>
               {isCurrent && <span className="level-card-badge">Current</span>}
             </div>
           );

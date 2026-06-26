@@ -133,3 +133,129 @@
 
   box-shadow: 0 0 0 3px var(--primary-soft-color);
 }
+
+
+
+/* ========================================
+   Responsive Design
+======================================== */
+
+/* Large Mobile */
+@media (min-width: 480px) {
+  .fillblank-container {
+    gap: 18px;
+  }
+
+  .fillblank-question-card {
+    padding: 24px;
+  }
+
+  .fillblank-sentence {
+    font-size: 1.05rem;
+  }
+
+  .fillblank-input {
+    height: 52px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .fillblank-container {
+    gap: 24px;
+  }
+
+  .fillblank-question-card {
+    padding: 28px;
+  }
+
+  .fillblank-sentence {
+    font-size: 1.15rem;
+    line-height: 2;
+  }
+
+  .fillblank-blank {
+    min-width: 90px;
+    margin: 0 6px;
+  }
+
+  .fillblank-hint-title {
+    font-size: 0.95rem;
+  }
+
+  .fillblank-hints {
+    gap: 10px;
+  }
+
+  .fillblank-hint-chip {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+
+  .fillblank-input {
+    height: 56px;
+    padding: 0 16px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Laptop */
+@media (min-width: 1024px) {
+  .fillblank-container {
+    gap: 28px;
+  }
+
+  .fillblank-question-card {
+    padding: 32px;
+  }
+
+  .fillblank-sentence {
+    font-size: 1.2rem;
+  }
+
+  .fillblank-blank {
+    min-width: 100px;
+  }
+
+  .fillblank-hint-chip {
+    padding: 9px 16px;
+    font-size: 0.95rem;
+  }
+
+  .fillblank-input {
+    height: 60px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1280px) {
+  .fillblank-question-card {
+    padding: 36px;
+  }
+
+  .fillblank-sentence {
+    font-size: 1.25rem;
+  }
+
+  .fillblank-input {
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .fillblank-input-section {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1536px) {
+  .fillblank-question-card {
+    padding: 40px;
+  }
+
+  .fillblank-sentence {
+    font-size: 1.3rem;
+  }
+}

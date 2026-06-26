@@ -3,19 +3,25 @@ import "../../styles/progresspage.css";
 
 const AchievementCard = React.memo(({ achievement, compact = false }) => {
   const {
-    icon,
+    icon: Icon,
     title,
+    description,
     unlocked,
     xp = 0,
+    rarity = 'common',
+    progress = 0,
   } = achievement;
+
+  const IconComponent = typeof Icon === 'function' ? <Icon /> : Icon;
 
   return (
     <article
-      className={`achievement-card ${unlocked ? "unlocked" : "locked"} ${compact ? "compact" : ""}`}
+      className={`achievement-card ${unlocked ? "unlocked" : "locked"} ${compact ? "compact" : ""} rarity-${rarity}`}
       aria-label={title}
+      title={description || title}
     >
       <div className="achievement-icon">
-        {icon}
+        {IconComponent}
       </div>
 
       <div className="achievement-content">
@@ -24,9 +30,19 @@ const AchievementCard = React.memo(({ achievement, compact = false }) => {
         </h4>
 
         {!compact && (
-          <span className="achievement-xp">
-            +{xp} XP
-          </span>
+          <>
+            <span className="achievement-xp">
+              +{xp} XP
+            </span>
+            {!unlocked && progress > 0 && progress < 100 && (
+              <div className="achievement-progress-bar">
+                <div
+                  className="achievement-progress-fill"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
 

@@ -1,16 +1,5 @@
 import { useMemo } from "react";
-import {
-  FaTrophy,
-  FaFire,
-  FaStar,
-  FaGraduationCap,
-  FaBook,
-  FaCheckCircle,
-} from "react-icons/fa";
-
-
 import { useProgress } from "../hooks/useProgress";
-
 import ProgressHero from "../components/progress/ProgressHero";
 import StatsRow from "../components/progress/StatsRow";
 import StreakCard from "../components/progress/StreakCard";
@@ -18,23 +7,36 @@ import LevelJourney from "../components/progress/LevelJourney";
 import ActivityHeatmap from "../components/progress/ActivityHeatmap";
 import AchievementSection from "../components/progress/AchievementSection";
 import RecentActivity from "../components/progress/RecentActivity";
-
 import "../styles/progresspage.css";
 
 function Progress() {
-  const { data } = useProgress();
+  const { data, getAchievements, getLevelInfo } = useProgress();
 
   const currentStreak = data?.user?.streak || 0;
   const longestStreak = data?.user?.longestStreak || currentStreak;
+  const currentXP = data?.user?.xp || 0;
+  
+  // Get level information from new level engine
+  const levelInfo = useMemo(() => getLevelInfo(), [getLevelInfo]);
+  
+  // Get achievements from new achievement engine
+  const achievements = useMemo(() => getAchievements(), [getAchievements]);
+  
   const progressData = {
     overallProgress: data.progress.overallProgress,
     topicsCompleted: data.progress.completedTopics.length,
-    notesRead: data.progress.completedTopics.length,
-    mcqSolved: data.progress.completedQuizzes.length,
-    practiceCompleted: data.progress.completedPractice.length,
+    notesRead: data.topicProgress.filter((t) => t.completed).length,
+    mcqSolved: data.quizResults.length,
+    practiceCompleted: [
+      ...data.fillBlankProgress.filter((f) => f.completed),
+      ...data.translationProgress.filter((t) => t.completed),
+      ...data.sentenceCorrectionProgress.filter((s) => s.completed),
+      ...data.verbProgress.filter((v) => v.completed),
+    ].length,
     weeklyActivity: data.user.completedDates,
-    currentXP: data.user.xp,
-    xpToNextLevel: 500 - (data.user.xp % 500),
+    currentXP,
+    xpToNextLevel: levelInfo.xpNeeded || 0,
+    levelProgress: levelInfo.percentage || 0,
   };
 
   const {
@@ -44,63 +46,9 @@ function Progress() {
     mcqSolved = 0,
     practiceCompleted = 0,
     weeklyActivity = [],
-    currentXP = 0,
-    xpToNextLevel = 500,
+    xpToNextLevel = 0,
+    levelProgress = 0,
   } = progressData;
-
-  const achievements = useMemo(
-    () => [
-      {
-        icon: <FaTrophy />,
-        title: "Consistent Learner",
-        unlocked: currentStreak >= 7,
-        category: "streak",
-        xp: 100,
-      },
-      {
-        icon: <FaFire />,
-        title: "7 Day Streak",
-        unlocked: currentStreak >= 7,
-        category: "streak",
-        xp: 150,
-      },
-      {
-        icon: <FaStar />,
-        title: "Completed 50 Lessons",
-        unlocked: mcqSolved >= 50,
-        category: "learning",
-        xp: 200,
-      },
-      {
-        icon: <FaGraduationCap />,
-        title: "Grammar Master",
-        unlocked: overallProgress >= 100,
-        category: "master",
-        xp: 500,
-      },
-      {
-        icon: <FaBook />,
-        title: "Bookworm",
-        unlocked: notesRead >= 20,
-        category: "learning",
-        xp: 150,
-      },
-      {
-        icon: <FaCheckCircle />,
-        title: "Perfect Score",
-        unlocked: practiceCompleted >= 10,
-        category: "quiz",
-        xp: 300,
-      },
-    ],
-    [
-      currentStreak,
-      mcqSolved,
-      overallProgress,
-      notesRead,
-      practiceCompleted,
-    ]
-  );
 
   const recentActivities = data.activityLogs;
 
@@ -125,6 +73,7 @@ function Progress() {
         progress={overallProgress}
         currentXP={currentXP}
         xpToNextLevel={xpToNextLevel}
+        levelInfo={levelInfo}
       />
 
       <StatsRow stats={stats} />
@@ -136,6 +85,7 @@ function Progress() {
 
       <LevelJourney
         currentProgress={overallProgress}
+        levelInfo={levelInfo}
       />
 
       <ActivityHeatmap

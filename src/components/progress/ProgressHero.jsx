@@ -1,49 +1,33 @@
 import React, { useMemo } from "react";
-import {
-  calculateLevel,
-  getNextLevelInfo,
-} from "../../utils/levelUtils";
 import { FaTrophy } from "react-icons/fa";
-
 import "../../styles/progresspage.css";
 
-const ProgressHero = React.memo(({ progress = 0, currentXP = 0, xpToNextLevel = 500 }) => {
-  const safeProgress = Math.min(100, Math.max(0, progress));
-
-  const currentLevel = useMemo(
-    () => calculateLevel(safeProgress),
-    [safeProgress]
-  );
-
-  const nextLevelInfo = useMemo(
-    () => getNextLevelInfo(safeProgress),
-    [safeProgress]
-  );
+const ProgressHero = React.memo(({ currentXP = 0, xpToNextLevel = 500, levelInfo = {} }) => {
+  const { level = 1, stage = 'Beginner', percentage = 0, isMaxLevel = false } = levelInfo;
 
   const message = useMemo(() => {
-    if (safeProgress < 25) {
+    if (stage === 'Beginner') {
       return "Great start! Keep learning";
     }
-
-    if (safeProgress < 50) {
+    if (stage === 'Intermediate') {
       return "You're building momentum";
     }
-
-    if (safeProgress < 75) {
+    if (stage === 'Advanced') {
       return "Excellent progress";
     }
-
-    if (safeProgress < 100) {
-      return "Almost at mastery";
+    if (stage === 'Master') {
+      return "Master level achieved";
     }
-
-    return "Master level achieved";
-  }, [safeProgress]);
+    return "Keep going!";
+  }, [stage]);
 
   const progressPercentage = useMemo(() => {
-    if (xpToNextLevel <= 0) return 100;
-    return Math.min((currentXP / (currentXP + xpToNextLevel)) * 100, 100);
-  }, [currentXP, xpToNextLevel]);
+    if (isMaxLevel || xpToNextLevel <= 0) return 100;
+    const value = Number.isFinite(percentage)
+      ? percentage
+      : (currentXP / (currentXP + xpToNextLevel)) * 100;
+    return Math.min(100, Math.max(0, value));
+  }, [currentXP, xpToNextLevel, percentage, isMaxLevel]);
 
   return (
     <section className="hero-progress">
@@ -52,7 +36,12 @@ const ProgressHero = React.memo(({ progress = 0, currentXP = 0, xpToNextLevel = 
         <div className="hero-info">
           <div className="hero-level">
             <span className="hero-level-label">Level</span>
-            <span className="hero-level-value">{currentLevel}</span>
+            <span className="hero-level-value">{level}</span>
+          </div>
+
+          <div className="hero-stage">
+            <span className="hero-stage-label">Stage</span>
+            <span className="hero-stage-value">{stage}</span>
           </div>
 
           <div className="hero-xp">
@@ -60,7 +49,7 @@ const ProgressHero = React.memo(({ progress = 0, currentXP = 0, xpToNextLevel = 
             <span className="hero-xp-value">{currentXP}</span>
           </div>
 
-          {!nextLevelInfo?.isMaxLevel && (
+          {!isMaxLevel && (
             <div className="hero-xp-needed">
               <span className="hero-xp-label">XP Needed</span>
               <span className="hero-xp-value">{xpToNextLevel}</span>
