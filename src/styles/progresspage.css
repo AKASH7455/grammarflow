@@ -1047,19 +1047,280 @@
 }
 
 /* =========================
-   RESPONSIVE DESIGN
-   Mobile First Breakpoints
+   PROGRESS INSIGHTS
 ========================= */
+
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  background: var(--white-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.progress-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.progress-section__eyebrow {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.progress-section__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--text-color);
+  letter-spacing: 0;
+}
+
+.progress-section__metric {
+  flex-shrink: 0;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  background: var(--primary-soft-color);
+  color: var(--primary-dark-color);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.progress-list__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px;
+  gap: 0.65rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-color);
+}
+
+.progress-list__content {
+  min-width: 0;
+}
+
+.progress-list__title,
+.progress-list__meta,
+.progress-list__value {
+  display: block;
+}
+
+.progress-list__title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-list__meta {
+  margin-top: 0.2rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-list__track {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.progress-list__track span,
+.subject-progress-card__bar span,
+.analytics-card::after {
+  display: block;
+}
+
+.progress-list__track span,
+.subject-progress-card__bar span {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark-color));
+}
+
+.progress-list__value {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  background: var(--white-color);
+  color: var(--primary-dark-color);
+  font-size: 0.72rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.subject-progress-grid,
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.subject-progress-card,
+.analytics-card {
+  min-width: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.subject-progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.9rem;
+}
+
+.subject-progress-card__top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--primary-color);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.subject-progress-card h3,
+.subject-progress-card p {
+  margin: 0;
+}
+
+.subject-progress-card h3 {
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: var(--text-color);
+  overflow-wrap: anywhere;
+}
+
+.subject-progress-card p {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.subject-progress-card__bar {
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.analytics-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.55rem;
+  min-height: 116px;
+  padding: 0.95rem;
+  overflow: hidden;
+}
+
+.analytics-card::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -24px;
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: var(--primary-soft-color);
+  opacity: 0.72;
+}
+
+.analytics-card svg {
+  width: 32px;
+  height: 32px;
+  padding: 0.45rem;
+  border-radius: 12px;
+  background: var(--white-color);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.analytics-card__value,
+.analytics-card__label {
+  position: relative;
+  z-index: 1;
+}
+
+.analytics-card__value {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-color);
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.analytics-card__label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+/* =========================
+   RESPONSIVE DESIGN
+   Phone First Breakpoints
+========================= */
+
+@media (min-width: 320px) {
+  .progress-page {
+    width: 100%;
+  }
+}
 
 @media (min-width: 360px) {
   .progress-page .level-card {
     width: 85px;
     min-height: 105px;
   }
-  
+
   .hero-level-value,
   .hero-xp-value {
     font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 375px) {
+  .progress-section,
+  .activity-heatmap,
+  .recent-activity,
+  .streak-card,
+  .hero-progress {
+    padding: 1.25rem;
   }
 }
 
@@ -1068,26 +1329,49 @@
     width: 90px;
     min-height: 110px;
   }
-  
+
   .hero-level-value,
   .hero-xp-value {
     font-size: 1.85rem;
   }
-  
+
   .stat-card-value {
     font-size: 1.75rem;
   }
 }
 
-@media (min-width: 412px) {
+@media (min-width: 430px) {
   .progress-page .level-card {
     width: 95px;
     min-height: 115px;
   }
-  
+
   .hero-level-value,
   .hero-xp-value {
     font-size: 2rem;
+  }
+
+  .progress-list__item {
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 38%) 54px;
+  }
+
+  .progress-list__track {
+    grid-column: 2;
+  }
+
+  .progress-list__value {
+    grid-column: 3;
+  }
+}
+
+@media (min-width: 480px) {
+  .progress-page {
+    padding-inline: 1.25rem;
+  }
+
+  .subject-progress-grid,
+  .analytics-grid {
+    gap: 1rem;
   }
 }
 
@@ -1096,23 +1380,53 @@
     padding: 2rem;
     max-width: 768px;
   }
-  
+
   .hero-info {
     flex-wrap: nowrap;
   }
-  
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
+
+  .stats-grid,
+  .analytics-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  
+
+  .subject-progress-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .level-journey-scroll {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
-  .achievement-category-scroll {
-    flex-wrap: wrap;
-    justify-content: center;
+
+  .activity-heatmap {
+    padding: 1.75rem;
+  }
+
+  .heatmap-header {
+    gap: 1rem;
+  }
+
+  .heatmap-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.35rem;
+  }
+
+  .heatmap-grid {
+    width: min(100%, 560px);
+    margin-inline: auto;
+    grid-template-columns: repeat(7, minmax(44px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .heatmap-cell {
+    border-radius: 10px;
+    font-size: 0.78rem;
+  }
+
+  .heatmap-day-number {
+    font-size: 0.72rem;
   }
 }
 
@@ -1120,8 +1434,38 @@
   .progress-page {
     max-width: 1024px;
   }
-  
+
   .hero-progress {
     padding: 2rem;
+  }
+
+  .activity-heatmap {
+    padding: 2rem;
+    min-height: 100%;
+  }
+
+  .heatmap-nav-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .heatmap-nav-button svg {
+    font-size: 1.25rem;
+  }
+
+  .heatmap-grid {
+    width: min(100%, 620px);
+    grid-template-columns: repeat(7, minmax(52px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .heatmap-cell {
+    max-width: 72px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .heatmap-legend {
+    margin-top: 0.75rem;
   }
 }

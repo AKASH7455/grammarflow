@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "../../styles/progresspage.css";
 
 const ActivityHeatmap = React.memo(({ activityData = [], completedDates = [] }) => {
@@ -87,7 +88,7 @@ const ActivityHeatmap = React.memo(({ activityData = [], completedDates = [] }) 
           onClick={() => navigateMonth(-1)}
           aria-label="Previous month"
         >
-          ←
+          <FiChevronLeft aria-hidden="true" />
         </button>
         <h2 className="heatmap-title">
           {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
@@ -97,7 +98,7 @@ const ActivityHeatmap = React.memo(({ activityData = [], completedDates = [] }) 
           onClick={() => navigateMonth(1)}
           aria-label="Next month"
         >
-          →
+          <FiChevronRight aria-hidden="true" />
         </button>
       </div>
 

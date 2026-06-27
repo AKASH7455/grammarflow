@@ -2,9 +2,25 @@
   min-height: 100dvh;
   min-height: 100vh;
   background: var(--surface-color);
+  overflow-x: hidden;
 }
 
 .app-main {
+  width: 100%;
+  min-width: 0;
   padding: 1rem;
-  padding-bottom: 90px;
+  padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  .app-main {
+    padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-main {
+    padding-bottom: calc(128px + env(safe-area-inset-bottom, 0px));
+  }
 }
