@@ -213,6 +213,13 @@
   font-size: 1.35rem;
 }
 
+.learning-list-number {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
 /* =====================================================
    LEVEL CARD TEXT
 ===================================================== */
@@ -344,3 +351,9 @@
 
   color: var(--text-muted-color);
 }
+
+
+.subject-card__icon.learning-list-number {
+  color: var(--primary-color);
+}
+

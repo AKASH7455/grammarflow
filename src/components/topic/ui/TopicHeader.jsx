@@ -16,7 +16,8 @@ function TopicHeader({
   } = useParams();
 
   const topicName = topicSlug
-    ?.split("-")
+    ?.replace(/^\d+-/, "")
+    .split("-")
     .map(
       (word) =>
         word.charAt(0).toUpperCase() +
@@ -64,3 +65,4 @@ function TopicHeader({
 }
 
 export default TopicHeader;
+

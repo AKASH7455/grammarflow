@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
-import { FiBook } from "react-icons/fi";
 
-function SubjectCard({ subject, levelSlug, levelColor }) {
+function SubjectCard({ subject, levelSlug, levelColor, index }) {
   const targetPath =
     subject.topics.length === 1
       ? `/learning/${levelSlug}/${subject.slug}/${subject.topics[0].slug}`
       : `/learning/${levelSlug}/${subject.slug}`;
+
+  const subjectNumber = String(index + 1).padStart(2, '0');
 
   return (
     <Link
       to={targetPath}
       className={`subject-card subject-card--${levelColor}`}
     >
-      <div className="subject-card__icon">
-        <FiBook />
+      <div className="subject-card__icon learning-list-number">
+        {subjectNumber}
       </div>
 
       <h3 className="subject-card__title">
@@ -29,3 +30,4 @@ function SubjectCard({ subject, levelSlug, levelColor }) {
 }
 
 export default SubjectCard;
+

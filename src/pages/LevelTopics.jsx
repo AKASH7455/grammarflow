@@ -37,13 +37,14 @@ function LevelTopics() {
       </div>
 
       <div className="subjects-grid">
-        {subject.topics.map((topic) => (
+        {subject.topics.map((topic, index) => (
           <TopicCard
             key={topic.slug}
             topic={topic}
             levelSlug={levelSlug}
             subjectSlug={subjectSlug}
             levelColor={levelSlug}
+            index={index}
           />
         ))}
       </div>

@@ -15,7 +15,7 @@
 
 .topic-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   padding: 0.5rem 0;
 }
@@ -50,6 +50,7 @@
 
 .topic-header__info {
   flex: 1;
+  min-width: 0;
 }
 
 .topic-header__top {
@@ -64,6 +65,7 @@
 
   font-size: 1.5rem;
   font-weight: 700;
+  line-height: 1.2;
 
   color: var(--text-color);
 }
@@ -315,3 +317,4 @@
   color: var(--primary-dark-color);
   font-weight: 600;
 }
+
