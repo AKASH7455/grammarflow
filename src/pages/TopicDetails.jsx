@@ -14,6 +14,22 @@ import {
 
 import "../styles/topicdetails.css";
 
+const buildTopicContent = (topic) => {
+  if (topic.content) return topic.content;
+
+  return {
+    notes: topic.notes,
+    mcq: topic.mcq,
+    fillBlanks: topic.fillBlanks,
+    translation: topic.translation,
+    sentenceCorrection: topic.sentenceCorrection,
+    aiPractice: topic.aiPractice,
+    "fill-blanks": topic.fillBlanks,
+    "sentence-correction": topic.sentenceCorrection,
+    "ai-practice": topic.aiPractice,
+  };
+};
+
 function TopicDetails() {
   const {
     levelSlug,
@@ -66,11 +82,13 @@ function TopicDetails() {
     );
   }
 
-  const availableTabs =
-    Object.keys(topic.content || {});
+  const topicContent = buildTopicContent(topic);
 
-  const currentData =
-    topic.content?.[activeTab];
+  const availableTabs = Object.keys(topicContent).filter(
+    (tab) => topicContent[tab]
+  );
+
+  const currentData = topicContent[activeTab];
 
   return (
     <main className="topic-details-page">
@@ -100,4 +118,3 @@ function TopicDetails() {
 }
 
 export default TopicDetails;
-

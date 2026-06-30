@@ -205,8 +205,8 @@
 
   flex-shrink: 0;
 
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
 
   border-radius: 14px;
 
@@ -215,8 +215,8 @@
 
 .learning-list-number {
   font-size: 1.35rem;
-  font-weight: 800;
-  line-height: 1;
+  font-weight: 700;
+  line-height: 0.75;
   text-align: center;
 }
 
@@ -255,7 +255,7 @@
 
   margin: 0;
 
-  font-size: 0.95rem;
+  font-size: 0.90rem;
   font-weight: 600;
 
   color: var(--text-color);
@@ -353,7 +353,14 @@
 }
 
 
-.subject-card__icon.learning-list-number {
+/* Learning Card Icon */
+.learning-page .level-card__icon {
   color: var(--primary-color);
 }
+
+/* Subject Card Icon */
+.subject-card__icon {
+  color: var(--advanced-text);
+}
+
 
