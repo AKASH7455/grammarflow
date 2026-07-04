@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
 import { FiBookOpen, FiZap, FiLayers, FiGrid,  } from "react-icons/fi";
 
 import VerbDashboardCard from "../components/verbs/VerbDashboardCard";
 import verbService from "../services/verbService";
+import { SkeletonVerb } from "../components/common/skeleton";
 
 import "../styles/verbforms.css";
 
 function VerbDashboard() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading - remove this when connecting to real API
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
+
   const dashboardCards = [
     {
       title: "Daily Verbs",

@@ -1,0 +1,95 @@
+/* Skeleton Loading Styles */
+/* Uses CSS variables for theme support */
+
+.skeleton {
+  background: var(--surface-color);
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* Base shimmer effect */
+.skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    var(--surface-color) 0%,
+    rgba(148, 163, 184, 0.1) 50%,
+    var(--surface-color) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+}
+
+/* Shimmer highlight overlay */
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+}
+
+/* Dark theme adjustments */
+.dark-theme .skeleton::before {
+  background: linear-gradient(
+    90deg,
+    var(--surface-color) 0%,
+    rgba(34, 211, 238, 0.08) 50%,
+    var(--surface-color) 100%
+  );
+  background-size: 200% 100%;
+}
+
+.dark-theme .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(34, 211, 238, 0.2) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::before,
+  .skeleton::after {
+    animation: none;
+  }
+  
+  .skeleton::before {
+    background: rgba(148, 163, 184, 0.1);
+  }
+  
+  .dark-theme .skeleton::before {
+    background: rgba(34, 211, 238, 0.08);
+  }
+}
