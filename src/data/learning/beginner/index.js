@@ -13,6 +13,11 @@ import simplePresentTense from "./simple-present-tense";
 import presentContinuousTense from "./present-continuous-tense";
 import simplePastTense from "./simple-past-tense";
 import simpleFutureTense from "./simple-future-tense";
+import prepositions from "./prepositions";
+import conjunctions from "./conjunctions";
+import modalVerbs from "./modal-verbs";
+import questionFormation from "./question-formation";
+import commonGrammarMistakes from "./common-grammar-mistakes";
 
 
 export default {
@@ -33,6 +38,11 @@ export default {
     simplePresentTense,
     presentContinuousTense,
     simplePastTense,
-    simpleFutureTense
+    simpleFutureTense,
+    prepositions,
+    conjunctions,
+    modalVerbs,
+    questionFormation,
+    commonGrammarMistakes
   ],
 };
