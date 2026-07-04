@@ -8,6 +8,11 @@ import adverbs from "./adverbs";
 import articles from "./articles";
 import determiners from "./determiners";
 import helpingVerbs from "./helping-verbs";
+import subjectVerbAgreement from "./subject-verb-agreement";
+import simplePresentTense from "./simple-present-tense";
+import presentContinuousTense from "./present-continuous-tense";
+import simplePastTense from "./simple-past-tense";
+import simpleFutureTense from "./simple-future-tense";
 
 
 export default {
@@ -23,6 +28,11 @@ export default {
     adverbs,
     articles,
     determiners,
-    helpingVerbs
+    helpingVerbs,
+    subjectVerbAgreement,
+    simplePresentTense,
+    presentContinuousTense,
+    simplePastTense,
+    simpleFutureTense
   ],
 };

@@ -44,13 +44,11 @@ initialShowAnswers = false,
   const score = useMemo(
     () =>
       data.reduce((total, question) => {
-        return (
-          total +
-          (answerMap[question.id] ===
-          question.answer
-            ? 1
-            : 0)
-        );
+        const userAnswer = answerMap[question.id] || "";
+        const isCorrect =
+          userAnswer.toLowerCase().trim() ===
+          question.answer.toLowerCase().trim();
+        return total + (isCorrect ? 1 : 0);
       }, 0),
     [data, answerMap]
   );
@@ -222,8 +220,12 @@ initialShowAnswers = false,
                 ];
 
               const isCorrect =
-                userAnswer ===
-                question.answer;
+                (userAnswer || "")
+                  .toLowerCase()
+                  .trim() ===
+                question.answer
+                  .toLowerCase()
+                  .trim();
 
               const explanationText = typeof question.explanation === 'object' 
                 ? question.explanation[language] || question.explanation.english 
@@ -305,6 +307,18 @@ initialShowAnswers = false,
               );
             }
           )}
+
+          <button
+            className="back-button back-button-bottom"
+            onClick={() =>
+              setShowReview(false)
+            }
+          >
+            <HiOutlineArrowLeft />
+            <span>
+              Back to Summary
+            </span>
+          </button>
         </div>
       )}
     </section>

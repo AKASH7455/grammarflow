@@ -5,7 +5,15 @@ function MCQ({
   options = [],
   selectedAnswer,
   onAnswer,
+  onEnter,
 }) {
+  const handleKeyDown = (event) => {
+    if (event.key !== "Enter" || event.repeat) return;
+
+    event.preventDefault();
+    onEnter?.();
+  };
+
   return (
     <div className="mcq-container">
       <h3 className="mcq-question-text">
@@ -32,6 +40,7 @@ function MCQ({
                 value={option}
                 checked={isSelected}
                 onChange={() => onAnswer(option)}
+                onKeyDown={handleKeyDown}
                 className="mcq-radio"
               />
 

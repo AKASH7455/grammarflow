@@ -52,6 +52,7 @@ function TopicContent({
     Boolean(initialSession.showAnswerReview)
   );
   const skipPersistRef = useRef(false);
+  const submitHandledRef = useRef(false);
 
   useEffect(() => {
     if (!Array.isArray(data) || !["mcq", "fill-blanks"].includes(activeTab)) return;
@@ -127,14 +128,20 @@ function TopicContent({
   };
 
   const handleSubmit = () => {
+    if (submitHandledRef.current) return;
+
+    submitHandledRef.current = true;
+
     const score = data.reduce(
-      (sum, question) =>
-        sum +
-        (answers.find(
+      (sum, question) => {
+        const userAnswer = answers.find(
           (item) => item.questionId === question.id
-        )?.selectedAnswer === question.answer
-          ? 1
-          : 0),
+        )?.selectedAnswer || "";
+        const isCorrect =
+          userAnswer.toLowerCase().trim() ===
+          question.answer.toLowerCase().trim();
+        return sum + (isCorrect ? 1 : 0);
+      },
       0
     );
 
@@ -171,8 +178,28 @@ function TopicContent({
     setCurrentIndex(0);
     setAnswers([]);
     setScoreData(null);
+    submitHandledRef.current = false;
     setShowAnswerReview(false);
     setShowReview(false);
+  };
+
+  const isLastQuestion = currentIndex === data.length - 1;
+  const hasCurrentAnswer = !!currentAnswer;
+  const allQuestionsAnswered = answers.length === data.length;
+
+  const handleNext = () => {
+    if (isLastQuestion || !hasCurrentAnswer) return;
+
+    setCurrentIndex((previous) => previous + 1);
+  };
+
+  const handlePrimaryEnter = () => {
+    if (isLastQuestion) {
+      if (allQuestionsAnswered) handleSubmit();
+      return;
+    }
+
+    handleNext();
   };
 
   if (showReview) {
@@ -203,6 +230,7 @@ function TopicContent({
           onAnswer={(answer) =>
             handleAnswer(currentQuestion.id, answer)
           }
+          onEnter={handlePrimaryEnter}
         />
       )}
 
@@ -214,20 +242,19 @@ function TopicContent({
             handleAnswer(currentQuestion.id, answer)
           }
           hintOptions={currentQuestion.hintOptions}
+          onEnter={handlePrimaryEnter}
         />
       )}
 
       <ExamNavigation
         currentIndex={currentIndex}
         totalQuestions={data.length}
-        hasAnswer={!!currentAnswer}
-        allAnswered={answers.length === data.length}
+        hasAnswer={hasCurrentAnswer}
+        allAnswered={allQuestionsAnswered}
         onPrevious={() =>
           setCurrentIndex((previous) => previous - 1)
         }
-        onNext={() =>
-          setCurrentIndex((previous) => previous + 1)
-        }
+        onNext={handleNext}
         onSubmit={handleSubmit}
       />
     </section>

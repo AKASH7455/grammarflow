@@ -4,10 +4,18 @@ function FillBlank({
   sentence,
   userAnswer,
   onAnswer,
+  onEnter,
   hintOptions = [],
 }) {
   const [beforeBlank = "", afterBlank = ""] =
     sentence.split("______");
+
+  const handleKeyDown = (event) => {
+    if (event.key !== "Enter" || event.repeat) return;
+
+    event.preventDefault();
+    onEnter?.();
+  };
 
   return (
     <div className="fillblank-container">
@@ -55,6 +63,7 @@ function FillBlank({
           placeholder="Type your answer..."
           className="fillblank-input"
           onChange={(e) => onAnswer(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
 
       </div>
