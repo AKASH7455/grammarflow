@@ -93,10 +93,11 @@ return ( <main className="verb-set-detail-page">
       <VerbTable verbs={searchedVerbs} />
     ) : (
       <div className="verb-cards-grid">
-        {searchedVerbs.map((verb) => (
+        {searchedVerbs.map((verb, index) => (
           <VerbCard
             key={verb.id}
             verb={verb}
+            number={index + 1}
           />
         ))}
       </div>

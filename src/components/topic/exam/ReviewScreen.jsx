@@ -119,7 +119,7 @@ initialShowAnswers = false,
                 cy="100"
                 r="80"
                 fill="none"
-                stroke="#e2e8f0"
+                stroke="var(--border-color)"
                 strokeWidth="12"
                 strokeLinecap="round"
               />
@@ -139,8 +139,8 @@ initialShowAnswers = false,
               />
               <defs>
                 <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#10b981" />
-                  <stop offset="100%" stopColor="#14b8a6" />
+                  <stop offset="0%" stopColor="var(--primary-color)" />
+                  <stop offset="100%" stopColor="var(--primary-dark-color)" />
                 </linearGradient>
               </defs>
             </svg>
@@ -308,17 +308,6 @@ initialShowAnswers = false,
             }
           )}
 
-          <button
-            className="back-button back-button-bottom"
-            onClick={() =>
-              setShowReview(false)
-            }
-          >
-            <HiOutlineArrowLeft />
-            <span>
-              Back to Summary
-            </span>
-          </button>
         </div>
       )}
     </section>

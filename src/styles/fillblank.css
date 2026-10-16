@@ -91,6 +91,20 @@
 
   font-size: 0.85rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.fillblank-hint-chip:hover,
+.fillblank-hint-chip:focus-visible {
+  background: var(--primary-soft-color);
+  border-color: var(--primary-color);
+  color: var(--primary-dark-color);
+}
+
+.fillblank-hint-chip:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 /* =========================

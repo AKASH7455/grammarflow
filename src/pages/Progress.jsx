@@ -1,11 +1,41 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { FiBarChart2, FiBookOpen, FiTarget } from "react-icons/fi";
 import { getProgress } from "../services/grammarFlowStorage";
 import { getCourseProgress } from "../utils/learningProgress";
 import "../styles/progresspage.css";
 
+const getSubjectName = (id = "") => {
+  const parts = id.split("/").filter(Boolean);
+  const subject = parts.length > 1 ? parts[1] : parts[0] || "";
+  const singular = subject.endsWith("s") ? subject.slice(0, -1) : subject;
+  return singular
+    .split(/[-_]/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+const formatTimeAgo = (timestamp) => {
+  const elapsedSeconds = Math.max(0, (Date.now() - new Date(timestamp).getTime()) / 1000);
+  if (!Number.isFinite(elapsedSeconds)) return "";
+  if (elapsedSeconds < 60) return "Just now";
+  if (elapsedSeconds < 3600) return `${Math.floor(elapsedSeconds / 60)} min ago`;
+  if (elapsedSeconds < 86400) return `${Math.floor(elapsedSeconds / 3600)} hr ago`;
+  if (elapsedSeconds < 2592000) return `${Math.floor(elapsedSeconds / 86400)} days ago`;
+  return `${Math.floor(elapsedSeconds / 2592000)} months ago`;
+};
+
+const getActivityLabel = (type) => ({
+  quiz: "Quiz done",
+  topic: "Topic completed",
+  fillblank: "Fill in the blanks done",
+  translation: "Translation practice done",
+  sentence: "Sentence correction done",
+  verb: "Verb practice done",
+}[type] || "Activity completed");
+
 function Progress() {
   const data = getProgress();
+  const [showAllTopics, setShowAllTopics] = useState(false);
 
   const currentStreak = data.user.streak || 0;
   const longestStreak = data.user.longestStreak || currentStreak;
@@ -33,11 +63,35 @@ function Progress() {
   }, [data.user.completedDates]);
 
   const topicProgress = useMemo(() => {
-    return data.topicProgress.map((topic) => ({
-      name: topic.topicId,
-      progress: topic.completed ? 100 : 0,
+    const latestBySubject = new Map();
+    data.activityLogs.forEach((activity) => {
+      if (!activity.type || !activity.id) return;
+      const activityId = activity.id?.slice(activity.type.length + 1).replace(/:\d{4}-\d{2}-\d{2}$/, "");
+      const name = getSubjectName(activityId);
+      if (!name || !activity.timestamp) return;
+      const current = latestBySubject.get(name);
+      if (!current || new Date(activity.timestamp) > new Date(current.timestamp)) {
+        latestBySubject.set(name, activity);
+      }
+    });
+
+    data.topicProgress.forEach((topic) => {
+      const name = getSubjectName(topic.topicId);
+      if (!name || latestBySubject.has(name)) return;
+      latestBySubject.set(name, {
+        type: "topic",
+        timestamp: topic.completedAt,
+      });
+    });
+
+    return [...latestBySubject.entries()].map(([name, activity]) => ({
+      name,
+      action: getActivityLabel(activity.type),
+      timeAgo: formatTimeAgo(activity.timestamp),
     }));
-  }, [data.topicProgress]);
+  }, [data.activityLogs, data.topicProgress]);
+
+  const visibleTopics = showAllTopics ? topicProgress : topicProgress.slice(0, 3);
 
   return (
     <main className="progress-page">
@@ -129,20 +183,25 @@ function Progress() {
         <h2 className="section-title">Topic Progress</h2>
         <div className="topic-list">
           {topicProgress.length > 0 ? (
-            topicProgress.map((topic, index) => (
-              <div key={index} className="topic-item">
+            visibleTopics.map((topic) => (
+              <div key={topic.name} className="topic-item">
                 <span className="topic-name">{topic.name}</span>
-                <div className="topic-progress-bar">
-                  <div
-                    className="topic-progress-fill"
-                    style={{ width: `${topic.progress}%` }}
-                  />
-                </div>
-                <span className="topic-percentage">{topic.progress}%</span>
+                <span className="topic-activity">
+                  {topic.action}{topic.timeAgo ? ` · ${topic.timeAgo}` : ""}
+                </span>
               </div>
             ))
           ) : (
             <p className="empty-state">No topics started yet</p>
+          )}
+          {topicProgress.length > 3 && (
+            <button
+              type="button"
+              className="activity-history-toggle"
+              onClick={() => setShowAllTopics((shown) => !shown)}
+            >
+              {showAllTopics ? "View less" : "View more"}
+            </button>
           )}
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LanguageContext } from "../../context/AppContexts";
 
-function VerbCard({ verb }) {
+function VerbCard({ verb, number }) {
   const { language } = useContext(LanguageContext);
 
   const meaning =
@@ -23,6 +23,7 @@ function VerbCard({ verb }) {
 
       <div className="verb-card__header">
         <h3 className="verb-card__v1">
+          <span className="verb-card__number">{number}.</span>
           {verb.v1}
         </h3>
       </div>
@@ -66,7 +67,7 @@ function VerbCard({ verb }) {
         <div className="verb-card__example">
 
           <span className="verb-card__example-label">
-            Example
+            Example {number}
           </span>
 
           <p className="verb-card__example-en">

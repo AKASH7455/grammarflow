@@ -968,6 +968,11 @@ Empty State
   color: var(--text-color);
 }
 
+.verb-card__number {
+  margin-right: 0.45rem;
+  color: var(--primary-color);
+}
+
 .verb-card__body {
   display: flex;
   gap: 0.75rem;

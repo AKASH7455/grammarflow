@@ -49,20 +49,7 @@ function Notes({ data }) {
         );
 
       case "example":
-        return (
-          <div
-            key={index}
-            className="notes-example"
-          >
-            <span className="notes-example-number">
-              {index + 1}.
-            </span>
-
-            <span className="notes-example-text">
-              {item.text}
-            </span>
-          </div>
-        );
+        return null;
 
       case "important":
         return (
@@ -91,6 +78,46 @@ function Notes({ data }) {
     }
   };
 
+  const renderExamplesTable = (examples, key) => (
+    <div className="notes-table-wrap" key={key}>
+      <table className="notes-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{language === "hindi" ? "उदाहरण" : "Example"}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {examples.map((example, index) => (
+            <tr key={index}>
+              <td className="notes-table-number">{index + 1}</td>
+              <td>{typeof example === "string" ? example : example.text}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const renderSectionContent = (items = []) => {
+    const output = [];
+    for (let index = 0; index < items.length; index += 1) {
+      if (items[index].type !== "example") {
+        output.push(renderContent(items[index], index));
+        continue;
+      }
+
+      const examples = [];
+      while (index < items.length && items[index].type === "example") {
+        examples.push(items[index]);
+        index += 1;
+      }
+      index -= 1;
+      output.push(renderExamplesTable(examples, `examples-${index}`));
+    }
+    return output;
+  };
+
   return (
     <article className="notes-article">
 
@@ -113,7 +140,7 @@ function Notes({ data }) {
             </h2>
           )}
 
-          {section.content?.map(renderContent)}
+          {renderSectionContent(section.content)}
 
         </section>
       ))}
@@ -125,20 +152,7 @@ function Notes({ data }) {
             Examples
           </h2>
 
-          <ol className="notes-examples">
-
-            {content.examples.map(
-              (example, index) => (
-                <li
-                  key={index}
-                  className="notes-example-item"
-                >
-                  {example}
-                </li>
-              )
-            )}
-
-          </ol>
+          {renderExamplesTable(content.examples, "top-level-examples")}
 
         </section>
       )}

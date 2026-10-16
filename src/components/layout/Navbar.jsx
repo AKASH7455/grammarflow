@@ -1,6 +1,7 @@
-import { FiBell, FiGlobe } from "react-icons/fi";
+import { FiGlobe, FiMoon, FiSun } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../hooks/useLanguage";
+import { useTheme } from "../../hooks/useTheme";
 
 import logo from "../../assets/images/logo.png";
 
@@ -8,6 +9,7 @@ import "../../styles/navbar.css";
 
 function Navbar() {
   const { language, toggleLanguage, isLearningPage } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const isVerbPage = location.pathname.startsWith("/verbs");
 
@@ -44,9 +46,11 @@ function Navbar() {
         <button
           type="button"
           className="navbar__icon-button"
-          aria-label="Notifications"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
         >
-          <FiBell />
+          {theme === "dark" ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
         </button>
       </div>
     </header>

@@ -43,12 +43,14 @@ function FillBlank({
 
           <div className="fillblank-hints">
             {hintOptions.map((option, index) => (
-              <span
+              <button
+                type="button"
                 key={index}
                 className="fillblank-hint-chip"
+                onClick={() => onAnswer(option)}
               >
                 {option}
-              </span>
+              </button>
             ))}
           </div>
 
