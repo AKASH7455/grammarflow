@@ -601,10 +601,22 @@
   border: 1px solid var(--border-color);
 }
 
+.profile__settings-copy {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
 .profile__settings-label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color);
+}
+
+.profile__settings-description {
+  color: var(--text-light);
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .profile__theme-toggle {
@@ -618,8 +630,21 @@
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
+  border: 0;
+  font-family: inherit;
   user-select: none;
   white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.profile__theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.profile__theme-toggle:focus-visible {
+  outline: 3px solid var(--primary-soft-color);
+  outline-offset: 3px;
 }
 
 .profile__theme-toggle--dark {

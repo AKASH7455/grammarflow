@@ -17,7 +17,6 @@ export { default as SkeletonFillBlank } from "./SkeletonFillBlank";
 export { default as SkeletonTranslation } from "./SkeletonTranslation";
 export { default as SkeletonSentenceCorrection } from "./SkeletonSentenceCorrection";
 export { default as SkeletonVerb } from "./SkeletonVerb";
-export { default as SkeletonProgress } from "./SkeletonProgress";
 export { default as SkeletonProfile } from "./SkeletonProfile";
 export { default as SkeletonSearch } from "./SkeletonSearch";
 
@@ -28,7 +27,6 @@ export { default as SkeletonSearch } from "./SkeletonSearch";
 // Card skeletons
 export { default as SkeletonTopicCard } from "./SkeletonTopicCard";
 export { default as SkeletonSubjectCard } from "./SkeletonSubjectCard";
-export { default as SkeletonLevelCard } from "./SkeletonLevelCard";
 export { default as SkeletonLessonCard } from "./SkeletonLessonCard";
 
 // Specialized components
@@ -37,4 +35,3 @@ export { default as SkeletonDashboard } from "./SkeletonDashboard";
 export { default as SkeletonSearchResults } from "./SkeletonSearchResults";
 export { default as SkeletonStatistics } from "./SkeletonStatistics";
 export { default as SkeletonWeeklyActivity } from "./SkeletonWeeklyActivity";
-export { default as SkeletonAchievementCard } from "./SkeletonAchievementCard";

@@ -1,14 +1,15 @@
 import WelcomeCard from "../components/home/WelcomeCard";
 import QuickActions from "../components/home/QuickActions";
-import StreakCard from "../components/home/StreakCard";
+import ActivityCalendar from "../components/home/ActivityCalendar";
+import BasicProgress from "../components/home/BasicProgress";
 
 function Home() {
   return (
     <>
       <WelcomeCard />
-      <StreakCard/>
+      <ActivityCalendar />
+      <BasicProgress />
       <QuickActions />
-    
     </>
   );
 }

@@ -7,12 +7,12 @@ import Notes from "./Notes";
 import ExamHeader from "./exam/ExamHeader";
 import ExamNavigation from "./exam/ExamNavigation";
 import ReviewScreen from "./exam/ReviewScreen";
-import { useProgress } from "../../hooks/useProgress";
 import {
   loadQuizSession,
   persistQuizSession,
   restartQuizSession,
 } from "../../services/quizSessionService";
+import { saveQuizResult, saveFillBlankResult, saveTopicResult } from "../../services/grammarFlowStorage";
 
 import "../../styles/topiccontent.css";
 
@@ -22,11 +22,6 @@ function TopicContent({
   onReviewModeChange,
   topicId,
 }) {
-  const {
-    saveQuizResult,
-    saveFillBlankResult,
-    saveTopicProgress,
-  } = useProgress();
 
   const quizId = `${topicId}/${activeTab}`;
   const [initialSession] = useState(() =>
@@ -168,7 +163,7 @@ function TopicContent({
       });
     }
 
-    saveTopicProgress({ topicId, completed: true });
+    saveTopicResult({ topicId, completed: true });
     setShowReview(true);
   };
 

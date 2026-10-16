@@ -25,7 +25,6 @@ const navItems = [
     label: "Practice",
     path: "/practice",
     icon: FiTarget,
-    comingSoon: true,
   },
   {
     label: "Progress",

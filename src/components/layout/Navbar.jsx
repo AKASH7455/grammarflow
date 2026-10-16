@@ -25,11 +25,12 @@ function Navbar() {
         {isLearningPage || isVerbPage ? (
           <button
             type="button"
-            className="navbar__verb-button"
+            className="navbar__language-button"
             onClick={toggleLanguage}
+            aria-label={`Switch language to ${language !== "hindi" ? "Hindi" : "Hinglish"}`}
           >
-            <FiGlobe />
-            <span>{language !== "hindi" ? "हिंदी" : "English"}</span>
+            <FiGlobe aria-hidden="true" />
+            <span>{language !== "hindi" ? "हिंदी" : "Hinglish"}</span>
           </button>
         ) : (
           <Link

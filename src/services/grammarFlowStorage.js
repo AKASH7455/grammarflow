@@ -1,14 +1,10 @@
 import { readStorage, writeStorage } from "../utils/localStorage";
-import { calculateXP, ACTIVITY_TYPES } from "./progress/experienceEngine";
-import { calculateLevel } from "./progress/levelEngine";
-import { checkAchievements, unlockAchievement, getNewlyUnlockedAchievements } from "./progress/achievementEngine";
+import { getCourseProgress } from "../utils/learningProgress";
 
 export const STORAGE_KEY = "grammarflow-data";
 
 export const defaultData = {
   user: {
-    xp: 0,
-    level: 1,
     streak: 0,
     longestStreak: 0,
     lastActivity: null,
@@ -20,7 +16,6 @@ export const defaultData = {
     completedSubjects: [],
     completedQuizzes: [],
     completedPractice: [],
-    achievements: [],
   },
   quizResults: [],
   quizSessions: {},
@@ -35,6 +30,47 @@ export const defaultData = {
 
 const freshData = () => JSON.parse(JSON.stringify(defaultData));
 const unique = (items) => [...new Set(items)];
+
+const toDateKey = (date) => date.toISOString().slice(0, 10);
+
+export const getCurrentStreak = (completedDates, today = new Date()) => {
+  const activeDays = new Set(Array.isArray(completedDates) ? completedDates : []);
+  const cursor = new Date(Date.UTC(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate()
+  ));
+  const todayKey = toDateKey(cursor);
+
+  // A streak remains active through the day after the latest activity.
+  if (!activeDays.has(todayKey)) cursor.setUTCDate(cursor.getUTCDate() - 1);
+
+  let streak = 0;
+  while (activeDays.has(toDateKey(cursor))) {
+    streak += 1;
+    cursor.setUTCDate(cursor.getUTCDate() - 1);
+  }
+  return streak;
+};
+
+const getLongestStreak = (completedDates) => {
+  const sortedDates = [...new Set(completedDates)].sort();
+  let longest = 0;
+  let current = 0;
+  let previous = null;
+
+  sortedDates.forEach((dateKey) => {
+    const date = new Date(`${dateKey}T00:00:00.000Z`);
+    if (Number.isNaN(date.getTime())) return;
+    const previousDate = previous && new Date(`${previous}T00:00:00.000Z`);
+    const isConsecutive = previousDate &&
+      date.getTime() - previousDate.getTime() === 86400000;
+    current = isConsecutive ? current + 1 : 1;
+    longest = Math.max(longest, current);
+    previous = dateKey;
+  });
+  return longest;
+};
 
 const getCleanTitle = (id, type) => {
   if (!id) return "Activity";
@@ -115,7 +151,7 @@ const normalize = (value) => {
 };
 
 export const getProgress = () =>
-  normalize(readStorage(STORAGE_KEY, freshData()));
+  calculateProgress(normalize(readStorage(STORAGE_KEY, freshData())));
 
 export const saveProgress = (value) => {
   const data = normalize(value);
@@ -132,6 +168,7 @@ const upsert = (items, key, record) => {
 };
 
 const calculateProgress = (data) => {
+  const courseProgress = getCourseProgress(data.topicProgress);
   const topics = unique(
     data.topicProgress.filter((item) => item.completed).map((item) => item.topicId)
   );
@@ -142,14 +179,6 @@ const calculateProgress = (data) => {
     ...data.sentenceCorrectionProgress.filter((item) => item.completed).map((item) => item.exerciseId),
     ...data.verbProgress.filter((item) => item.completed).map((item) => item.verbId),
   ]);
-  const total =
-    data.topicProgress.length +
-    data.quizResults.length +
-    data.fillBlankProgress.length +
-    data.translationProgress.length +
-    data.sentenceCorrectionProgress.length +
-    data.verbProgress.length;
-
   data.progress = {
     ...data.progress,
     completedTopics: topics,
@@ -158,13 +187,8 @@ const calculateProgress = (data) => {
     ),
     completedQuizzes: quizzes,
     completedPractice: practice,
-    overallProgress: total
-      ? Math.round(((topics.length + quizzes.length + practice.length) / total) * 100)
-      : 0,
+    overallProgress: courseProgress.percentage,
   };
-  // Use new level engine for level calculation
-  const levelInfo = calculateLevel(data.user.xp);
-  data.user.level = levelInfo.level;
   return data;
 };
 
@@ -180,30 +204,22 @@ export const updateProgress = (updater) => {
 const recordActivity = (data, type, id, metadata = {}, timestamp) => {
   const activityId = `${type}:${id}:${timestamp.slice(0, 10)}`;
   const cleanTitle = getCleanTitle(id, type);
-  
+
   if (!data.activityLogs.some((item) => item.id === activityId)) {
-    // Calculate XP using the new experience engine
-    const xp = calculateXP(type, metadata);
-    data.user.xp += xp;
-    
     data.activityLogs.unshift({
       id: activityId,
       type,
       text: cleanTitle,
       timestamp,
-      xp,
-    });
-    
-    // Check for new achievements
-    const newAchievements = getNewlyUnlockedAchievements(data);
-    newAchievements.forEach((achievement) => {
-      data = unlockAchievement(achievement.id, data);
     });
   }
   const date = timestamp.slice(0, 10);
   data.user.completedDates = unique([...data.user.completedDates, date]);
-  data.user.streak = data.user.completedDates.length;
-  data.user.longestStreak = Math.max(data.user.longestStreak, data.user.streak);
+  data.user.streak = getCurrentStreak(data.user.completedDates);
+  data.user.longestStreak = Math.max(
+    data.user.longestStreak,
+    getLongestStreak(data.user.completedDates)
+  );
   data.user.lastActivity = timestamp;
 };
 
@@ -215,8 +231,7 @@ export const saveQuizResult = (result) =>
       correctAnswers: result.correctAnswers ?? result.score,
       completedAt,
     });
-    // Use new XP calculation with metadata for perfect quiz bonus
-    recordActivity(data, ACTIVITY_TYPES.QUIZ, result.quizId, { score: result.percentage || (result.correctAnswers / result.totalQuestions) * 100 }, completedAt);
+    recordActivity(data, "quiz", result.quizId, {}, completedAt);
     return data;
   });
 
@@ -225,7 +240,7 @@ export const saveTopicResult = (result) =>
     const completedAt = result.completedAt || new Date().toISOString();
     const record = { completed: true, ...result, completedAt };
     data.topicProgress = upsert(data.topicProgress, "topicId", record);
-    recordActivity(data, ACTIVITY_TYPES.NOTE, result.topicId, {}, completedAt);
+    recordActivity(data, "topic", result.topicId, {}, completedAt);
     return data;
   });
 
@@ -241,13 +256,13 @@ const saveExercise = (collection, key, result, activityType) =>
   });
 
 export const saveFillBlankResult = (result) =>
-  saveExercise("fillBlankProgress", "exerciseId", result, ACTIVITY_TYPES.FILL_BLANK);
+  saveExercise("fillBlankProgress", "exerciseId", result, "fillblank");
 export const saveTranslationResult = (result) =>
-  saveExercise("translationProgress", "exerciseId", result, ACTIVITY_TYPES.TRANSLATION);
+  saveExercise("translationProgress", "exerciseId", result, "translation");
 export const saveSentenceCorrectionResult = (result) =>
-  saveExercise("sentenceCorrectionProgress", "exerciseId", result, ACTIVITY_TYPES.SENTENCE_CORRECTION);
+  saveExercise("sentenceCorrectionProgress", "exerciseId", result, "sentence");
 export const saveVerbResult = (result) =>
-  saveExercise("verbProgress", "verbId", result, ACTIVITY_TYPES.VERB_FORMS);
+  saveExercise("verbProgress", "verbId", result, "verb");
 
 export const saveQuizSession = (quizId, session) =>
   updateProgress((data) => {
